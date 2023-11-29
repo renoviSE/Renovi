@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.renovi.R;
 
-//Test Cengiz
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
