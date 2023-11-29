@@ -1,8 +1,10 @@
-package com.example.renovi;
+package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.renovi.R;
 
 //Test Cengiz
 public class MainActivity extends AppCompatActivity {
