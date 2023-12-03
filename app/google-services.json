@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "809651023215",
+    "project_id": "renovi-2d2d0",
+    "storage_bucket": "renovi-2d2d0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809651023215:android:aa94207b732ea1aea18c9a",
+        "android_client_info": {
+          "package_name": "com.example.renovi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAI8VN_kfnV5kkVXdOTo24ZGJM15lCE5LQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
