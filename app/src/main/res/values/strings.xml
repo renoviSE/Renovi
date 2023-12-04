@@ -9,6 +9,10 @@
     <string name="renoviTitle">Renovi</string>
     <string name="kaltmiete">Aktuelle Kaltmiete: %d</string>
     <string name="afterwards">Nach Sanierung:\n+%d €\t%d €</string>
+    <string name="addRenterButton">Mieter hinzufügen</string>
+    <string name="firstName">Vorname</string>
+    <string name="lastName">Nachname</string>
+    <string name="renter_id">ID</string>
 
 
 </resources>
