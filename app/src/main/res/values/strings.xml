@@ -15,4 +15,10 @@
     <string name="renter_id">ID</string>
 
 
+    <!-- welcomescreen strings @bamboo-->
+    <string name="logo_char">R</string>
+    <string name="logo_string">enovi</string>
+    <string name="slogan_string">sehr cooler slogan</string>
+	<string name="start_button_string">Get Started</string>
+    <!-- welcomescreen strings @bamboo-->
 </resources>

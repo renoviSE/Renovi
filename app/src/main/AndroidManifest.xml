@@ -18,6 +18,13 @@
             android:exported="false"
             android:label="@string/title_activity_overview"
             android:theme="@style/Theme.Renovi" />
+        <!-- welcomescreen @bamboo -->
+        <activity
+		android:name=".welcomescreen_activity"
+		android:configChanges="orientation|keyboardHidden|screenSize"
+		android:label="@string/app_name"
+		android:exported="true"  >
+        <!-- welcomescreen @bamboo -->
         <activity
             android:name=".view.MainActivity"
             android:exported="true" >

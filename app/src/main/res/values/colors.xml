@@ -2,4 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- welcomescreen colors @bamboo-->
+	<color name="colorAccent">#D81B60</color>
+	<color name="primaryBlue">#FF5297FF</color>
+	<color name="purple_200">#FFBB86FC</color>
+	<color name="purple_500">#FF6200EE</color>
+	<color name="purple_700">#FF3700B3</color>
+	<color name="teal_200">#FF03DAC5</color>
+	<color name="teal_700">#FF018786</color>
+
+	<color name="slogan_color">#7B6F72</color>
+	<color name="logo_text_color">#1D1517</color>
+	<!-- welcomescreen colors @bamboo-->
 </resources>
