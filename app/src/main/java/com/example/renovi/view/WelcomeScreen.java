@@ -26,7 +26,7 @@ public class WelcomeScreen extends Activity {
 
 		logotext = (TextView) findViewById(R.id.logotext);
 		slogan = (TextView) findViewById(R.id.slogan);
-		startButton = (Button) findViewById(R.id.StartButton);
+		startButton = (Button) findViewById(R.id.startButton);
 
 	}
 }

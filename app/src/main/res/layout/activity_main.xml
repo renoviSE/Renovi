@@ -15,7 +15,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:ems="10"
-        android:background="@drawable/bg_startbutton_background"
+        android:background="@drawable/bg_button"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.796"
