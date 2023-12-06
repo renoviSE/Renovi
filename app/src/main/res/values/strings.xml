@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Renovi</string>
     <string name="title_activity_overview">OverviewActivity</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="title_activity_signin">Sign In</string>
+    <string name="title_activity_main_test">Main (Test)</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
