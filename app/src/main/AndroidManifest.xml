@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -13,37 +13,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Renovi"
-        tools:targetApi="31" >
-        <!-- main(test) @bamboo -->
+        tools:targetApi="31">
+        <activity
+            android:name=".view.InboxActivity"
+            android:exported="true" />
+        <activity
+            android:name=".view.DetailsActivity"
+            android:exported="true" />
         <activity
             android:name=".view.MainActivityTest"
             android:exported="true"
-            android:label="@string/title_activity_main_test"/>
-        <!-- main(test) @bamboo -->
+            android:label="@string/title_activity_main_test" />
         <activity
             android:name=".view.OverviewActivity"
             android:exported="false"
             android:label="@string/title_activity_overview"
             android:theme="@style/Theme.Renovi" />
-
-        <!-- welcomescreen @bamboo -->
         <activity
             android:name=".view.WelcomeScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
             android:label="@string/title_activity_welcome" />
-        <!-- welcomescreen @bamboo -->
-
-        <!-- signin @bamboo -->
         <activity
             android:name=".view.SignInActivity"
             android:exported="true"
             android:label="@string/title_activity_signin" />
-        <!-- signin @bamboo -->
-
         <activity
             android:name=".view.MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

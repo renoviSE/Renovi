@@ -22,7 +22,7 @@
     <string name="logo_char">R</string>
     <string name="logo_string">enovi</string>
     <string name="slogan_string">sehr cooler slogan</string>
-	<string name="start_button_string">Get Started</string>
+    <string name="start_button_string">Get Started</string>
     <!-- welcomescreen strings @bamboo-->
 
     <!-- signin strings @bamboo-->
@@ -30,7 +30,7 @@
     <string name="descriptiontext_string">Den Verifizierungscode erhalten Sie vom Vermieter</string>
     <string name="verifyidplaceholder_string">Verifizierungscode</string>
     <string name="firstnameplaceholder_string">Vorname</string>
-	<string name="lastnameplaceholder_string">Nachname</string>
+    <string name="lastnameplaceholder_string">Nachname</string>
     <string name="birthdateplaceholder_string">Geburtstag</string>
     <string name="signin_button_string">Registrieren</string>
     <!-- signin strings @bamboo-->
