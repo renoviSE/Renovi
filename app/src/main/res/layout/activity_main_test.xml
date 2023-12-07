@@ -1,10 +1,669 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.MainActivityTest">
+    android:layout_height="match_parent">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".view.MainActivityTest">
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".view.MainActivityTest">
+
+                <TextView
+                    android:id="@+id/welcomeMassage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/welcome_string"
+                    android:textColor="@color/gray2"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:text="@string/user_name_string"
+                    android:textColor="@color/black1"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/welcomeMassage" />
+
+                <Button
+                    android:id="@+id/notification"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="34dp"
+                    android:layout_marginEnd="36dp"
+                    android:background="@drawable/bg_input_field"
+                    android:drawableStart="@drawable/ic_notification_active"
+                    android:padding="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/banner"
+                    android:layout_width="340dp"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="38dp"
+                    android:background="@drawable/il_banner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/userName" />
+
+                <TextView
+                    android:id="@+id/bannerTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/banner_title_string"
+                    android:textColor="@color/gray4"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/banner"
+                    app:layout_constraintTop_toTopOf="@+id/banner" />
+
+                <TextView
+                    android:id="@+id/bannerDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/banner_description_string"
+                    android:textColor="@color/gray4"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toStartOf="@+id/banner"
+                    app:layout_constraintTop_toBottomOf="@+id/bannerTitle" />
+
+                <ImageView
+                    android:id="@+id/mieteBackground"
+                    android:layout_width="95dp"
+                    android:layout_height="35dp"
+                    android:layout_marginStart="24dp"
+                    android:background="@drawable/bg_miete"
+                    app:layout_constraintBottom_toBottomOf="@+id/banner"
+                    app:layout_constraintStart_toStartOf="@+id/banner"
+                    app:layout_constraintTop_toBottomOf="@+id/bannerDescription" />
+
+                <TextView
+                    android:id="@+id/mieteDouble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/miete_price_string"
+                    android:textColor="@color/gray4"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/mieteBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/mieteBackground"
+                    app:layout_constraintStart_toStartOf="@+id/mieteBackground"
+                    app:layout_constraintTop_toTopOf="@+id/mieteBackground" />
+
+                <ImageView
+                    android:id="@+id/eclipseBackground"
+                    android:layout_width="106dp"
+                    android:layout_height="106dp"
+                    android:background="@drawable/bg_eclipse"
+                    app:layout_constraintBottom_toBottomOf="@+id/banner"
+                    app:layout_constraintEnd_toEndOf="@+id/banner"
+                    app:layout_constraintHorizontal_bias="0.85"
+                    app:layout_constraintStart_toStartOf="@+id/banner"
+                    app:layout_constraintTop_toTopOf="@+id/banner" />
+
+                <ProgressBar
+                    android:id="@+id/rentCostProgressBar"
+                    style="@style/Widget.Material3.CircularProgressIndicator"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:progressDrawable="@drawable/bg_progresscircle"
+                    app:layout_constraintBottom_toBottomOf="@+id/eclipseBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/eclipseBackground"
+                    app:layout_constraintStart_toStartOf="@+id/eclipseBackground"
+                    app:layout_constraintTop_toTopOf="@+id/eclipseBackground"
+                    tools:progress="20" />
+
+                <TextView
+                    android:id="@+id/rentCostPercentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/percentage"
+                    android:textColor="@color/gray4"
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/eclipseBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/eclipseBackground"
+                    app:layout_constraintHorizontal_bias="0.85"
+                    app:layout_constraintStart_toStartOf="@+id/eclipseBackground"
+                    app:layout_constraintTop_toTopOf="@+id/eclipseBackground"
+                    app:layout_constraintVertical_bias="0.1" />
+
+                <ImageView
+                    android:id="@+id/reparaturenBackground"
+                    android:layout_width="340dp"
+                    android:layout_height="63dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_verylightblue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/banner" />
+
+                <TextView
+                    android:id="@+id/reparaturenTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/reperatur_title"
+                    android:textColor="@color/black1"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/reparaturenBackground"
+                    app:layout_constraintStart_toStartOf="@+id/reparaturenBackground"
+                    app:layout_constraintTop_toTopOf="@+id/reparaturenBackground" />
+
+                <Button
+                    android:id="@+id/reparaturenButton"
+                    android:layout_width="68dp"
+                    android:layout_height="34dp"
+                    android:layout_marginEnd="24dp"
+                    android:background="@drawable/bg_lightblue"
+                    android:text="@string/reperatur_button_string"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray4"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/reparaturenBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/reparaturenBackground"
+                    app:layout_constraintTop_toTopOf="@+id/reparaturenBackground" />
+
+                <TextView
+                    android:id="@+id/verbrauchssenkungTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/verbrauchssenkung_title"
+                    android:textColor="@color/black1"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/reparaturenBackground" />
+
+                <ImageView
+                    android:id="@+id/verbrauchssenkungBackground"
+                    android:layout_width="340dp"
+                    android:layout_height="180dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/il_verbrauchssenkung"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/verbrauchssenkungTitle" />
+
+                <ImageView
+                    android:id="@+id/co2Background"
+                    android:layout_width="130dp"
+                    android:layout_height="58dp"
+                    android:layout_marginTop="-16dp"
+                    android:background="@drawable/bg_input_field"
+                    android:backgroundTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/verbrauchssenkungBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/verbrauchssenkungBackground"
+                    app:layout_constraintStart_toStartOf="@+id/verbrauchssenkungBackground"
+                    app:layout_constraintTop_toTopOf="@+id/verbrauchssenkungBackground"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:id="@+id/co2Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/co2_title"
+                    android:textColor="@color/gray2"
+                    android:textSize="8dp"
+                    app:layout_constraintStart_toStartOf="@+id/co2Background"
+                    app:layout_constraintTop_toTopOf="@+id/co2Background" />
+
+                <TextView
+                    android:id="@+id/co2Percantage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/co2_percantage"
+                    android:textColor="@color/success"
+                    android:textSize="8dp"
+                    app:layout_constraintStart_toEndOf="@+id/co2Title"
+                    app:layout_constraintTop_toTopOf="@+id/co2Background" />
+
+                <TextView
+                    android:id="@+id/co2ProgressbarTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/co2_progressbar_title"
+                    android:textColor="@color/gray1"
+                    android:textSize="10dp"
+                    app:layout_constraintStart_toStartOf="@+id/co2Background"
+                    app:layout_constraintTop_toBottomOf="@+id/co2Title" />
+
+                <ProgressBar
+                    android:id="@+id/co2ProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="113dp"
+                    android:layout_height="6dp"
+                    android:layout_marginTop="-8dp"
+                    android:backgroundTint="@color/black"
+                    android:progressDrawable="@drawable/bg_progressbar"
+                    app:layout_constraintBottom_toBottomOf="@+id/co2Background"
+                    app:layout_constraintEnd_toEndOf="@+id/co2Background"
+                    app:layout_constraintStart_toStartOf="@+id/co2Background"
+                    app:layout_constraintTop_toBottomOf="@+id/co2ProgressbarTitle"
+                    tools:progress="75" />
+
+                <TextView
+                    android:id="@+id/bevorstehendeRenovierungenTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginTop="32dp"
+                    android:text="@string/bevorstehende_renovierungen_title"
+                    android:textColor="@color/black1"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/verbrauchssenkungBackground" />
+
+                <Button
+                    android:id="@+id/tuerRenovierungButton"
+                    android:layout_width="340dp"
+                    android:layout_height="85dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_input_field"
+                    android:backgroundTint="@color/white"
+                    android:paddingRight="80dp"
+                    android:paddingBottom="50dp"
+                    android:text="@string/tuer_renovierung_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/bevorstehendeRenovierungenTitle" />
+
+                <TextView
+                    android:id="@+id/tuerRenovierungButtonDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="22dp"
+                    android:elevation="6dp"
+                    android:text="@string/tuer_renovierung_button_description"
+                    android:textColor="@color/gray2"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/tuerRenovierungIconBackground"
+                    app:layout_constraintTop_toTopOf="@+id/tuerRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/tuerRenovierungIconBackground"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_eclipse"
+                    android:backgroundTint="@color/whiteBlue"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tuerRenovierungButton"
+                    app:layout_constraintStart_toStartOf="@+id/tuerRenovierungButton"
+                    app:layout_constraintTop_toTopOf="@+id/tuerRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/tuerRenovierungIcon"
+                    android:layout_width="42dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/il_door"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tuerRenovierungIconBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/tuerRenovierungIconBackground"
+                    app:layout_constraintStart_toStartOf="@+id/tuerRenovierungIconBackground"
+                    app:layout_constraintTop_toTopOf="@+id/tuerRenovierungIconBackground" />
+
+                <ProgressBar
+                    android:id="@+id/doorPriceProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    android:backgroundTint="@color/black"
+                    android:elevation="6dp"
+                    android:progressDrawable="@drawable/bg_progressbar_reversed"
+                    app:layout_constraintStart_toEndOf="@+id/tuerRenovierungIconBackground"
+                    app:layout_constraintTop_toBottomOf="@+id/tuerRenovierungButtonDescription"
+                    tools:progress="36" />
+
+                <ProgressBar
+                    android:id="@+id/doorEfficiencyProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="-2dp"
+                    android:backgroundTint="@color/black"
+                    android:elevation="6dp"
+                    android:progressDrawable="@drawable/bg_progressbar"
+                    app:layout_constraintBottom_toBottomOf="@+id/tuerRenovierungButton"
+                    app:layout_constraintStart_toEndOf="@+id/tuerRenovierungIconBackground"
+                    app:layout_constraintTop_toBottomOf="@+id/doorPriceProgressBar"
+                    tools:progress="55" />
+
+                <ImageView
+                    android:id="@+id/tuerRenovierungNextIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/il_next"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tuerRenovierungButton"
+                    app:layout_constraintEnd_toEndOf="@+id/tuerRenovierungButton"
+                    app:layout_constraintTop_toTopOf="@+id/tuerRenovierungButton" />
+
+                <Button
+                    android:id="@+id/fensterRenovierungButton"
+                    android:layout_width="340dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_input_field"
+                    android:backgroundTint="@color/white"
+                    android:paddingRight="0dp"
+                    android:paddingBottom="40dp"
+                    android:text="@string/fenster_renovierung_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tuerRenovierungButton" />
+
+                <TextView
+                    android:id="@+id/fensterRenovierungButtonDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="22dp"
+                    android:elevation="6dp"
+                    android:text="@string/fenster_renovierung_button_description"
+                    android:textColor="@color/gray2"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/fensterRenovierungIconBackground"
+                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/fensterRenovierungIconBackground"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_eclipse"
+                    android:backgroundTint="@color/whitePurple"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungButton"
+                    app:layout_constraintStart_toStartOf="@+id/fensterRenovierungButton"
+                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/fensterRenovierungIcon"
+                    android:layout_width="42dp"
+                    android:layout_height="38dp"
+                    android:background="@drawable/il_window"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungIconBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/fensterRenovierungIconBackground"
+                    app:layout_constraintStart_toStartOf="@+id/fensterRenovierungIconBackground"
+                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungIconBackground" />
+
+                <ProgressBar
+                    android:id="@+id/windowPriceProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    android:backgroundTint="@color/black"
+                    android:elevation="6dp"
+                    android:progressDrawable="@drawable/bg_progressbar_reversed"
+                    app:layout_constraintStart_toEndOf="@+id/fensterRenovierungIconBackground"
+                    app:layout_constraintTop_toBottomOf="@+id/fensterRenovierungButtonDescription"
+                    tools:progress="27" />
+
+                <ProgressBar
+                    android:id="@+id/windowEfficiencyProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="-2dp"
+                    android:backgroundTint="@color/black"
+                    android:elevation="6dp"
+                    android:progressDrawable="@drawable/bg_progressbar"
+                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungButton"
+                    app:layout_constraintStart_toEndOf="@+id/fensterRenovierungIconBackground"
+                    app:layout_constraintTop_toBottomOf="@+id/windowPriceProgressBar"
+                    tools:progress="75" />
+
+                <ImageView
+                    android:id="@+id/fensterRenovierungNextIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/il_next"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungButton"
+                    app:layout_constraintEnd_toEndOf="@+id/fensterRenovierungButton"
+                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
+
+                <Button
+                    android:id="@+id/badsanierungRenovierungButton"
+                    android:layout_width="340dp"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_input_field"
+                    android:backgroundTint="@color/white"
+                    android:paddingRight="73dp"
+                    android:paddingBottom="40dp"
+                    android:text="@string/badsanierung_renovierung_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="14dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/fensterRenovierungButton" />
+
+                <TextView
+                    android:id="@+id/badsanierungRenovierungButtonDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="22dp"
+                    android:elevation="6dp"
+                    android:text="@string/badsanierung_renovierung_button_description"
+                    android:textColor="@color/gray2"
+                    android:textSize="12dp"
+                    app:layout_constraintStart_toEndOf="@+id/badsanierungRenovierungIconBackground"
+                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/badsanierungRenovierungIconBackground"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/bg_eclipse"
+                    android:backgroundTint="@color/whiteBlue"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungButton"
+                    app:layout_constraintStart_toStartOf="@+id/badsanierungRenovierungButton"
+                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/badsanierungRenovierungIcon"
+                    android:layout_width="36dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/ic_wc"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungIconBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/badsanierungRenovierungIconBackground"
+                    app:layout_constraintStart_toStartOf="@+id/badsanierungRenovierungIconBackground"
+                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungIconBackground" />
+
+                <ProgressBar
+                    android:id="@+id/wcRenovationPriceProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="6dp"
+                    android:backgroundTint="@color/black"
+                    android:elevation="6dp"
+                    android:progressDrawable="@drawable/bg_progressbar_reversed"
+                    app:layout_constraintStart_toEndOf="@+id/badsanierungRenovierungIconBackground"
+                    app:layout_constraintTop_toBottomOf="@+id/badsanierungRenovierungButtonDescription"
+                    tools:progress="60" />
+
+                <ProgressBar
+                    android:id="@+id/wcRenovationEfficiencyProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="12dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="-2dp"
+                    android:backgroundTint="@color/black"
+                    android:elevation="6dp"
+                    android:progressDrawable="@drawable/bg_progressbar"
+                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungButton"
+                    app:layout_constraintStart_toEndOf="@+id/badsanierungRenovierungIconBackground"
+                    app:layout_constraintTop_toBottomOf="@+id/wcRenovationPriceProgressBar"
+                    tools:progress="85" />
+
+                <ImageView
+                    android:id="@+id/badsanierungRenovierungNextIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/il_next"
+                    android:elevation="6dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungButton"
+                    app:layout_constraintEnd_toEndOf="@+id/badsanierungRenovierungButton"
+                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungButton" />
+
+                <ImageView
+                    android:id="@+id/emptySpace"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/badsanierungRenovierungButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+        <ImageView
+            android:id="@+id/navBarBackground"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@drawable/bg_navbar"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            android:id="@+id/navBarButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/bg_button"
+            android:rotation="230"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
+            app:layout_constraintEnd_toEndOf="@+id/navBarBackground"
+            app:layout_constraintStart_toStartOf="@+id/navBarBackground" />
+
+        <ImageView
+            android:id="@+id/navBarButtonIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ic_search"
+            android:elevation="10dp"
+            app:layout_constraintBottom_toBottomOf="@+id/navBarButton"
+            app:layout_constraintEnd_toEndOf="@+id/navBarButton"
+            app:layout_constraintStart_toStartOf="@+id/navBarButton"
+            app:layout_constraintTop_toTopOf="@+id/navBarButton" />
+
+        <Button
+            android:id="@+id/homeIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/ic_home"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
+            app:layout_constraintEnd_toStartOf="@+id/notificationIcon"
+            app:layout_constraintStart_toStartOf="@+id/navBarBackground"
+            app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
+
+        <Button
+            android:id="@+id/notificationIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="32dp"
+            android:background="@drawable/ic_notifications"
+            android:backgroundTint="@color/gray2"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
+            app:layout_constraintEnd_toStartOf="@+id/navBarButton"
+            app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
+
+        <Button
+            android:id="@+id/faqIcon"
+            android:layout_width="35dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/ic_faq"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
+            app:layout_constraintStart_toEndOf="@+id/navBarButton"
+            app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
+
+        <Button
+            android:id="@+id/userMenuIcon"
+            android:layout_width="25dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="24dp"
+            android:background="@drawable/ic_person"
+            android:backgroundTint="@color/gray2"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
+            app:layout_constraintEnd_toEndOf="@+id/navBarBackground"
+            app:layout_constraintStart_toEndOf="@+id/faqIcon"
+            app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

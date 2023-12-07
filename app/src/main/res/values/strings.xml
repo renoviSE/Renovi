@@ -32,6 +32,28 @@
     <string name="firstnameplaceholder_string">Vorname</string>
 	<string name="lastnameplaceholder_string">Nachname</string>
     <string name="birthdateplaceholder_string">Geburtstag</string>
-    <string name="buttontext_string">Registrieren</string>
+    <string name="signin_button_string">Registrieren</string>
     <!-- signin strings @bamboo-->
+
+    <!-- mainTest strings @bamboo-->
+    <string name="welcome_string">Willkommen zurück,</string>
+    <string name="user_name_string">Herr Mieter</string>
+    <string name="banner_title_string">Kaltmiete</string>
+    <string name="banner_description_string">Mieterhöhung um xx%</string>
+    <string name="miete_price_string">450,00€</string>
+    <string name="percentage">20%</string>
+    <string name="reperatur_title">Reperaturen</string>
+    <string name="reperatur_button_string">Add</string>
+    <string name="verbrauchssenkung_title">Verbrauchssenkung</string>
+    <string name="co2_title">CO2-Reduzierung:</string>
+    <string name="co2_percantage">90% ⬆</string>
+    <string name="co2_progressbar_title">Klimapositive Folgen</string>
+    <string name="bevorstehende_renovierungen_title">Bevorstehende Renovierungen</string>
+    <string name="tuer_renovierung_button_title">Türsicherheit</string>
+    <string name="tuer_renovierung_button_description">Kosten: 50€</string>
+    <string name="fenster_renovierung_button_title">Fenster Wärmedämmung</string>
+    <string name="fenster_renovierung_button_description">Kosten: 30€</string>
+    <string name="badsanierung_renovierung_button_title">Badsanierung</string>
+    <string name="badsanierung_renovierung_button_description">Kosten: 100€</string>
+    <!-- mainTest strings @bamboo-->
 </resources>

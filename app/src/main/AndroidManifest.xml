@@ -14,10 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Renovi"
         tools:targetApi="31" >
+        <!-- main(test) @bamboo -->
         <activity
             android:name=".view.MainActivityTest"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_main_test"/>
+        <!-- main(test) @bamboo -->
         <activity
             android:name=".view.OverviewActivity"
             android:exported="false"
@@ -28,14 +30,14 @@
         <activity
             android:name=".view.WelcomeScreen"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_welcome" />
         <!-- welcomescreen @bamboo -->
 
         <!-- signin @bamboo -->
         <activity
             android:name=".view.SignInActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_signin" />
         <!-- signin @bamboo -->
 

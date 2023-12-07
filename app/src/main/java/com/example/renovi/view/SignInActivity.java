@@ -23,7 +23,7 @@ public class SignInActivity extends Activity {
 	private EditText firstNameInput;
 	private EditText lastNameInput;
 	private EditText birthdateInput;
-	private Button startButton;
+	private Button signinButton;
 
 
 	@Override
@@ -40,7 +40,7 @@ public class SignInActivity extends Activity {
 		firstNameInput = (EditText) findViewById(R.id.firstNameInput);
 		lastNameInput = (EditText) findViewById(R.id.lastNameInput);
 		birthdateInput = (EditText) findViewById(R.id.birthdateInput);
-		startButton = (Button) findViewById(R.id.startButton);
+		signinButton = (Button) findViewById(R.id.signinButton);
 	}
 }
 	
