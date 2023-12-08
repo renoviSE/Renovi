@@ -2,6 +2,7 @@ package com.example.renovi.view;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 
 
@@ -26,8 +27,18 @@ public class WelcomeScreen extends Activity {
 
 		logotext = (TextView) findViewById(R.id.logotext);
 		slogan = (TextView) findViewById(R.id.slogan);
-		startButton = (Button) findViewById(R.id.startButton);
 
+		initializeStartButton();
+	}
+
+	private void initializeStartButton() {
+		Button startButton = findViewById(R.id.startButton);
+		startButton.setOnClickListener(v -> switchToSignIn());
+	}
+
+	private void switchToSignIn() {
+		Intent switchActivityIntent = new Intent(this, SignInActivity.class);
+		startActivity(switchActivityIntent);
 	}
 }
 	
