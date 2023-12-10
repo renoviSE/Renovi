@@ -26,7 +26,7 @@
     <!-- welcomescreen strings @bamboo-->
 
     <!-- signin strings @bamboo-->
-    <string name="title_string">Erstelle ein Account</string>
+    <string name="signin_title">Erstelle ein Account</string>
     <string name="descriptiontext_string">Den Verifizierungscode erhalten Sie vom Vermieter</string>
     <string name="verifyidplaceholder_string">Verifizierungscode</string>
     <string name="firstnameplaceholder_string">Vorname</string>
@@ -56,4 +56,10 @@
     <string name="badsanierung_renovierung_button_title">Badsanierung</string>
     <string name="badsanierung_renovierung_button_description">Kosten: 100€</string>
     <!-- mainTest strings @bamboo-->
+
+    <!-- inbox strings @bamboo-->
+    <string name="inbox_title">Postfach</string>
+    <string name="back_button_string">&lt;</string>
+    <string name="more_button_string">&#8226;&#8226;</string>
+    <!-- inbox strings @bamboo-->
 </resources>
