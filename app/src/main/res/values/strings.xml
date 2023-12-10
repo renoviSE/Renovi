@@ -58,6 +58,18 @@
     <!-- mainTest strings @bamboo-->
 
     <!-- inbox strings @bamboo-->
+    <string name="details_title">Haustür</string>
+    <string name="details_price_string">Kosten:</string>
+    <string name="details_price_double">50€</string>
+    <string name="pros_title">Vorteile</string>
+    <string name="description_title">Begründung</string>
+    <string name="description_string">§ 555b Nr. 1:\n\"durch die in Bezug auf die Mietsache Endenergie nachhaltig eingespart wird (energetische Modernisierung)\"&#160;<a href="https://www.gesetze-im-internet.de/bgb/__555b.html">Read More...</a></string>
+    <string name="redirect_title">Weitere Renovierungen</string>
+    <string name="object_count_string">6 Objekte</string>
+    <string name="details_button_string">Reperatur vermerken</string>
+    <!-- inbox strings @bamboo-->
+
+    <!-- inbox strings @bamboo-->
     <string name="inbox_title">Postfach</string>
     <string name="back_button_string">&lt;</string>
     <string name="more_button_string">&#8226;&#8226;</string>

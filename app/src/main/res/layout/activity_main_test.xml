@@ -428,7 +428,7 @@
                     app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
 
                 <ImageView
-                    android:id="@+id/fensterRenovierungIcon"
+                    android:id="@+id/windowIcon"
                     android:layout_width="42dp"
                     android:layout_height="38dp"
                     android:background="@drawable/il_window"

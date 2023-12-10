@@ -49,15 +49,14 @@
 		android:id="@+id/startButton"
 		android:layout_width="315dp"
 		android:layout_height="65dp"
+		android:layout_marginBottom="32dp"
+		android:background="@drawable/bg_button"
 		android:text="@string/start_button_string"
 		android:textColor="@color/white"
-		android:background="@drawable/bg_button"
 		android:textSize="16sp"
 		android:textStyle="bold"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/slogan"
-		app:layout_constraintVertical_bias="0.89" />
+		app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
