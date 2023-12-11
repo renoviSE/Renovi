@@ -1,7 +1,10 @@
 package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -33,6 +36,8 @@ public class MainActivityTest extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
+        initializeOverviewButton();
+        initializeInboxButton();
 
         rentProgressBar = (ProgressBar) findViewById(R.id.rentCostProgressBar);
         rentCostPercentage = (TextView) findViewById(R.id.rentCostPercentage);
@@ -80,5 +85,26 @@ public class MainActivityTest extends AppCompatActivity {
         wcRenovationCurrentEfficiency = 85;
         wcRenovationEfficiencyProgressBar.setProgress(wcRenovationCurrentEfficiency);
         wcRenovationEfficiencyProgressBar.setMax(100);
+    }
+    private void initializeOverviewButton() {
+        Button startButton = findViewById(R.id.mailButton);
+        startButton.setOnClickListener(view -> switchToDetails());
+    }
+
+    private void switchToDetails() {
+        Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
+        startActivity(switchActivityIntent);
+    }
+
+    //Redudanz kann man bestimmt lösen @TODO
+
+    private void initializeInboxButton() {
+        Button startButton = findViewById(R.id.notificationButton);
+        startButton.setOnClickListener(view -> switchToInbox());
+    }
+
+    private void switchToInbox() {
+        Intent switchActivityIntent = new Intent(this, InboxActivity.class);
+        startActivity(switchActivityIntent);
     }
 }
