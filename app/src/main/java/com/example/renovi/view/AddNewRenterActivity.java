@@ -14,11 +14,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class AddNewRenterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_add_new_renter);
         FirebaseApp.initializeApp(this);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -36,18 +36,18 @@ public class MainActivity extends AppCompatActivity {
         EditText nachnameEditText = findViewById(R.id.nachnameField);
         EditText mieterIdEditText = findViewById(R.id.mieterIdField);
 
-        // Extrahieren Sie die Textwerte aus den Eingabefeldern
+        // Extrahiert die Textwerte aus den Eingabefeldern
         String vorname = vornameEditText.getText().toString();
         String nachname = nachnameEditText.getText().toString();
         String mieter_id = mieterIdEditText.getText().toString();
 
-        // Erstellen Sie ein neues Datenobjekt
+        // Erstellt ein neues Datenobjekt
         Map<String, Object> benutzerDaten = new HashMap<>();
         benutzerDaten.put("Vorname", vorname);
         benutzerDaten.put("Nachname", nachname);
         benutzerDaten.put("Mieter ID", mieter_id);
 
-        // Fügen Sie das neue Dokument zur Benutzer-Sammlung hinzu
+        // Fügt das neue Dokument zur Benutzer-Sammlung hinzu
         db.collection("Mieter")
                 .add(benutzerDaten)
                 .addOnSuccessListener(documentReference -> {

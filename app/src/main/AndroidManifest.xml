@@ -45,7 +45,7 @@
             android:exported="true"
             android:label="@string/title_activity_signin" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.AddNewRenterActivity"
             android:exported="true">
         </activity>
     </application>
