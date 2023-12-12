@@ -13,7 +13,7 @@
         android:ems="10"
         android:text="@string/addRenterButton"
         android:textAllCaps="false"
-        android:textColor="#448AFF"
+        android:textColor="@color/white1"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
