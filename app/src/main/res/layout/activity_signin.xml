@@ -104,24 +104,6 @@
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@+id/firstNameInput" />
 
-	<EditText
-		android:id="@+id/birthdateInput"
-		android:layout_width="315dp"
-		android:layout_height="48dp"
-		android:layout_marginTop="15dp"
-		android:background="@drawable/bg_gray_round_corner"
-		android:drawableStart="@drawable/ic_calendar"
-		android:drawablePadding="12dp"
-		android:hint="@string/birthdateplaceholder_string"
-		android:inputType="textVisiblePassword"
-		android:paddingLeft="10dp"
-		android:textCursorDrawable="@drawable/bg_cursor"
-		android:textColorHint="@color/gray2"
-		android:textSize="16dp"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toBottomOf="@+id/lastNameInput" />
-
 	<Button
 		android:id="@+id/signinButton"
 		android:layout_width="315dp"
