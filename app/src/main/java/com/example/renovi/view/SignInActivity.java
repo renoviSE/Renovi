@@ -29,7 +29,6 @@ public class SignInActivity extends Activity {
 		verifyIdInput = findViewById(R.id.verifyIdInput);
 		firstNameInput = findViewById(R.id.firstNameInput);
 		lastNameInput = findViewById(R.id.lastNameInput);
-		birthdateInput = findViewById(R.id.birthdateInput);
 
 		initializeSignInButton();
 	}
