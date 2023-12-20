@@ -53,7 +53,7 @@
             app:layout_constraintHorizontal_bias="0.25"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
+<!--
         <Button
             android:id="@+id/moreButton"
             style="?android:attr/borderlessButtonStyle"
@@ -71,6 +71,7 @@
             app:layout_constraintHorizontal_bias="0.75"
             app:layout_constraintStart_toEndOf="@+id/inboxTitle"
             app:layout_constraintTop_toTopOf="parent" />
+-->
 
         <ScrollView
             android:id="@+id/scrollView2"

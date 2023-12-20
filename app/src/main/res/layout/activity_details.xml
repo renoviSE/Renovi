@@ -4,7 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="@color/midBlue">
+android:background="@color/veryLightBlue">
 
 <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -19,7 +19,7 @@ android:background="@color/midBlue">
         android:layout_marginTop="41dp"
         android:text="@string/details_title"
         android:textAlignment="center"
-        android:textColor="@color/midBlue"
+        android:textColor="@color/veryLightBlue"
         android:visibility="invisible"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -31,8 +31,8 @@ android:background="@color/midBlue">
     <Button
         android:id="@+id/InboxToMainButton"
         style="?android:attr/borderlessButtonStyle"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="59dp"
+        android:layout_height="49dp"
         android:layout_marginTop="34dp"
         android:background="@drawable/bg_gray_round_corner"
         android:backgroundTint="@color/gray4"
@@ -46,6 +46,7 @@ android:background="@color/midBlue">
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<!--
     <Button
         android:id="@+id/moreButton"
         style="?android:attr/borderlessButtonStyle"
@@ -63,6 +64,7 @@ android:background="@color/midBlue">
         app:layout_constraintHorizontal_bias="0.75"
         app:layout_constraintStart_toEndOf="@+id/detailsTitleDamitAbstandGleich"
         app:layout_constraintTop_toTopOf="parent" />
+-->
 
     <ImageView
         android:id="@+id/objectIllustration"
