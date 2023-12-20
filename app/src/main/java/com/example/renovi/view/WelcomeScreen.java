@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.renovi.R;
 
@@ -29,7 +27,7 @@ public class WelcomeScreen extends Activity {
 	}
 
 	private void switchToSignIn() {
-		Intent switchActivityIntent = new Intent(this, SignInActivity.class);
+		Intent switchActivityIntent = new Intent(this, LogInActivity.class);
 		startActivity(switchActivityIntent);
 	}
 }

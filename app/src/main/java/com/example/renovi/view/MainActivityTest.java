@@ -4,14 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -20,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import android.net.Uri;
 public class MainActivityTest extends AppCompatActivity {
 
     private int rentCurrentProgress;
@@ -42,6 +47,8 @@ public class MainActivityTest extends AppCompatActivity {
     private ProgressBar wcRenovationEfficiencyProgressBar;
     final String TAG = "myTag";
 
+    ScrollView mainScrollView;
+    TextView upcomingRenovationsTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,9 @@ public class MainActivityTest extends AppCompatActivity {
         getRenovierungen(db);
         initializeOverviewButton();
         initializeInboxButton();
+        initializeProfileButton();
+        initializeMainButton();
+        initializeFaqButton();
 
         rentProgressBar = (ProgressBar) findViewById(R.id.rentCostProgressBar);
         rentCostPercentage = (TextView) findViewById(R.id.rentCostPercentage);
@@ -143,14 +153,66 @@ public class MainActivityTest extends AppCompatActivity {
     //Redudanz kann man bestimmt lösen @TODO
 
     private void initializeInboxButton() {
-        Button startButton = findViewById(R.id.notificationButton);
-        startButton.setOnClickListener(view -> switchToInbox());
+        Button notificationButton = findViewById(R.id.notificationButton);
+        notificationButton.setOnClickListener(view -> switchToInbox());
+        Button notificationButtonNavBar = findViewById(R.id.notificationButtonNavBar);
+        notificationButtonNavBar.setOnClickListener(view -> switchToInbox());
     }
-
     private void switchToInbox() {
         Intent switchActivityIntent = new Intent(this, InboxActivity.class);
         startActivity(switchActivityIntent);
     }
+
+    private void initializeProfileButton() {
+        Button profileButton = findViewById(R.id.profileButton);
+        profileButton.setOnClickListener(view -> switchToProfile());
+    }
+    private void switchToProfile() {
+        Intent switchActivityIntent = new Intent(this, ProfileActivity.class);
+        switchActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        startActivity(switchActivityIntent);
+        overridePendingTransition(0,0); //disables animation
+    }
+
+    private void initializeMainButton() { //main button scrolls down to the TextView "upcomingRenovationsTitle"
+        Button mainButton = findViewById(R.id.navBarButton);
+        mainScrollView = findViewById(R.id.scrollView2);
+        upcomingRenovationsTitle = findViewById(R.id.upcomingRenovationsTitle);
+        mainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                scrollToTextView();
+            }
+        });
+    }
+    private void scrollToTextView() {
+        mainScrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                mainScrollView.smoothScrollTo(0, upcomingRenovationsTitle.getTop()); // smoothScrollTo(horizontalScroll, verticalScroll)
+            }
+        });
+    }
+
+    private void initializeFaqButton() { //main button scrolls down to the TextView "upcomingRenovationsTitle"
+        Button faqButton = findViewById(R.id.faqButton);
+        faqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openWebPage("https://funktionales-kostensplitting.de");
+            }
+        });
+    }
+    private void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Keine Anwendung gefunden, um diese URL zu öffnen", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
@@ -189,8 +251,5 @@ public class MainActivityTest extends AppCompatActivity {
             // Füge den neuen Button zum Layout hinzu
             meinLayout.addView(renoButton);
         }
-
-
-}
-
+    }
 }

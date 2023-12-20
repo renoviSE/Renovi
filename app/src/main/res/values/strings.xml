@@ -28,11 +28,10 @@
     <!-- signin strings @bamboo-->
     <string name="signin_title">Erstelle ein Account</string>
     <string name="descriptiontext_string">Den Verifizierungscode erhalten Sie vom Vermieter</string>
-    <string name="verifyidplaceholder_string">Verifizierungscode</string>
-    <string name="firstnameplaceholder_string">Vorname</string>
-    <string name="lastnameplaceholder_string">Nachname</string>
-    <string name="birthdateplaceholder_string">Geburtstag</string>
-    <string name="signin_button_string">Registrieren</string>
+    <string name="verify_id_placeholder_string">Verifizierungscode</string>
+    <string name="first_name_placeholder_string">Vorname</string>
+    <string name="last_name_placeholder_string">Nachname</string>
+    <string name="login_button_string">Anmelden</string>
     <!-- signin strings @bamboo-->
 
     <!-- mainTest strings @bamboo-->
@@ -74,4 +73,10 @@
     <string name="back_button_string">&lt;</string>
     <string name="more_button_string">&#8226;&#8226;</string>
     <!-- inbox strings @bamboo-->
+
+    <!-- profile strings @bamboo-->
+    <string name="profile_title">Profil</string>
+    <string name="app_information_string">Renovi\n\v 1.2.18 - Build 1</string> <!-- version.sprint.deployment-Nr.-->
+    <string name="role_string">Mieter</string>
+    <!-- profile strings @bamboo-->
 </resources>

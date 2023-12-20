@@ -6,15 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.ImageView;
 
 import com.example.renovi.R;
 
-public class SignInActivity extends Activity {
+public class LogInActivity extends Activity {
 	private EditText verifyIdInput;
 	private EditText firstNameInput;
 	private EditText lastNameInput;
@@ -24,7 +21,7 @@ public class SignInActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_signin);
+		setContentView(R.layout.activity_login);
 
 		verifyIdInput = findViewById(R.id.verifyIdInput);
 		firstNameInput = findViewById(R.id.firstNameInput);
