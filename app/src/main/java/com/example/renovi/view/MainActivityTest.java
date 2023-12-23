@@ -194,7 +194,7 @@ public class MainActivityTest extends AppCompatActivity {
         });
     }
 
-    private void initializeFaqButton() { //main button scrolls down to the TextView "upcomingRenovationsTitle"
+    private void initializeFaqButton() {
         Button faqButton = findViewById(R.id.faqButton);
         faqButton.setOnClickListener(new View.OnClickListener() {
             @Override

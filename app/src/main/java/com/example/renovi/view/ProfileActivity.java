@@ -2,10 +2,12 @@ package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         initializeHomeButton();
         initializeCopyButton();
+        initializeInboxButton();
+        initializeFaqButton();
         setUserProfile();
 
     }
@@ -65,6 +69,34 @@ public class ProfileActivity extends AppCompatActivity {
         switchActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         startActivity(switchActivityIntent);
         overridePendingTransition(0,0); //disables animation
+    }
+
+    private void initializeInboxButton() {
+        Button notificationButtonNavBar = findViewById(R.id.notificationButtonNavBar);
+        notificationButtonNavBar.setOnClickListener(view -> switchToInbox());
+    }
+    private void switchToInbox() {
+        Intent switchActivityIntent = new Intent(this, InboxActivity.class);
+        startActivity(switchActivityIntent);
+    }
+
+    private void initializeFaqButton() {
+        Button faqButton = findViewById(R.id.faqButton);
+        faqButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openWebPage("https://funktionales-kostensplitting.de");
+            }
+        });
+    }
+    private void openWebPage(String url) {
+        Uri webpage = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, "Keine Anwendung gefunden, um diese URL zu öffnen", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setUserProfile() {
