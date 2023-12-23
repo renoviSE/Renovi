@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white1">
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
@@ -15,7 +16,6 @@
             android:id="@+id/titleBackground"
             android:layout_width="match_parent"
             android:layout_height="90dp"
-            android:elevation="1dp"
             android:background="@color/white1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,6 @@
             android:textColor="@color/black1"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:elevation="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -44,7 +43,6 @@
             android:layout_marginTop="34dp"
             android:background="@drawable/bg_gray_round_corner"
             android:backgroundTint="@color/gray4"
-            android:elevation="1dp"
             android:text="@string/back_button_string"
             android:textColor="@color/black1"
             android:textSize="20sp"
@@ -76,27 +74,16 @@
         <ScrollView
             android:id="@+id/scrollView2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             android:scrollbars="none"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="16dp">
+            app:layout_constraintTop_toBottomOf="@+id/titleBackground">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-
+                android:id="@+id/constraintLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".view.InboxActivity">
-
-                <ImageView
-                    android:id="@+id/titleSplitter"
-                    android:layout_width="340dp"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="100dp"
-                    android:background="@color/white1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/mailButton"
@@ -108,7 +95,7 @@
                     android:backgroundTint="@color/white1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/titleSplitter" />
+                    app:layout_constraintTop_toTopOf="@+id/constraintLayout2" />
 
                 <TextView
                     android:id="@+id/mailTitle"
@@ -543,16 +530,6 @@
                     app:layout_constraintBottom_toBottomOf="@+id/mailButton5"
                     app:layout_constraintEnd_toEndOf="@+id/mailButton5"
                     app:layout_constraintTop_toTopOf="@+id/mailButton5" />
-
-                <ImageView
-                    android:id="@+id/test_damit_man_scrollen_kann"
-                    android:layout_width="match_parent"
-                    android:layout_height="170dp"
-                    android:layout_marginTop="16dp"
-                    android:background="@color/white1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mailButton5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
