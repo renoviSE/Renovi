@@ -2,6 +2,8 @@ package com.example.renovi.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
 
 import android.content.ActivityNotFoundException;
@@ -113,7 +115,7 @@ public class MainActivityTest extends AppCompatActivity {
     private void getRenovierungen(FirebaseFirestore db) {
         Log.i(TAG, "We´re trying");
         db.collection("Renovierung")
-                // document = eingeloggter User! 
+                // document = eingeloggter User!
                 .whereEqualTo("mieter", db.collection("mieter").document("W6vJ0B7y1ahLHynv02AD"))
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -124,7 +126,7 @@ public class MainActivityTest extends AppCompatActivity {
                             // Hier kannst du die Daten verarbeiten, z.B., um Buttons zu erstellen
                             String mieterName = "NEUER BUTTON";
                             // Erstelle einen Button für jeden Mieter
-                            //erstelleButtonFürMieter(mieterName);
+                            erstelleButtonFürMieter(mieterName);
                             Log.i(TAG, "Good Job");
                         }
                     }
@@ -220,36 +222,33 @@ public class MainActivityTest extends AppCompatActivity {
     }
 
     private void erstelleButtonFürMieter(String mieterName) {
-        RelativeLayout meinLayout = findViewById(R.id.layout_activity_main);
+        ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
 
         if (mieterName != null) {
             Button renoButton = new Button(this);
             renoButton.setText(mieterName);
-            renoButton.setId(R.id.mailButton); // Setze die ID des Buttons
-            renoButton.setWidth((340)); // Konvertiere dp in Pixel
-            renoButton.setHeight(dpToPx(85)); // Konvertiere dp in Pixel
-
-            renoButton.setPadding(0, 0, 0, 0); // Entferne Padding
+            renoButton.setId(View.generateViewId());
+            renoButton.setWidth(340);
+            renoButton.setHeight(dpToPx(85));
+            renoButton.setPadding(0, 0, 0, 0);
             renoButton.setTextSize(14);
             renoButton.setTypeface(null, Typeface.BOLD);
             renoButton.setTextColor(ContextCompat.getColor(this, R.color.gray4));
             renoButton.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_lightblue));
 
-            // Definiere Layoutparameter für den Button
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-                    RelativeLayout.LayoutParams.WRAP_CONTENT,
-                    RelativeLayout.LayoutParams.WRAP_CONTENT
-            );
-            layoutParams.addRule(RelativeLayout.ALIGN_END, R.id.reparaturenBackground);
-            layoutParams.addRule(RelativeLayout.ALIGN_TOP, R.id.reparaturenBackground);
-            layoutParams.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.reparaturenBackground);
-            layoutParams.setMarginEnd(dpToPx(24)); // Konvertiere dp in Pixel
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
+            constraintSet.connect(renoButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
+            constraintSet.connect(renoButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID ,constraintSet.START);
 
-            // Setze die Layoutparameter für den Button
-            renoButton.setLayoutParams(layoutParams);
+            // Füge Constraints für die ScrollView hinzu (optional, wenn nötig)
+            //constraintSet.connect(R.id.upcomingRenovationsTitle, ConstraintSet.TOP, R.id.scrollView2, ConstraintSet.TOP);
+            //constraintSet.connect(R.id.reparaturenBackground, ConstraintSet.BOTTOM, R.id.scrollView2, ConstraintSet.BOTTOM);
 
-            // Füge den neuen Button zum Layout hinzu
-            meinLayout.addView(renoButton);
+            constraintSet.applyTo(constraintLayout);
+
+            //@TODO ICH HABE MEINEN BUTTON VERLOREN :(
         }
     }
 }

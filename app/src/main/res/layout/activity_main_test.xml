@@ -8,6 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
+        android:id="@+id/inner_constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".view.MainActivityTest">
@@ -598,8 +599,8 @@
             android:layout_height="60dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/bg_button"
-            android:rotation="230"
             android:elevation="10dp"
+            android:rotation="230"
             app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
             app:layout_constraintEnd_toEndOf="@+id/navBarBackground"
             app:layout_constraintStart_toStartOf="@+id/navBarBackground" />
