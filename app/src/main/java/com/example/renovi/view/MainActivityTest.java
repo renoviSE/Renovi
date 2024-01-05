@@ -72,6 +72,18 @@ public class MainActivityTest extends AppCompatActivity {
         initializeFaqButton();
     }
 
+    private void declareViews() {
+        rentProgressBar = (ProgressBar) findViewById(R.id.rentCostProgressBar);
+        rentCostPercentage = (TextView) findViewById(R.id.rentCostPercentage);
+        co2ProgressBar = (ProgressBar) findViewById(R.id.co2ProgressBar);
+        doorPriceProgressBar = (ProgressBar) findViewById(R.id.doorPriceProgressBar);
+        doorEfficiencyProgressBar = (ProgressBar) findViewById(R.id.doorEfficiencyProgressBar);
+        windowPriceProgressBar = (ProgressBar) findViewById(R.id.windowPriceProgressBar);
+        windowEfficiencyProgressBar = (ProgressBar) findViewById(R.id.windowEfficiencyProgressBar);
+        wcRenovationPriceProgressBar = (ProgressBar) findViewById(R.id.wcRenovationPriceProgressBar);
+        wcRenovationEfficiencyProgressBar = (ProgressBar) findViewById(R.id.wcRenovationEfficiencyProgressBar);
+    }
+
     private void initializeViews() {
         rentCurrentProgress = 20;
         rentCurrentCostPercentage = String.format("%d%%", rentCurrentProgress);
@@ -108,18 +120,6 @@ public class MainActivityTest extends AppCompatActivity {
         wcRenovationCurrentEfficiency = 85;
         wcRenovationEfficiencyProgressBar.setProgress(wcRenovationCurrentEfficiency);
         wcRenovationEfficiencyProgressBar.setMax(100);
-    }
-
-    private void declareViews() {
-        rentProgressBar = (ProgressBar) findViewById(R.id.rentCostProgressBar);
-        rentCostPercentage = (TextView) findViewById(R.id.rentCostPercentage);
-        co2ProgressBar = (ProgressBar) findViewById(R.id.co2ProgressBar);
-        doorPriceProgressBar = (ProgressBar) findViewById(R.id.doorPriceProgressBar);
-        doorEfficiencyProgressBar = (ProgressBar) findViewById(R.id.doorEfficiencyProgressBar);
-        windowPriceProgressBar = (ProgressBar) findViewById(R.id.windowPriceProgressBar);
-        windowEfficiencyProgressBar = (ProgressBar) findViewById(R.id.windowEfficiencyProgressBar);
-        wcRenovationPriceProgressBar = (ProgressBar) findViewById(R.id.wcRenovationPriceProgressBar);
-        wcRenovationEfficiencyProgressBar = (ProgressBar) findViewById(R.id.wcRenovationEfficiencyProgressBar);
     }
 
     private void getRenovierungen(FirebaseFirestore db) {

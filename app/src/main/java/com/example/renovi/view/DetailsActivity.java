@@ -21,6 +21,7 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         initializeBackToMainButton();
         initializeReadMoreLink();
+        
     }
     private void initializeBackToMainButton() {
         Button startButton = findViewById(R.id.InboxToMainButton);
