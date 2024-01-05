@@ -31,7 +31,7 @@ public class DetailsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String geplanteRenovierung = intent.getStringExtra(MainActivityTest.geplanteRenovierung);
 
-        getRenovierungsDaten(db);
+        //getRenovierungsDaten(db);
 
 
 
