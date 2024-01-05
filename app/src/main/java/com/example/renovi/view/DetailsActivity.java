@@ -6,12 +6,14 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -21,8 +23,25 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
         initializeBackToMainButton();
         initializeReadMoreLink();
-        
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        //@Todo bekommt naoch kein Intent. intent muss von der MainActivity übergeben werden als String
+        //@Todo ...damit man hier in der detailsactivit, nach dem string in der datenbank suchen und die daten anzeigen kann
+        Intent intent = getIntent();
+        String geplanteRenovierung = intent.getStringExtra(MainActivityTest.geplanteRenovierung);
+
+        getRenovierungsDaten(db);
+
+
+
+
     }
+
+    //@Todo datenbank muss geklärt werden
+    //private void getRenovierungsDaten(FirebaseFirestore db){
+    //    db.collection("Renovierung").whereEqualTo("object")
+    //}
     private void initializeBackToMainButton() {
         Button startButton = findViewById(R.id.InboxToMainButton);
         startButton.setOnClickListener(view -> switchToMain());

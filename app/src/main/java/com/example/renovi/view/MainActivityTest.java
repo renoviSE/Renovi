@@ -49,6 +49,8 @@ public class MainActivityTest extends AppCompatActivity {
     private ProgressBar wcRenovationEfficiencyProgressBar;
     final String TAG = "myTag";
 
+    public static final String geplanteRenovierung ="com.exemple.renovi";
+
     ScrollView mainScrollView;
     TextView upcomingRenovationsTitle;
 
@@ -158,7 +160,7 @@ public class MainActivityTest extends AppCompatActivity {
 
     private void switchToDetails(int renoID) {
         Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
-        switchActivityIntent.putExtra("renoID",renoID);
+        switchActivityIntent.putExtra(geplanteRenovierung,renoID);
         startActivity(switchActivityIntent);
     }
 
