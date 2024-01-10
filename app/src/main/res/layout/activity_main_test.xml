@@ -8,7 +8,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
 
-        android:id="@+id/inner_constraint"
+        android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".view.MainActivityTest">
@@ -24,6 +24,7 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
 
+                android:id="@+id/inner_constraint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".view.MainActivityTest">
@@ -69,6 +70,7 @@
                     android:layout_width="340dp"
                     android:layout_height="180dp"
                     android:background="@drawable/il_banner"
+                    android:padding="10dp"
                     app:layout_constraintTop_toBottomOf="@+id/verbrauchssenkungBackground"
                     tools:layout_editor_absoluteX="36dp" />
 
@@ -158,42 +160,6 @@
                     app:layout_constraintTop_toTopOf="@+id/eclipseBackground"
                     app:layout_constraintVertical_bias="0.1" />
 
-                <ImageView
-                    android:id="@+id/reparaturenBackground"
-                    android:layout_width="340dp"
-                    android:layout_height="63dp"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/bg_verylightblue"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/badsanierungRenovierungButton" />
-
-                <TextView
-                    android:id="@+id/reparaturenTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:text="@string/reperatur_title"
-                    android:textColor="@color/black1"
-                    android:textSize="16dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/reparaturenBackground"
-                    app:layout_constraintStart_toStartOf="@+id/reparaturenBackground"
-                    app:layout_constraintTop_toTopOf="@+id/reparaturenBackground" />
-
-                <Button
-                    android:id="@+id/reparaturenButton"
-                    android:layout_width="68dp"
-                    android:layout_height="34dp"
-                    android:layout_marginEnd="24dp"
-                    android:background="@drawable/bg_lightblue"
-                    android:text="@string/reperatur_button_string"
-                    android:textAllCaps="false"
-                    android:textColor="@color/gray4"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/reparaturenBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/reparaturenBackground"
-                    app:layout_constraintTop_toTopOf="@+id/reparaturenBackground" />
 
                 <TextView
                     android:id="@+id/verbrauchssenkungTitle"
@@ -206,7 +172,7 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/reparaturenBackground" />
+                    app:layout_constraintTop_toBottomOf="@+id/upcomingRenovationsTitle" />
 
                 <ImageView
                     android:id="@+id/verbrauchssenkungBackground"
@@ -387,199 +353,6 @@
                     app:layout_constraintEnd_toEndOf="@+id/mailButton"
                     app:layout_constraintTop_toTopOf="@+id/mailButton" />
 
-                <Button
-                    android:id="@+id/fensterRenovierungButton"
-                    android:layout_width="340dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_gray_round_corner"
-                    android:backgroundTint="@color/white"
-                    android:paddingRight="0dp"
-                    android:paddingBottom="40dp"
-                    android:text="@string/fenster_renovierung_button_title"
-                    android:textAllCaps="false"
-                    android:textColor="@color/gray1"
-                    android:textSize="14dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mailButton" />
-
-                <TextView
-                    android:id="@+id/fensterRenovierungButtonDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="22dp"
-                    android:elevation="6dp"
-                    android:text="@string/fenster_renovierung_button_description"
-                    android:textColor="@color/gray2"
-                    android:textSize="12dp"
-                    app:layout_constraintStart_toEndOf="@+id/fensterRenovierungIconBackground"
-                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
-
-                <ImageView
-                    android:id="@+id/fensterRenovierungIconBackground"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/bg_eclipse"
-                    android:backgroundTint="@color/whitePurple"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungButton"
-                    app:layout_constraintStart_toStartOf="@+id/fensterRenovierungButton"
-                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
-
-                <ImageView
-                    android:id="@+id/windowIcon"
-                    android:layout_width="42dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/il_window"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungIconBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/fensterRenovierungIconBackground"
-                    app:layout_constraintStart_toStartOf="@+id/fensterRenovierungIconBackground"
-                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungIconBackground" />
-
-                <ProgressBar
-                    android:id="@+id/windowPriceProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="190dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="6dp"
-                    android:backgroundTint="@color/black"
-                    android:elevation="6dp"
-                    android:progressDrawable="@drawable/bg_progressbar_reversed"
-                    app:layout_constraintStart_toEndOf="@+id/fensterRenovierungIconBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/fensterRenovierungButtonDescription"
-                    tools:progress="27" />
-
-                <ProgressBar
-                    android:id="@+id/windowEfficiencyProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="190dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="-2dp"
-                    android:backgroundTint="@color/black"
-                    android:elevation="6dp"
-                    android:progressDrawable="@drawable/bg_progressbar"
-                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungButton"
-                    app:layout_constraintStart_toEndOf="@+id/fensterRenovierungIconBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/windowPriceProgressBar"
-                    tools:progress="75" />
-
-                <ImageView
-                    android:id="@+id/fensterRenovierungNextIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/il_next"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/fensterRenovierungButton"
-                    app:layout_constraintEnd_toEndOf="@+id/fensterRenovierungButton"
-                    app:layout_constraintTop_toTopOf="@+id/fensterRenovierungButton" />
-
-                <Button
-                    android:id="@+id/badsanierungRenovierungButton"
-                    android:layout_width="340dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_gray_round_corner"
-                    android:backgroundTint="@color/white"
-                    android:paddingRight="73dp"
-                    android:paddingBottom="40dp"
-                    android:text="@string/badsanierung_renovierung_button_title"
-                    android:textAllCaps="false"
-                    android:textColor="@color/gray1"
-                    android:textSize="14dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/fensterRenovierungButton" />
-
-                <TextView
-                    android:id="@+id/badsanierungRenovierungButtonDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="22dp"
-                    android:elevation="6dp"
-                    android:text="@string/badsanierung_renovierung_button_description"
-                    android:textColor="@color/gray2"
-                    android:textSize="12dp"
-                    app:layout_constraintStart_toEndOf="@+id/badsanierungRenovierungIconBackground"
-                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungButton" />
-
-                <ImageView
-                    android:id="@+id/badsanierungRenovierungIconBackground"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/bg_eclipse"
-                    android:backgroundTint="@color/whiteBlue"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungButton"
-                    app:layout_constraintStart_toStartOf="@+id/badsanierungRenovierungButton"
-                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungButton" />
-
-                <ImageView
-                    android:id="@+id/badsanierungRenovierungIcon"
-                    android:layout_width="36dp"
-                    android:layout_height="44dp"
-                    android:background="@drawable/ic_wc"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungIconBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/badsanierungRenovierungIconBackground"
-                    app:layout_constraintStart_toStartOf="@+id/badsanierungRenovierungIconBackground"
-                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungIconBackground" />
-
-                <ProgressBar
-                    android:id="@+id/wcRenovationPriceProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="190dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="6dp"
-                    android:backgroundTint="@color/black"
-                    android:elevation="6dp"
-                    android:progressDrawable="@drawable/bg_progressbar_reversed"
-                    app:layout_constraintStart_toEndOf="@+id/badsanierungRenovierungIconBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/badsanierungRenovierungButtonDescription"
-                    tools:progress="60" />
-
-                <ProgressBar
-                    android:id="@+id/wcRenovationEfficiencyProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="190dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="-2dp"
-                    android:backgroundTint="@color/black"
-                    android:elevation="6dp"
-                    android:progressDrawable="@drawable/bg_progressbar"
-                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungButton"
-                    app:layout_constraintStart_toEndOf="@+id/badsanierungRenovierungIconBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/wcRenovationPriceProgressBar"
-                    tools:progress="85" />
-
-                <ImageView
-                    android:id="@+id/badsanierungRenovierungNextIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/il_next"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/badsanierungRenovierungButton"
-                    app:layout_constraintEnd_toEndOf="@+id/badsanierungRenovierungButton"
-                    app:layout_constraintTop_toTopOf="@+id/badsanierungRenovierungButton" />
-
-                <ImageView
-                    android:id="@+id/emptySpace"
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:visibility="invisible"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="952dp" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>

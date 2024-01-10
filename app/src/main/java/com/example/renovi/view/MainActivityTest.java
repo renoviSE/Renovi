@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.renovi.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -39,16 +40,8 @@ public class MainActivityTest extends AppCompatActivity {
     private ProgressBar doorPriceProgressBar;
     private int doorCurrentEfficiency;
     private ProgressBar doorEfficiencyProgressBar;
-    private int windowCurrentPrice;
-    private ProgressBar windowPriceProgressBar;
-    private int windowCurrentEfficiency;
-    private ProgressBar windowEfficiencyProgressBar;
-    private int wcRenovationCurrentPrice;
-    private ProgressBar wcRenovationPriceProgressBar;
-    private int wcRenovationCurrentEfficiency;
-    private ProgressBar wcRenovationEfficiencyProgressBar;
+    private Button lastButton;
     final String TAG = "myTag";
-
     public static final String geplanteRenovierung ="com.exemple.renovi";
 
     ScrollView mainScrollView;
@@ -80,10 +73,6 @@ public class MainActivityTest extends AppCompatActivity {
         co2ProgressBar = (ProgressBar) findViewById(R.id.co2ProgressBar);
         doorPriceProgressBar = (ProgressBar) findViewById(R.id.doorPriceProgressBar);
         doorEfficiencyProgressBar = (ProgressBar) findViewById(R.id.doorEfficiencyProgressBar);
-        windowPriceProgressBar = (ProgressBar) findViewById(R.id.windowPriceProgressBar);
-        windowEfficiencyProgressBar = (ProgressBar) findViewById(R.id.windowEfficiencyProgressBar);
-        wcRenovationPriceProgressBar = (ProgressBar) findViewById(R.id.wcRenovationPriceProgressBar);
-        wcRenovationEfficiencyProgressBar = (ProgressBar) findViewById(R.id.wcRenovationEfficiencyProgressBar);
     }
 
     private void initializeViews() {
@@ -108,20 +97,8 @@ public class MainActivityTest extends AppCompatActivity {
         doorEfficiencyProgressBar.setMax(100);
 
         doorCurrentPrice = 27;
-        windowPriceProgressBar.setProgress(doorCurrentPrice);
-        windowPriceProgressBar.setMax(100);
 
         doorCurrentEfficiency = 75;
-        windowEfficiencyProgressBar.setProgress(doorCurrentEfficiency);
-        windowEfficiencyProgressBar.setMax(100);
-
-        wcRenovationCurrentPrice = 60;
-        wcRenovationPriceProgressBar.setProgress(wcRenovationCurrentPrice);
-        wcRenovationPriceProgressBar.setMax(100);
-
-        wcRenovationCurrentEfficiency = 85;
-        wcRenovationEfficiencyProgressBar.setProgress(wcRenovationCurrentEfficiency);
-        wcRenovationEfficiencyProgressBar.setMax(100);
     }
 
     private void getRenovierungen(FirebaseFirestore db) {
@@ -134,12 +111,16 @@ public class MainActivityTest extends AppCompatActivity {
                     @Override
                     public void onSuccess(QuerySnapshot documents) {
                         // Daten erfolgreich erhalten
-                        for (QueryDocumentSnapshot document : documents) {
-                            // Hier kannst du die Daten verarbeiten, z.B., um Buttons zu erstellen
-                            String mieterName = "NEUER BUTTON";
-                            // Erstelle einen Button für jeden Mieter
-                            erstelleButtonFürMieter(mieterName);
-                            Log.i(TAG, "Good Job");
+                        int buttonId = 1;
+                        for (DocumentSnapshot document : documents.getDocuments()) {
+                            if (document.exists()) {
+                                String objectValue = document.getString("object");
+                                // Erstelle einen Button für jeden Mieter
+                                erstelleButtonFürMieter(objectValue,buttonId);
+                                buttonId+=1;
+                                Log.i(TAG, "Good Job");
+                            }
+
                         }
                     }
                 })
@@ -233,13 +214,14 @@ public class MainActivityTest extends AppCompatActivity {
         return Math.round((float) dp * density);
     }
 
-    private void erstelleButtonFürMieter(String mieterName) {
+    private void erstelleButtonFürMieter(String mieterName, int buttonId) {
         ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
+        View upperConstraint = findViewById(R.id.upcomingRenovationsTitle);
 
         if (mieterName != null) {
             Button renoButton = new Button(this);
             renoButton.setText(mieterName);
-            renoButton.setId(View.generateViewId());
+            renoButton.setId(buttonId);
             renoButton.setWidth(340);
             renoButton.setHeight(dpToPx(85));
             renoButton.setPadding(0, 0, 0, 0);
@@ -248,19 +230,30 @@ public class MainActivityTest extends AppCompatActivity {
             renoButton.setTextColor(ContextCompat.getColor(this, R.color.gray4));
             renoButton.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_lightblue));
 
+            // Füge den neuen Button zum Layout hinzu
+            constraintLayout.addView(renoButton);
+
+            // Setze Constraints für den Button (innerhalb des ConstraintLayouts)
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
-            constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
-            constraintSet.connect(renoButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-            constraintSet.connect(renoButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID ,constraintSet.START);
 
-            // Füge Constraints für die ScrollView hinzu (optional, wenn nötig)
-            //constraintSet.connect(R.id.upcomingRenovationsTitle, ConstraintSet.TOP, R.id.scrollView2, ConstraintSet.TOP);
-            //constraintSet.connect(R.id.reparaturenBackground, ConstraintSet.BOTTOM, R.id.scrollView2, ConstraintSet.BOTTOM);
+            // Setze Constraints für den neuen Button
+            if (buttonId == 1) {
+                constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
+            }else{
+                constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, lastButton.getId(), ConstraintSet.BOTTOM);
+            }
+            constraintSet.connect(renoButton.getId(), ConstraintSet.END, R.id.verbrauchssenkungTitle, ConstraintSet.END);
+            constraintSet.connect(R.id.verbrauchssenkungTitle,ConstraintSet.TOP, renoButton.getId(),ConstraintSet.BOTTOM);
 
+
+            // Wende die Constraints an
             constraintSet.applyTo(constraintLayout);
+
+            lastButton = renoButton;
 
             //@TODO ICH HABE MEINEN BUTTON VERLOREN :(
         }
+
     }
 }
