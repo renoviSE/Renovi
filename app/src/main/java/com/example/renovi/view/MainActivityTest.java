@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,21 +23,15 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import android.net.Uri;
 public class MainActivityTest extends AppCompatActivity {
 
-    private int rentCurrentProgress;
     private ProgressBar rentProgressBar;
-    private String rentCurrentCostPercentage;
     private TextView rentCostPercentage;
-    private int co2CurrentProgress;
     private ProgressBar co2ProgressBar;
-    private int doorCurrentPrice;
     private ProgressBar doorPriceProgressBar;
-    private int doorCurrentEfficiency;
     private ProgressBar doorEfficiencyProgressBar;
     private Button lastButton;
     final String TAG = "myTag";
@@ -76,29 +69,26 @@ public class MainActivityTest extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        rentCurrentProgress = 20;
-        rentCurrentCostPercentage = String.format("%d%%", rentCurrentProgress);
+        int rentCurrentProgress = 20;
+        String rentCurrentCostPercentage = String.format("%d%%", rentCurrentProgress);
         rentCostPercentage.setText(rentCurrentCostPercentage);
         rentProgressBar.setProgress(rentCurrentProgress);
         rentProgressBar.setMax(100);
 
 
-        co2CurrentProgress = 75;
+        int co2CurrentProgress = 75;
         co2ProgressBar.setProgress(co2CurrentProgress);
         co2ProgressBar.setMax(100);
 
 
-        doorCurrentPrice = 36;
+        int doorCurrentPrice = 36;
         doorPriceProgressBar.setProgress(doorCurrentPrice);
         doorPriceProgressBar.setMax(100);
 
-        doorCurrentEfficiency = 55;
+        int doorCurrentEfficiency = 55;
         doorEfficiencyProgressBar.setProgress(doorCurrentEfficiency);
         doorEfficiencyProgressBar.setMax(100);
 
-        doorCurrentPrice = 27;
-
-        doorCurrentEfficiency = 75;
     }
 
     private void getRenovierungen(FirebaseFirestore db) {
@@ -107,30 +97,24 @@ public class MainActivityTest extends AppCompatActivity {
                 // document = eingeloggter User!
                 .whereEqualTo("mieter", db.collection("mieter").document("W6vJ0B7y1ahLHynv02AD"))
                 .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot documents) {
-                        // Daten erfolgreich erhalten
-                        int buttonId = 1;
-                        for (DocumentSnapshot document : documents.getDocuments()) {
-                            if (document.exists()) {
-                                String objectValue = document.getString("object");
-                                // Erstelle einen Button für jeden Mieter
-                                erstelleButtonFürMieter(objectValue,buttonId);
-                                buttonId+=1;
-                                Log.i(TAG, "Good Job");
-                            }
-
+                .addOnSuccessListener(documents -> {
+                    // Daten erfolgreich erhalten
+                    int buttonId = 1;
+                    for (DocumentSnapshot document : documents.getDocuments()) {
+                        if (document.exists()) {
+                            String objectValue = document.getString("object");
+                            // Erstelle einen Button für jeden Mieter
+                            erstelleButtonFuerMieter(objectValue,buttonId);
+                            buttonId+=1;
+                            Log.i(TAG, "Good Job");
                         }
+
                     }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Fehler beim Abrufen der Daten
-                        Log.i(TAG, "NO");
+                .addOnFailureListener(e -> {
+                    // Fehler beim Abrufen der Daten
+                    Log.i(TAG, "NO");
 
-                    }
                 });
     }
 
@@ -173,30 +157,17 @@ public class MainActivityTest extends AppCompatActivity {
         Button mainButton = findViewById(R.id.navBarButton);
         mainScrollView = findViewById(R.id.scrollView2);
         upcomingRenovationsTitle = findViewById(R.id.upcomingRenovationsTitle);
-        mainButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                scrollToTextView();
-            }
-        });
+        mainButton.setOnClickListener(view -> scrollToTextView());
     }
     private void scrollToTextView() {
-        mainScrollView.post(new Runnable() {
-            @Override
-            public void run() {
-                mainScrollView.smoothScrollTo(0, upcomingRenovationsTitle.getTop()); // smoothScrollTo(horizontalScroll, verticalScroll)
-            }
+        mainScrollView.post(() -> {
+            mainScrollView.smoothScrollTo(0, upcomingRenovationsTitle.getTop()); // smoothScrollTo(horizontalScroll, verticalScroll)
         });
     }
 
     private void initializeFaqButton() {
         Button faqButton = findViewById(R.id.faqButton);
-        faqButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openWebPage("https://funktionales-kostensplitting.de");
-            }
-        });
+        faqButton.setOnClickListener(view -> openWebPage("https://funktionales-kostensplitting.de"));
     }
     private void openWebPage(String url) {
         Uri webpage = Uri.parse(url);
@@ -214,9 +185,8 @@ public class MainActivityTest extends AppCompatActivity {
         return Math.round((float) dp * density);
     }
 
-    private void erstelleButtonFürMieter(String mieterName, int buttonId) {
+    private void erstelleButtonFuerMieter(String mieterName, int buttonId) {
         ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
-        View upperConstraint = findViewById(R.id.upcomingRenovationsTitle);
 
         if (mieterName != null) {
             Button renoButton = new Button(this);
@@ -230,14 +200,11 @@ public class MainActivityTest extends AppCompatActivity {
             renoButton.setTextColor(ContextCompat.getColor(this, R.color.gray4));
             renoButton.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_lightblue));
 
-            // Füge den neuen Button zum Layout hinzu
             constraintLayout.addView(renoButton);
 
-            // Setze Constraints für den Button (innerhalb des ConstraintLayouts)
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(constraintLayout);
 
-            // Setze Constraints für den neuen Button
             if (buttonId == 1) {
                 constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
             }else{
@@ -246,13 +213,10 @@ public class MainActivityTest extends AppCompatActivity {
             constraintSet.connect(renoButton.getId(), ConstraintSet.END, R.id.verbrauchssenkungTitle, ConstraintSet.END);
             constraintSet.connect(R.id.verbrauchssenkungTitle,ConstraintSet.TOP, renoButton.getId(),ConstraintSet.BOTTOM);
 
-
-            // Wende die Constraints an
             constraintSet.applyTo(constraintLayout);
 
             lastButton = renoButton;
 
-            //@TODO ICH HABE MEINEN BUTTON VERLOREN :(
         }
 
     }
