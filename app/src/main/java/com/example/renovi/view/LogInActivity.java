@@ -6,16 +6,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.renovi.R;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class LogInActivity extends Activity {
-	private EditText verifyIdInput;
-	private EditText firstNameInput;
-	private EditText lastNameInput;
-	private EditText birthdateInput;
+
+	final String TAG = "myTag";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -23,16 +23,24 @@ public class LogInActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		verifyIdInput = findViewById(R.id.verifyIdInput);
-		firstNameInput = findViewById(R.id.firstNameInput);
-		lastNameInput = findViewById(R.id.lastNameInput);
-
 		initializeSignInButton();
 	}
 
 	private void initializeSignInButton() {
 		Button signInButton = findViewById(R.id.signinButton);
 		signInButton.setOnClickListener(view -> switchToMain());
+	}
+
+	private void checkIfValid() {
+		EditText verifyIdInput = findViewById(R.id.verifyIdInput);
+		EditText firstNameInput = findViewById(R.id.firstNameInput);
+		EditText lastNameInput = findViewById(R.id.lastNameInput);
+
+
+	}
+
+	private void getMieter(FirebaseFirestore db) {
+
 	}
 
 	private void switchToMain() {
