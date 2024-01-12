@@ -8,10 +8,13 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
 
 import com.example.renovi.R;
+import com.example.renovi.model.Mieter;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 public class LogInActivity extends Activity {
 
@@ -32,15 +35,39 @@ public class LogInActivity extends Activity {
 	}
 
 	private void checkIfValid() {
-		EditText verifyIdInput = findViewById(R.id.verifyIdInput);
-		EditText firstNameInput = findViewById(R.id.firstNameInput);
-		EditText lastNameInput = findViewById(R.id.lastNameInput);
+		String verifyIdInput = String.valueOf(findViewById(R.id.verifyIdInput));
+		String firstNameInput = String.valueOf(findViewById(R.id.firstNameInput));
+		String lastNameInput = String.valueOf(findViewById(R.id.lastNameInput));
 
-
+		Mieter mieter = getMieter(verifyIdInput);
+		if (firstNameInput.equals(mieter.getFirstName()) && lastNameInput.equals(mieter.getLastName())) {
+			// alle Daten stimmen
+			switchToMain();
+		}
+		else {
+			// Fehler... Seite neu laden
+			Log.i(TAG, "falsche Login-Daten");
+		}
 	}
 
-	private void getMieter(FirebaseFirestore db) {
-
+	private Mieter getMieter(String id) {
+		FirebaseFirestore db = FirebaseFirestore.getInstance();
+		// null falls ID nicht existiert
+		AtomicReference<Mieter> mieter = null;
+		mieter.set(new Mieter("0", "0", "0"));
+		Log.i(TAG, "trying");
+		db.collection("Mieter")
+				.whereEqualTo("mieter_id", id)
+				.get()
+				.addOnSuccessListener(documents -> {
+					// Mieter in Klasse schreiben
+					DocumentSnapshot document = documents.getDocuments().get(0);
+					if (document.exists()) {
+						mieter.set(new Mieter(id, document.getString("vorname"), document.getString("nachname")));
+					}
+				})
+				.addOnFailureListener(e -> Log.i(TAG, "fail"));
+		return mieter.get();
 	}
 
 	private void switchToMain() {
