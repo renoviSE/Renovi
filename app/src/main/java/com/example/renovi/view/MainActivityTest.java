@@ -1,6 +1,5 @@
 package com.example.renovi.view;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -12,18 +11,17 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import android.net.Uri;
 public class MainActivityTest extends AppCompatActivity {
@@ -36,7 +34,6 @@ public class MainActivityTest extends AppCompatActivity {
     private Button lastButton;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
-
     ScrollView mainScrollView;
     TextView upcomingRenovationsTitle;
 
@@ -104,7 +101,7 @@ public class MainActivityTest extends AppCompatActivity {
                         if (document.exists()) {
                             String objectValue = document.getString("object");
                             // Erstelle einen Button für jeden Mieter
-                            erstelleButtonFuerMieter(objectValue,buttonId);
+                            generateButtonForRenter(objectValue,buttonId);
                             buttonId+=1;
                             Log.i(TAG, "Good Job");
                         }
@@ -185,39 +182,82 @@ public class MainActivityTest extends AppCompatActivity {
         return Math.round((float) dp * density);
     }
 
-    private void erstelleButtonFuerMieter(String mieterName, int buttonId) {
-        ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
+    private void generateButtonForRenter(String renovationTitle, int buttonId) {
 
-        if (mieterName != null) {
+        if (renovationTitle != null) {
             Button renoButton = new Button(this);
-            renoButton.setText(mieterName);
-            renoButton.setId(buttonId);
-            renoButton.setWidth(340);
-            renoButton.setHeight(dpToPx(85));
-            renoButton.setPadding(0, 0, 0, 0);
-            renoButton.setTextSize(14);
-            renoButton.setTypeface(null, Typeface.BOLD);
-            renoButton.setTextColor(ContextCompat.getColor(this, R.color.gray4));
-            renoButton.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_lightblue));
 
-            constraintLayout.addView(renoButton);
+            setButtonValues(renovationTitle, buttonId, renoButton);
 
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(constraintLayout);
+            ImageView arrow = new ImageView(this);
+            setImageValues(arrow);
+            setImageConstraints(arrow, renoButton);
 
-            if (buttonId == 1) {
-                constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
-            }else{
-                constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, lastButton.getId(), ConstraintSet.BOTTOM);
-            }
-            constraintSet.connect(renoButton.getId(), ConstraintSet.END, R.id.verbrauchssenkungTitle, ConstraintSet.END);
-            constraintSet.connect(R.id.verbrauchssenkungTitle,ConstraintSet.TOP, renoButton.getId(),ConstraintSet.BOTTOM);
-
-            constraintSet.applyTo(constraintLayout);
+            setButtonConstraints(buttonId, renoButton);
 
             lastButton = renoButton;
-
         }
 
+    }
+
+    private static void setImageValues(ImageView arrow) {
+        int arrowId = View.generateViewId();
+        arrow.setId(arrowId);
+
+        arrow.setPadding(0, 0, 0, 0);
+        arrow.setBackgroundResource(R.drawable.il_next);
+        arrow.setElevation(6);
+    }
+
+    private void setImageConstraints(ImageView arrow, Button renoButton) {
+        ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
+        constraintLayout.addView(arrow);
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        constraintSet.connect(arrow.getId(), ConstraintSet.END, renoButton.getId(), ConstraintSet.END);
+        //constraintSet.connect(arrow.getId(), ConstraintSet.START, renoButton.getId(), ConstraintSet.START);
+        
+        constraintSet.connect(arrow.getId(),ConstraintSet.BOTTOM,renoButton.getId(),ConstraintSet.BOTTOM);
+        constraintSet.connect(arrow.getId(),ConstraintSet.TOP,renoButton.getId(),ConstraintSet.TOP);
+
+        constraintSet.applyTo(constraintLayout);
+    }
+
+    private void setButtonConstraints(int buttonId, Button renoButton) {
+        ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
+        constraintLayout.addView(renoButton);
+
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        if (buttonId == 1) {
+            constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
+        }else{
+            constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, lastButton.getId(), ConstraintSet.BOTTOM);
+            constraintSet.connect(lastButton.getId(), ConstraintSet.BOTTOM, renoButton.getId(), ConstraintSet.TOP);
+        }
+        constraintSet.connect(renoButton.getId(), ConstraintSet.END, R.id.verbrauchssenkungTitle, ConstraintSet.END);
+        constraintSet.connect(renoButton.getId(), ConstraintSet.START, R.id.verbrauchssenkungTitle, ConstraintSet.START);
+        constraintSet.connect(R.id.verbrauchssenkungTitle,ConstraintSet.TOP, renoButton.getId(),ConstraintSet.BOTTOM);
+        constraintSet.setMargin(renoButton.getId(), ConstraintSet.TOP, dpToPx(16));
+
+
+        constraintSet.connect(renoButton.getId(),ConstraintSet.BOTTOM,R.id.verbrauchssenkungTitle,ConstraintSet.TOP);
+
+        constraintSet.applyTo(constraintLayout);
+    }
+
+    private void setButtonValues(String renovationTitle, int buttonId, Button renoButton) {
+        renoButton.setText(renovationTitle);
+        renoButton.setId(buttonId);
+        renoButton.setWidth(dpToPx(340));
+        renoButton.setHeight(dpToPx(85));
+        renoButton.setPadding(0, 0, 0, 0);
+        renoButton.setTextSize(14);
+        renoButton.setTypeface(null, Typeface.BOLD);
+        renoButton.setTextColor(ContextCompat.getColor(this, R.color.gray4));
+        renoButton.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_lightblue));
     }
 }
