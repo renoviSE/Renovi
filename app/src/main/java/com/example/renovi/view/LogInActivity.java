@@ -43,7 +43,7 @@ public class LogInActivity extends Activity {
 		String id = idData.getText().toString();
 
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
-		Log.i(TAG, id);
+		try {
 			db.collection("Mieter").document(id).get()
 					.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 						@Override
@@ -61,6 +61,11 @@ public class LogInActivity extends Activity {
 							}
 						}
 					});
+		}
+		catch (Exception e) {
+			Log.i(TAG, "keine ID");
+			onFalseLoginData();
+		}
 	}
 
 	private void checkIfValid(Renter renter) {
