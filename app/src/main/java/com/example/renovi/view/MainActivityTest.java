@@ -112,7 +112,7 @@ public class MainActivityTest extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-    //Redudanz kann man bestimmt lösen @TODO
+
 
     private void initializeInboxButton() {
         Button notificationButton = findViewById(R.id.notificationButton);
