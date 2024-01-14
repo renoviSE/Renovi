@@ -29,8 +29,6 @@ public class MainActivityTest extends AppCompatActivity {
     private ProgressBar rentProgressBar;
     private TextView rentCostPercentage;
     private ProgressBar co2ProgressBar;
-    private ProgressBar doorPriceProgressBar;
-    private ProgressBar doorEfficiencyProgressBar;
     private Button lastButton;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
@@ -50,7 +48,6 @@ public class MainActivityTest extends AppCompatActivity {
     }
 
     private void initializeButtons() {
-        initializeOverviewButton();
         initializeInboxButton();
         initializeProfileButton();
         initializeMainButton();
@@ -61,8 +58,6 @@ public class MainActivityTest extends AppCompatActivity {
         rentProgressBar = (ProgressBar) findViewById(R.id.rentCostProgressBar);
         rentCostPercentage = (TextView) findViewById(R.id.rentCostPercentage);
         co2ProgressBar = (ProgressBar) findViewById(R.id.co2ProgressBar);
-        doorPriceProgressBar = (ProgressBar) findViewById(R.id.doorPriceProgressBar);
-        doorEfficiencyProgressBar = (ProgressBar) findViewById(R.id.doorEfficiencyProgressBar);
     }
 
     private void initializeViews() {
@@ -76,15 +71,6 @@ public class MainActivityTest extends AppCompatActivity {
         int co2CurrentProgress = 75;
         co2ProgressBar.setProgress(co2CurrentProgress);
         co2ProgressBar.setMax(100);
-
-
-        int doorCurrentPrice = 36;
-        doorPriceProgressBar.setProgress(doorCurrentPrice);
-        doorPriceProgressBar.setMax(100);
-
-        int doorCurrentEfficiency = 55;
-        doorEfficiencyProgressBar.setProgress(doorCurrentEfficiency);
-        doorEfficiencyProgressBar.setMax(100);
 
     }
 
@@ -186,6 +172,7 @@ public class MainActivityTest extends AppCompatActivity {
 
         if (renovationTitle != null) {
             Button renoButton = new Button(this);
+            renoButton.setOnClickListener(view -> switchToDetails(1)); //hier renoId eigentlich
 
             setButtonValues(renovationTitle, buttonId, renoButton);
 
@@ -193,11 +180,28 @@ public class MainActivityTest extends AppCompatActivity {
             setImageValues(arrow);
             setImageConstraints(arrow, renoButton);
 
+            if(renovationTitle.contains("Tür")){
+                //ImageView door = new ImageView(this);
+                //setDoorValues(door);
+                //setImageConstraints(door, renoButton, 300);
+            } else if (renovationTitle.contains("Fenster")) {
+
+            }
+
             setButtonConstraints(buttonId, renoButton);
 
             lastButton = renoButton;
         }
+    }
 
+    private void setDoorValues(ImageView door) {
+        int doorId = View.generateViewId();
+        door.setId(doorId);
+
+        door.setBackgroundResource(R.drawable.il_door);
+        door.setMaxHeight(dpToPx(38));
+        door.setMaxWidth(dpToPx(42));
+        door.setElevation(6);
     }
 
     private static void setImageValues(ImageView arrow) {
@@ -218,6 +222,7 @@ public class MainActivityTest extends AppCompatActivity {
 
         constraintSet.connect(arrow.getId(), ConstraintSet.END, renoButton.getId(), ConstraintSet.END);
         //constraintSet.connect(arrow.getId(), ConstraintSet.START, renoButton.getId(), ConstraintSet.START);
+        constraintSet.setMargin(arrow.getId(), ConstraintSet.END, dpToPx(30));
         
         constraintSet.connect(arrow.getId(),ConstraintSet.BOTTOM,renoButton.getId(),ConstraintSet.BOTTOM);
         constraintSet.connect(arrow.getId(),ConstraintSet.TOP,renoButton.getId(),ConstraintSet.TOP);

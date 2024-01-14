@@ -15,8 +15,8 @@
 
         <ScrollView
             android:id="@+id/scrollView2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:fillViewport="true"
             android:scrollbars="none"
             app:layout_constraintTop_toTopOf="parent"
@@ -30,6 +30,7 @@
                 android:id="@+id/inner_constraint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
                 tools:context=".view.MainActivityTest">
 
                 <TextView
@@ -75,6 +76,8 @@
                     android:layout_marginTop="8dp"
                     android:background="@drawable/il_banner"
                     android:padding="10dp"
+                    android:layout_marginVertical="50dp"
+                    android:layout_marginBottom="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -265,99 +268,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/userName" />
-
-                <Button
-                    android:id="@+id/mailButton"
-                    android:layout_width="340dp"
-                    android:layout_height="85dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/bg_gray_round_corner"
-                    android:backgroundTint="@color/white"
-                    android:paddingRight="80dp"
-                    android:paddingBottom="50dp"
-                    android:text="@string/tuer_renovierung_button_title"
-                    android:textAllCaps="false"
-                    android:textColor="@color/gray1"
-                    android:textSize="14dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/upcomingRenovationsTitle" />
-
-                <TextView
-                    android:id="@+id/mailDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="22dp"
-                    android:elevation="6dp"
-                    android:text="@string/tuer_renovierung_button_description"
-                    android:textColor="@color/gray2"
-                    android:textSize="12dp"
-                    app:layout_constraintStart_toEndOf="@+id/mailIconBackground"
-                    app:layout_constraintTop_toTopOf="@+id/mailButton" />
-
-                <ImageView
-                    android:id="@+id/mailIconBackground"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginStart="16dp"
-                    android:background="@drawable/bg_eclipse"
-                    android:backgroundTint="@color/whiteBlue"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/mailButton"
-                    app:layout_constraintStart_toStartOf="@+id/mailButton"
-                    app:layout_constraintTop_toTopOf="@+id/mailButton" />
-
-                <ImageView
-                    android:id="@+id/mailIcon"
-                    android:layout_width="42dp"
-                    android:layout_height="38dp"
-                    android:background="@drawable/il_door"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/mailIconBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/mailIconBackground"
-                    app:layout_constraintStart_toStartOf="@+id/mailIconBackground"
-                    app:layout_constraintTop_toTopOf="@+id/mailIconBackground" />
-
-                <ProgressBar
-                    android:id="@+id/doorPriceProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="190dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="6dp"
-                    android:backgroundTint="@color/black"
-                    android:elevation="6dp"
-                    android:progressDrawable="@drawable/bg_progressbar_reversed"
-                    app:layout_constraintStart_toEndOf="@+id/mailIconBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/mailDate"
-                    tools:progress="36" />
-
-                <ProgressBar
-                    android:id="@+id/doorEfficiencyProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="190dp"
-                    android:layout_height="12dp"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="-2dp"
-                    android:backgroundTint="@color/black"
-                    android:elevation="6dp"
-                    android:progressDrawable="@drawable/bg_progressbar"
-                    app:layout_constraintBottom_toBottomOf="@+id/mailButton"
-                    app:layout_constraintStart_toEndOf="@+id/mailIconBackground"
-                    app:layout_constraintTop_toBottomOf="@+id/doorPriceProgressBar"
-                    tools:progress="55" />
-
-                <ImageView
-                    android:id="@+id/mailButtonIcon"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="@drawable/il_next"
-                    android:elevation="6dp"
-                    app:layout_constraintBottom_toBottomOf="@+id/mailButton"
-                    app:layout_constraintEnd_toEndOf="@+id/mailButton"
-                    app:layout_constraintTop_toTopOf="@+id/mailButton" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
