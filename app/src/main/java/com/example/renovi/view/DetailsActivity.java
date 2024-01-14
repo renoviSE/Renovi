@@ -1,6 +1,7 @@
 package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -35,12 +36,16 @@ public class DetailsActivity extends AppCompatActivity {
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        //@Todo bekommt noch kein Intent. intent muss von der MainActivity übergeben werden als String
-        //@Todo ...damit man hier in der detailsactivit, nach dem string in der datenbank suchen und die daten anzeigen kann
+
         Intent intent = getIntent();
         String geplanteRenovierung = intent.getStringExtra(MainActivityTest.geplanteRenovierung);
 
-        //getRenovierungsDaten(db);
+        getRenovierungsDaten(db, geplanteRenovierung);
+        TextView kostenTextview = findViewById(R.id.kosten);
+        kostenTextview.setText("ksoten");
+        System.out.println("das ist ein test:" + kosten);
+        //kostenTextview.setText(kosten);
+        kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
 
 
 
@@ -56,8 +61,7 @@ public class DetailsActivity extends AppCompatActivity {
                             if(document.exists()){
                                 setKosten(document.getString("kosten"));
 
-                                TextView kostenTextview = findViewById(new Integer("kosten"));
-                                kostenTextview.setText(kosten);
+
 
                                 //String kosten = document.getString("kosten");
                                 //String nachteile = document.getString(("nachteile"));
@@ -65,12 +69,15 @@ public class DetailsActivity extends AppCompatActivity {
                                 //String paragraph = document.getString("paragraph");
                                 //String vorteile = document.getString("vorteile");
 
-
-
-
                             }
                         }
+
                     }
+                    else{
+                        System.out.println("error zeile 76");
+
+                    }
+
 
                 });
     }

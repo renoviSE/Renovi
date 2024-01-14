@@ -103,10 +103,10 @@ public class MainActivityTest extends AppCompatActivity {
 
     private void initializeOverviewButton() {
         Button startButton = findViewById(R.id.mailButton);
-        startButton.setOnClickListener(view -> switchToDetails(1));
+        startButton.setOnClickListener(view -> switchToDetails("1"));
     }
 
-    private void switchToDetails(int renoID) {
+    private void switchToDetails(String renoID) {
         Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
         switchActivityIntent.putExtra(geplanteRenovierung,renoID);
         startActivity(switchActivityIntent);
@@ -172,7 +172,7 @@ public class MainActivityTest extends AppCompatActivity {
 
         if (renovationTitle != null) {
             Button renoButton = new Button(this);
-            renoButton.setOnClickListener(view -> switchToDetails(1)); //hier renoId eigentlich
+            renoButton.setOnClickListener(view -> switchToDetails("1")); //hier renoId eigentlich
 
             setButtonValues(renovationTitle, buttonId, renoButton);
 
