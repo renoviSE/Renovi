@@ -8,13 +8,17 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
 
 import com.example.renovi.R;
-import com.example.renovi.model.Mieter;
+import com.example.renovi.model.Renter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.concurrent.atomic.AtomicReference;
 
 public class LogInActivity extends Activity {
 
@@ -31,43 +35,52 @@ public class LogInActivity extends Activity {
 
 	private void initializeSignInButton() {
 		Button signInButton = findViewById(R.id.signinButton);
-		signInButton.setOnClickListener(view -> switchToMain());
+		signInButton.setOnClickListener(view -> checkIfIdExists());
 	}
 
-	private void checkIfValid() {
-		String verifyIdInput = String.valueOf(findViewById(R.id.verifyIdInput));
-		String firstNameInput = String.valueOf(findViewById(R.id.firstNameInput));
-		String lastNameInput = String.valueOf(findViewById(R.id.lastNameInput));
+	private void checkIfIdExists() {
+		EditText idData = findViewById(R.id.verifyIdInput);
+		String id = idData.getText().toString();
 
-		Mieter mieter = getMieter(verifyIdInput);
-		if (firstNameInput.equals(mieter.getFirstName()) && lastNameInput.equals(mieter.getLastName())) {
-			// alle Daten stimmen
+		FirebaseFirestore db = FirebaseFirestore.getInstance();
+		Log.i(TAG, id);
+			db.collection("Mieter").document(id).get()
+					.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+						@Override
+						public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+							if (task.isSuccessful()) {
+								DocumentSnapshot document = task.getResult();
+								if (document.exists()) {
+									Log.i(TAG, "Mieter mit ID gefunden");
+									Renter renter = new Renter(id, document.getString("vorname"), document.getString("nachname"));
+									checkIfValid(renter);
+								} else {
+									Log.i(TAG, "kein Mieter mit ID gefunden");
+									onFalseLoginData();
+								}
+							}
+						}
+					});
+	}
+
+	private void checkIfValid(Renter renter) {
+		EditText firstNameData = findViewById(R.id.firstNameInput);
+		String firstName = firstNameData.getText().toString();
+		EditText lastNameData = findViewById(R.id.lastNameInput);
+		String lastName = lastNameData.getText().toString();
+
+		if (firstName.equals(renter.getFirstName()) && lastName.equals(renter.getLastName())) {
 			switchToMain();
 		}
 		else {
-			// Fehler... Seite neu laden
-			Log.i(TAG, "falsche Login-Daten");
+			onFalseLoginData();
 		}
 	}
 
-	private Mieter getMieter(String id) {
-		FirebaseFirestore db = FirebaseFirestore.getInstance();
-		// null falls ID nicht existiert
-		AtomicReference<Mieter> mieter = null;
-		mieter.set(new Mieter("0", "0", "0"));
-		Log.i(TAG, "trying");
-		db.collection("Mieter")
-				.whereEqualTo("mieter_id", id)
-				.get()
-				.addOnSuccessListener(documents -> {
-					// Mieter in Klasse schreiben
-					DocumentSnapshot document = documents.getDocuments().get(0);
-					if (document.exists()) {
-						mieter.set(new Mieter(id, document.getString("vorname"), document.getString("nachname")));
-					}
-				})
-				.addOnFailureListener(e -> Log.i(TAG, "fail"));
-		return mieter.get();
+	private void onFalseLoginData() {
+		// erstmal nur Seite neu laden
+		Intent switchActivityIntent = new Intent(this, LogInActivity.class);
+		startActivity(switchActivityIntent);
 	}
 
 	private void switchToMain() {
