@@ -9,6 +9,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.Renovierung;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -86,8 +88,9 @@ public class MainActivityTest extends AppCompatActivity {
                     for (DocumentSnapshot document : documents.getDocuments()) {
                         if (document.exists()) {
                             String objectValue = document.getString("object");
+                            Renovierung renovierung = new Renovierung(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"));
                             // Erstelle einen Button für jeden Mieter
-                            generateButtonForRenter(objectValue,buttonId);
+                            generateButtonForRenter(objectValue,buttonId, renovierung);
                             buttonId+=1;
                             Log.i(TAG, "Good Job");
                         }
@@ -103,12 +106,12 @@ public class MainActivityTest extends AppCompatActivity {
 
     private void initializeOverviewButton() {
         Button startButton = findViewById(R.id.mailButton);
-        startButton.setOnClickListener(view -> switchToDetails("1"));
+        //startButton.setOnClickListener(view -> switchToDetails("1"));
     }
 
-    private void switchToDetails(String renoID) {
+    private void switchToDetails(Renovierung renovierung) {
         Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
-        switchActivityIntent.putExtra(geplanteRenovierung,renoID);
+        switchActivityIntent.putExtra("renovierung", renovierung);
         startActivity(switchActivityIntent);
     }
 
@@ -168,11 +171,11 @@ public class MainActivityTest extends AppCompatActivity {
         return Math.round((float) dp * density);
     }
 
-    private void generateButtonForRenter(String renovationTitle, int buttonId) {
+    private void generateButtonForRenter(String renovationTitle, int buttonId, Renovierung renovierung) {
 
         if (renovationTitle != null) {
             Button renoButton = new Button(this);
-            renoButton.setOnClickListener(view -> switchToDetails("1")); //hier renoId eigentlich
+            renoButton.setOnClickListener(view -> switchToDetails(renovierung)); //hier renoId eigentlich
 
             setButtonValues(renovationTitle, buttonId, renoButton);
 
