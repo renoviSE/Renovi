@@ -26,7 +26,7 @@
     <!-- welcomescreen strings @bamboo-->
 
     <!-- signin strings @bamboo-->
-    <string name="signin_title">Erstelle ein Account</string>
+    <string name="signin_title">Melden Sie sich an</string>
     <string name="descriptiontext_string">Den Verifizierungscode erhalten Sie vom Vermieter</string>
     <string name="verify_id_placeholder_string">Verifizierungscode</string>
     <string name="first_name_placeholder_string">Vorname</string>
