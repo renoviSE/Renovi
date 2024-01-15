@@ -39,6 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String geplanteRenovierung = intent.getStringExtra(MainActivityTest.geplanteRenovierung);
+        System.out.println("suchmich" + geplanteRenovierung);
 
         getRenovierungsDaten(db, geplanteRenovierung);
         TextView kostenTextview = findViewById(R.id.kosten);
@@ -57,8 +58,10 @@ public class DetailsActivity extends AppCompatActivity {
         db.collection("Renovierung").whereEqualTo("id",geplanteRenovierung).get().addOnCompleteListener(
                 characteristics ->{
                     if (characteristics.isSuccessful()){
+                        System.out.println("ich habs gefunden");
                         for (DocumentSnapshot document : characteristics.getResult()) {
-                            if(document.exists()){
+                            //if(document.exists()){
+                                System.out.println("wenn du hier ankommst gibts stress"); //er kommt nicht hier an geil. 
                                 setKosten(document.getString("kosten"));
 
 
@@ -69,7 +72,7 @@ public class DetailsActivity extends AppCompatActivity {
                                 //String paragraph = document.getString("paragraph");
                                 //String vorteile = document.getString("vorteile");
 
-                            }
+                            //}
                         }
 
                     }
