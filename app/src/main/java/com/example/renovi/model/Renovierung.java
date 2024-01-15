@@ -10,7 +10,9 @@ public class Renovierung implements Serializable {
     private String disadvantages;
     private String cost;
     private String paragraph;
-    //private int mieterId;
+
+
+//private int mieterId;
 
     public Renovierung(String object, String advantages, String disadvantages, String cost, String paragraph) {
         this.object = object;
@@ -23,4 +25,20 @@ public class Renovierung implements Serializable {
     public String getCost() {
         return cost;
     }
+    public String getObject() {
+        return object;
+    }
+
+    public String getAdvantages() {
+        return advantages;
+    }
+
+    public String getDisadvantages() {
+        return disadvantages;
+    }
+
+    public String getParagraph() {
+        return paragraph;
+    }
+
 }

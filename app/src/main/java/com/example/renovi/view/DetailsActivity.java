@@ -45,10 +45,19 @@ public class DetailsActivity extends AppCompatActivity {
 
         //getRenovierungsDaten(db, geplanteRenovierung);
         TextView kostenTextview = findViewById(R.id.kosten);
-        kostenTextview.setText(renovierung.getCost());
-        System.out.println("das ist ein test:" + kosten);
+        TextView renovierungTextView = findViewById(R.id.detailsTitle);
+        TextView paragraphenTextView = findViewById(R.id.descriptionString);
+
+
+
+
+        renovierungTextView.setText(renovierung.getObject());
+        kostenTextview.setText(renovierung.getCost() + "€" );
+        paragraphenTextView.setText(renovierung.getParagraph());
         //kostenTextview.setText(kosten);
         kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
+
+
 
 
 
