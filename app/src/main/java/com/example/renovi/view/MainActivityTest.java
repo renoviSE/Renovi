@@ -32,6 +32,7 @@ public class MainActivityTest extends AppCompatActivity {
     private TextView rentCostPercentage;
     private ProgressBar co2ProgressBar;
     private Button lastButton;
+    private String userId;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
     ScrollView mainScrollView;
@@ -43,6 +44,8 @@ public class MainActivityTest extends AppCompatActivity {
         setContentView(R.layout.activity_main_test);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
+
+        userId = getIntent().getStringExtra("userId");
 
         initializeButtons();
         declareViews();
@@ -130,11 +133,12 @@ public class MainActivityTest extends AppCompatActivity {
 
     private void initializeProfileButton() {
         Button profileButton = findViewById(R.id.profileButton);
-        profileButton.setOnClickListener(view -> switchToProfile());
+        profileButton.setOnClickListener(view -> switchToProfile(userId));
     }
-    private void switchToProfile() {
+    private void switchToProfile(String userId) {
         Intent switchActivityIntent = new Intent(this, ProfileActivity.class);
         switchActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+        switchActivityIntent.putExtra("userId", userId);
         startActivity(switchActivityIntent);
         overridePendingTransition(0,0); //disables animation
     }

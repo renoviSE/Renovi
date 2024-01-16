@@ -24,6 +24,8 @@ public class LogInActivity extends Activity {
 
 	final String TAG = "myTag";
 
+	private String userId;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
@@ -41,6 +43,7 @@ public class LogInActivity extends Activity {
 	private void checkIfIdExists() {
 		EditText idData = findViewById(R.id.verifyIdInput);
 		String id = idData.getText().toString();
+		userId = id;
 
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		try {
@@ -75,7 +78,7 @@ public class LogInActivity extends Activity {
 		String lastName = lastNameData.getText().toString();
 
 		if (firstName.equals(renter.getFirstName()) && lastName.equals(renter.getLastName())) {
-			switchToMain();
+			switchToMain(userId);
 		}
 		else {
 			onFalseLoginData();
@@ -88,10 +91,9 @@ public class LogInActivity extends Activity {
 		startActivity(switchActivityIntent);
 	}
 
-	private void switchToMain() {
+	private void switchToMain(String userId) {
 		Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
+		switchActivityIntent.putExtra("userId", userId);
 		startActivity(switchActivityIntent);
 	}
 }
-	
-	
