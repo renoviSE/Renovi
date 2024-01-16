@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.example.renovi.R;
 import com.example.renovi.model.AnimationUtil;
 import com.example.renovi.model.Renter;
+import com.example.renovi.model.RenterSession;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -30,8 +31,8 @@ public class LogInActivity extends Activity {
 	EditText firstNameData;
 	EditText lastNameData;
 	EditText verifyIdInput;
-	Renter renter;
-
+	private Renter renter;
+	private RenterSession renterSession;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,12 @@ public class LogInActivity extends Activity {
 		verifyIdInput = findViewById(R.id.verifyIdInput);
 
 		initializeLogInButton();
+		initializeRenterSession();
+	}
+
+	private void initializeRenterSession() {
+		renterSession = new RenterSession(this);
+		renterSession.deleteSession();
 	}
 
 	private void initializeLogInButton() {
@@ -85,6 +92,7 @@ public class LogInActivity extends Activity {
 		String lastName = lastNameData.getText().toString();
 
 		if (firstName.equals(renter.getFirstName()) && lastName.equals(renter.getLastName())) {
+			renterSession.putRenter(renter);
 			switchToMain();
 		}
 		else {

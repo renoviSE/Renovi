@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import android.util.Log;
+
+import com.example.renovi.model.RenterSession;
 import com.example.renovi.viewmodel.FirestoreHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -29,13 +31,15 @@ public class ProfileActivity extends AppCompatActivity {
     String userId;
     private static final String TAG = ProfileActivity.class.getSimpleName(); //getSimpleName() gibt einfachen Namen der Klasse als String, ohne jeglichen Paketnamen, zurück, mit der die Instanz assoziiert ist.
 
+    private RenterSession renterSession;
+    private Renter renter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        userId = getIntent().getStringExtra("userId"); // entnimmt die übergebene user id von der MainActivity
+        getRenterFromSession();
 
         profileFirstName = findViewById(R.id.profileFirstName);
         profileLastName = findViewById(R.id.profileLastName);
@@ -47,6 +51,11 @@ public class ProfileActivity extends AppCompatActivity {
         initializeFaqButton();
         setUserProfile();
 
+    }
+
+    private void getRenterFromSession() {
+        renterSession = new RenterSession(this);
+        renter = renterSession.getRenter();
     }
 
     private void initializeCopyButton() {
@@ -104,27 +113,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setUserProfile() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //String userId = "W6vJ0B7y1ahLHynv02AD"; // Die ID des Nutzers
-        String collectionName = "Mieter";
-        FirestoreHelper.getUserData(db, collectionName, userId, new FirestoreHelper.FirestoreCallback() {
-            @Override
-            public void onSuccess(DocumentSnapshot document) {
-                // Überprüfen Sie, ob das Dokument existiert und Felder hat
-                if (document.exists() && document.getData() != null) {
-                    profileFirstName.setText(document.getString("vorname"));
-                    profileLastName.setText(document.getString("nachname"));
-                    profileVerifyId.setText(document.getString("mieter_id"));
-                } else {
-                    Log.w(TAG, "Dokument existiert nicht.");
-                }
-            }
+        profileFirstName.setText(renter.getFirstName());
+        profileLastName.setText(renter.getLastName());
+        profileVerifyId.setText(renter.getId());
 
-            @Override
-            public void onFailure(Exception e) {
-                // Fehlerbehandlung, z.B. eine Fehlermeldung anzeigen
-                Log.e(TAG, "Fehler beim Abrufen des Dokuments: ", e);
-            }
-        });
     }
 }
