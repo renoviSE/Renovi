@@ -45,7 +45,7 @@ public class MainActivityTest extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
 
-        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getStringExtra("userId"); // entnimmt die übergebene user id von der LoginActivity
 
         initializeButtons();
         declareViews();
@@ -137,10 +137,11 @@ public class MainActivityTest extends AppCompatActivity {
     }
     private void switchToProfile(String userId) {
         Intent switchActivityIntent = new Intent(this, ProfileActivity.class);
+        switchActivityIntent.putExtra("userId", userId); // übergibt die userId an ProfileActivity
+
         switchActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        switchActivityIntent.putExtra("userId", userId);
-        startActivity(switchActivityIntent);
         overridePendingTransition(0,0); //disables animation
+        startActivity(switchActivityIntent);
     }
 
     private void initializeMainButton() { //main button scrolls down to the TextView "upcomingRenovationsTitle"

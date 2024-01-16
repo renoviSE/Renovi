@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
+import com.example.renovi.model.AnimationUtil;
 import com.example.renovi.model.Renter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,6 +27,10 @@ public class LogInActivity extends Activity {
 
 	final String TAG = "myTag";
 
+	EditText firstNameData;
+	EditText lastNameData;
+	EditText verifyIdInput;
+
 	private String userId;
 
 	@Override
@@ -31,6 +38,10 @@ public class LogInActivity extends Activity {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+
+		firstNameData = findViewById(R.id.firstNameInput);
+		lastNameData = findViewById(R.id.lastNameInput);
+		verifyIdInput = findViewById(R.id.verifyIdInput);
 
 		initializeLogInButton();
 	}
@@ -72,9 +83,7 @@ public class LogInActivity extends Activity {
 	}
 
 	private void checkIfValid(Renter renter) {
-		EditText firstNameData = findViewById(R.id.firstNameInput);
 		String firstName = firstNameData.getText().toString();
-		EditText lastNameData = findViewById(R.id.lastNameInput);
 		String lastName = lastNameData.getText().toString();
 
 		if (firstName.equals(renter.getFirstName()) && lastName.equals(renter.getLastName())) {
@@ -86,14 +95,32 @@ public class LogInActivity extends Activity {
 	}
 
 	private void onFalseLoginData() {
-		// erstmal nur Seite neu laden
-		Intent switchActivityIntent = new Intent(this, LogInActivity.class);
-		startActivity(switchActivityIntent);
+		// löscht den Text in den eingabe Feldern
+		verifyIdInput.setText("");
+		firstNameData.setText("");
+		lastNameData.setText("");
+
+		// zeigt eine Fehlermeldung am Bildschirm
+		Toast.makeText(this, "Überprüfen Sie Ihre Informationen und versuchen Sie es erneut.", Toast.LENGTH_SHORT).show();
+
+		// animeiert hint farbe
+		int hintColor = ContextCompat.getColor(this, R.color.danger); // @color/success// @color/danger
+		AnimationUtil.animateHintAndDrawableColor(verifyIdInput, hintColor, 1000);
+		AnimationUtil.animateHintAndDrawableColor(firstNameData, hintColor, 1000);
+		AnimationUtil.animateHintAndDrawableColor(lastNameData, hintColor, 1000);
+
 	}
 
 	private void switchToMain(String userId) {
+		// animeiert hint farbe
+		int hintColor = ContextCompat.getColor(this, R.color.lightBlue); // @color/lightBlue
+		int currentDrawableColor = ContextCompat.getColor(this, R.color.gray2); // @color/gray2
+		AnimationUtil.animateInputAndDrawableColor(verifyIdInput, currentDrawableColor, hintColor, 1000);
+		AnimationUtil.animateInputAndDrawableColor(firstNameData, currentDrawableColor, hintColor, 1000);
+		AnimationUtil.animateInputAndDrawableColor(lastNameData, currentDrawableColor, hintColor, 1000);
+
 		Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
-		switchActivityIntent.putExtra("userId", userId);
+		switchActivityIntent.putExtra("userId", userId); // übergibt die userId an MainActivity
 		startActivity(switchActivityIntent);
 	}
 }

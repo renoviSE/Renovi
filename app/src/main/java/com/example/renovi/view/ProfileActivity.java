@@ -35,7 +35,7 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        userId = getIntent().getStringExtra("userId");
+        userId = getIntent().getStringExtra("userId"); // entnimmt die übergebene user id von der MainActivity
 
         profileFirstName = findViewById(R.id.profileFirstName);
         profileLastName = findViewById(R.id.profileLastName);
