@@ -30,8 +30,8 @@ public class LogInActivity extends Activity {
 	EditText firstNameData;
 	EditText lastNameData;
 	EditText verifyIdInput;
+	Renter renter;
 
-	private String userId;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,9 +52,7 @@ public class LogInActivity extends Activity {
 	}
 
 	private void checkIfIdExists() {
-		EditText idData = findViewById(R.id.verifyIdInput);
-		String id = idData.getText().toString();
-		userId = id;
+		String id = verifyIdInput.getText().toString();
 
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		try {
@@ -66,8 +64,8 @@ public class LogInActivity extends Activity {
 								DocumentSnapshot document = task.getResult();
 								if (document.exists()) {
 									Log.i(TAG, "Mieter mit ID gefunden");
-									Renter renter = new Renter(id, document.getString("vorname"), document.getString("nachname"));
-									checkIfValid(renter);
+									renter = new Renter(id, document.getString("vorname"), document.getString("nachname"), Float.parseFloat(document.getString("miete")));
+									checkIfValid();
 								} else {
 									Log.i(TAG, "kein Mieter mit ID gefunden");
 									onFalseLoginData();
@@ -82,12 +80,12 @@ public class LogInActivity extends Activity {
 		}
 	}
 
-	private void checkIfValid(Renter renter) {
+	private void checkIfValid() {
 		String firstName = firstNameData.getText().toString();
 		String lastName = lastNameData.getText().toString();
 
 		if (firstName.equals(renter.getFirstName()) && lastName.equals(renter.getLastName())) {
-			switchToMain(userId);
+			switchToMain();
 		}
 		else {
 			onFalseLoginData();
@@ -110,8 +108,7 @@ public class LogInActivity extends Activity {
 		AnimationUtil.animateHintAndDrawableColor(lastNameData, hintColor, 1000);
 
 	}
-
-	private void switchToMain(String userId) {
+	private void switchToMain() {
 		// animeiert hint farbe
 		int hintColor = ContextCompat.getColor(this, R.color.lightBlue); // @color/lightBlue
 		int currentDrawableColor = ContextCompat.getColor(this, R.color.gray2); // @color/gray2
@@ -120,7 +117,6 @@ public class LogInActivity extends Activity {
 		AnimationUtil.animateInputAndDrawableColor(lastNameData, currentDrawableColor, hintColor, 1000);
 
 		Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
-		switchActivityIntent.putExtra("userId", userId); // übergibt die userId an MainActivity
 		startActivity(switchActivityIntent);
 	}
 }
