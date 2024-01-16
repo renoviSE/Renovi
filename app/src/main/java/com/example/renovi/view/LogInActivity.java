@@ -30,10 +30,10 @@ public class LogInActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		initializeSignInButton();
+		initializeLogInButton();
 	}
 
-	private void initializeSignInButton() {
+	private void initializeLogInButton() {
 		Button signInButton = findViewById(R.id.signinButton);
 		signInButton.setOnClickListener(view -> checkIfIdExists());
 	}
