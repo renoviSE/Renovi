@@ -1,7 +1,9 @@
-package com.example.renovi.model;
+package com.example.renovi.viewmodel;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.renovi.model.Renter;
 
 public class RenterSession {
     final String PREF_RENTER = "renter_prefs";

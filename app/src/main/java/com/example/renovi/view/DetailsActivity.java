@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Renovierung;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailsActivity extends AppCompatActivity {

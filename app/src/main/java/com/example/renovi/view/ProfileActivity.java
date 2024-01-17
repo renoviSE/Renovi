@@ -15,12 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
-import android.util.Log;
-
-import com.example.renovi.model.RenterSession;
-import com.example.renovi.viewmodel.FirestoreHelper;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.DocumentSnapshot;
+import com.example.renovi.viewmodel.RenterSession;
 import com.example.renovi.model.Renter;
 
 public class ProfileActivity extends AppCompatActivity {

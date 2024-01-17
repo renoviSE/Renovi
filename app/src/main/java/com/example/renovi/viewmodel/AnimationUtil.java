@@ -1,4 +1,4 @@
-package com.example.renovi.model;
+package com.example.renovi.viewmodel;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;

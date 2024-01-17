@@ -15,9 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
-import com.example.renovi.model.AnimationUtil;
+import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.model.Renter;
-import com.example.renovi.model.RenterSession;
+import com.example.renovi.viewmodel.RenterSession;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
