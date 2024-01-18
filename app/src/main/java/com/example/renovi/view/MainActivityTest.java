@@ -31,12 +31,16 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 
 public class MainActivityTest extends AppCompatActivity {
-
+    private ProgressBar rentProgressBar;
+    private TextView rentCostPercentage;
     private ProgressBar co2ProgressBar;
     private Button lastButton;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
-    ScrollView mainScrollView;
+
+    private ScrollView mainScrollView;
+    private TextView upcomingRenovationsTitle;
+
     TextView mietepreisTitle;
     private Renter renter;
     private RenterSession renterSession;
@@ -44,14 +48,20 @@ public class MainActivityTest extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main_test);
 
         getRenterFromSession();
 
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
 
+
         setRenterNameAsHeadline();
+
+        setContentView(R.layout.activity_main_test);
+
         initializeButtons();
         declareViews();
         initializeViews();

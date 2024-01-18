@@ -279,6 +279,9 @@ android:background="@color/veryLightBlue">
                 android:elevation="1dp"
                 android:scrollbars="none"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:layout_editor_absoluteY="448dp"/>
 
             <ImageView
