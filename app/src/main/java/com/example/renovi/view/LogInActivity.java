@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.math.BigDecimal;
+
 
 public class LogInActivity extends Activity {
 
@@ -71,7 +73,7 @@ public class LogInActivity extends Activity {
 								DocumentSnapshot document = task.getResult();
 								if (document.exists()) {
 									Log.i(TAG, "Mieter mit ID gefunden");
-									renter = new Renter(id, document.getString("vorname"), document.getString("nachname"), Float.parseFloat(document.getString("miete")));
+									renter = new Renter(id, document.getString("vorname"), document.getString("nachname"), new BigDecimal(document.getString("miete")));
 									checkIfValid();
 								} else {
 									Log.i(TAG, "kein Mieter mit ID gefunden");
@@ -110,7 +112,7 @@ public class LogInActivity extends Activity {
 		Toast.makeText(this, "Überprüfen Sie Ihre Informationen und versuchen Sie es erneut.", Toast.LENGTH_SHORT).show();
 
 		// animeiert hint farbe
-		int hintColor = ContextCompat.getColor(this, R.color.danger); // @color/success// @color/danger
+		int hintColor = ContextCompat.getColor(this, R.color.danger); // @color/danger
 		AnimationUtil.animateHintAndDrawableColor(verifyIdInput, hintColor, 1000);
 		AnimationUtil.animateHintAndDrawableColor(firstNameData, hintColor, 1000);
 		AnimationUtil.animateHintAndDrawableColor(lastNameData, hintColor, 1000);

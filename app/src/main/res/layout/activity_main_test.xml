@@ -174,7 +174,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/bannerDescription" />
 
                 <TextView
-                    android:id="@+id/mieteDouble"
+                    android:id="@+id/mietpreisString"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/miete_price_string"

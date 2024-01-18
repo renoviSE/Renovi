@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.example.renovi.model.Renter;
 
+import java.math.BigDecimal;
+
 public class RenterSession {
     final String PREF_RENTER = "renter_prefs";
     final String KEY_ID = "key_id";
@@ -25,7 +27,7 @@ public class RenterSession {
         editor.putString(KEY_ID, renter.getId());
         editor.putString(KEY_FIRSTNAME, renter.getFirstName());
         editor.putString(KEY_LASTNAME, renter.getLastName());
-        editor.putFloat(KEY_RENT, renter.getRent());
+        editor.putString(KEY_RENT, renter.getRent().toString());
         editor.commit();
     }
 
@@ -39,7 +41,9 @@ public class RenterSession {
         String id = sharedPreferences.getString(KEY_ID, null);
         String firstName = sharedPreferences.getString(KEY_FIRSTNAME, null);
         String lastName = sharedPreferences.getString(KEY_LASTNAME, null);
-        float rent = sharedPreferences.getFloat(KEY_RENT, 0);
+        String rentAsString = sharedPreferences.getString(KEY_RENT, null);
+
+        BigDecimal rent = new BigDecimal(rentAsString);
 
         return new Renter(id, firstName, lastName, rent);
     }

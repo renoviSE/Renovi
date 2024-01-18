@@ -20,34 +20,46 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Renovierung;
+import com.example.renovi.model.Renter;
+import com.example.renovi.viewmodel.RenterSession;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.net.Uri;
+
+import java.math.BigDecimal;
+import java.math.BigInteger;
+
 public class MainActivityTest extends AppCompatActivity {
 
-    private ProgressBar rentProgressBar;
-    private TextView rentCostPercentage;
     private ProgressBar co2ProgressBar;
     private Button lastButton;
-    private String userId;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
     ScrollView mainScrollView;
     TextView mietepreisTitle;
+    private Renter renter;
+    private RenterSession renterSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_test);
+
+        getRenterFromSession();
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
 
-        userId = getIntent().getStringExtra("userId"); // entnimmt die übergebene user id von der LoginActivity
-
+        setRenterNameAsHeadline();
         initializeButtons();
         declareViews();
         initializeViews();
+    }
+
+    private void getRenterFromSession() {
+        renterSession = new RenterSession(this);
+        renter = renterSession.getRenter();
     }
 
     private void initializeButtons() {
@@ -58,51 +70,75 @@ public class MainActivityTest extends AppCompatActivity {
     }
 
     private void declareViews() {
-        rentProgressBar = (ProgressBar) findViewById(R.id.rentCostProgressBar);
-        rentCostPercentage = (TextView) findViewById(R.id.rentCostPercentage);
         co2ProgressBar = (ProgressBar) findViewById(R.id.co2ProgressBar);
     }
 
     private void initializeViews() {
-        int rentCurrentProgress = 20;
-        String rentCurrentCostPercentage = String.format("%d%%", rentCurrentProgress);
-        rentCostPercentage.setText(rentCurrentCostPercentage);
-        rentProgressBar.setProgress(rentCurrentProgress);
-        rentProgressBar.setMax(100);
-
-
         int co2CurrentProgress = 75;
         co2ProgressBar.setProgress(co2CurrentProgress);
         co2ProgressBar.setMax(100);
-
     }
 
     private void getRenovierungen(FirebaseFirestore db) {
         Log.i(TAG, "We´re trying");
         db.collection("Renovierung")
                 // document = eingeloggter User!
-                .whereEqualTo("mieter", db.collection("mieter").document("W6vJ0B7y1ahLHynv02AD"))
+                .whereEqualTo("mieter", db.collection("mieter").document(renter.getId()))
                 .get()
                 .addOnSuccessListener(documents -> {
+                    BigDecimal allObjectsValue = new BigDecimal("0");
+
                     // Daten erfolgreich erhalten
                     int buttonId = 1;
                     for (DocumentSnapshot document : documents.getDocuments()) {
                         if (document.exists()) {
                             String objectValue = document.getString("object");
-                            Renovierung renovierung = new Renovierung(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"));
+                            Renovierung renovierung = new Renovierung(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"), document.getString("zustand"));
                             // Erstelle einen Button für jeden Mieter
                             generateButtonForRenter(objectValue,buttonId, renovierung);
+
+                            // Speichere Kosten von allen Objekten
+                            allObjectsValue = allObjectsValue.add(renovierung.getObjectValue());
+
                             buttonId+=1;
                             Log.i(TAG, "Good Job");
                         }
 
                     }
+                    renter.setRent(allObjectsValue);
+                    renter.setRentDifferenceInPercentage(allObjectsValue);
+                    setRentCost();
                 })
                 .addOnFailureListener(e -> {
                     // Fehler beim Abrufen der Daten
                     Log.i(TAG, "NO");
 
                 });
+    }
+
+    private void setRenterNameAsHeadline() {
+        TextView userName = findViewById(R.id.userName);
+        userName.setText(renter.getFirstName() + " " + renter.getLastName());
+
+    }
+
+    private void setRentCost() {
+        TextView rentcostString = findViewById(R.id.mietpreisString);
+        rentcostString.setText(String.format("%.2f €", renter.getRent()));
+
+        TextView rentCostPercentage = findViewById(R.id.rentCostPercentage);
+        rentCostPercentage.setText(String.format("%.0f%%", renter.getRentDifferenceInPercentage()));
+
+        // Prüfen ob der Wert von getRentDifferenceInPercentage größer als 17
+        if (renter.getRentDifferenceInPercentage().compareTo(new BigDecimal("17")) > 0) {
+            rentCostPercentage.setTextColor(ContextCompat.getColor(this, R.color.gray4));
+        } else {
+            rentCostPercentage.setTextColor(ContextCompat.getColor(this, R.color.black1));
+        }
+        
+        ProgressBar rentCostProgressBar = findViewById(R.id.rentCostProgressBar);
+        rentCostProgressBar.setProgress(renter.getRentDifferenceInPercentage().intValue());
+        rentCostProgressBar.setMax(100);
     }
 
     private void initializeOverviewButton() {
@@ -131,11 +167,10 @@ public class MainActivityTest extends AppCompatActivity {
 
     private void initializeProfileButton() {
         Button profileButton = findViewById(R.id.profileButton);
-        profileButton.setOnClickListener(view -> switchToProfile(userId));
+        profileButton.setOnClickListener(view -> switchToProfile());
     }
-    private void switchToProfile(String userId) {
+    private void switchToProfile() {
         Intent switchActivityIntent = new Intent(this, ProfileActivity.class);
-        switchActivityIntent.putExtra("userId", userId); // übergibt die userId an ProfileActivity
 
         switchActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         overridePendingTransition(0,0); //disables animation
