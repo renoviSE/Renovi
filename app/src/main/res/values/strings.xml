@@ -37,6 +37,7 @@
     <!-- mainTest strings @bamboo-->
     <string name="welcome_string">Willkommen zurück,</string>
     <string name="user_name_string">Herr Mieter</string>
+    <string name="kosten_title_string">Kostenänderung</string>
     <string name="banner_title_string">Kaltmiete</string>
     <string name="banner_description_string">Mieterhöhung um xx%</string>
     <string name="miete_price_string">450,00€</string>

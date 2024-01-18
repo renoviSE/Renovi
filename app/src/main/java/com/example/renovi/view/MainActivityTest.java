@@ -32,8 +32,11 @@ public class MainActivityTest extends AppCompatActivity {
     private String userId;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
+
     private ScrollView mainScrollView;
     private TextView upcomingRenovationsTitle;
+
+    TextView mietepreisTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,12 +149,12 @@ public class MainActivityTest extends AppCompatActivity {
     private void initializeMainButton() { //main button scrolls down to the TextView "upcomingRenovationsTitle"
         Button mainButton = findViewById(R.id.navBarButton);
         mainScrollView = findViewById(R.id.scrollView2);
-        upcomingRenovationsTitle = findViewById(R.id.upcomingRenovationsTitle);
+        mietepreisTitle = findViewById(R.id.mietepreisTitle);
         mainButton.setOnClickListener(view -> scrollToTextView());
     }
     private void scrollToTextView() {
         mainScrollView.post(() -> {
-            mainScrollView.smoothScrollTo(0, upcomingRenovationsTitle.getTop()); // smoothScrollTo(horizontalScroll, verticalScroll)
+            mainScrollView.smoothScrollTo(0, mietepreisTitle.getTop()); // smoothScrollTo(horizontalScroll, verticalScroll)
         });
     }
 
@@ -205,7 +208,7 @@ public class MainActivityTest extends AppCompatActivity {
         int doorId = View.generateViewId();
         door.setId(doorId);
 
-        door.setBackgroundResource(R.drawable.il_door);
+        door.setBackgroundResource(R.drawable.il_tuer);
         door.setMaxHeight(dpToPx(38));
         door.setMaxWidth(dpToPx(42));
         door.setElevation(6);
