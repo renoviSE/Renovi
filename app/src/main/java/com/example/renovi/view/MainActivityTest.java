@@ -113,7 +113,9 @@ public class MainActivityTest extends AppCompatActivity {
                             buttonId+=1;
                             Log.i(TAG, "Good Job");
                         }
-
+                    }
+                    if (buttonId == 1) {
+                        generateButtonForRenter("Keine bevorstehenden Renovierungen",buttonId);
                     }
                     renter.setRent(allObjectsValue);
                     renter.setRentDifferenceInPercentage(allObjectsValue);
@@ -244,6 +246,21 @@ public class MainActivityTest extends AppCompatActivity {
             lastButton = renoButton;
         }
     }
+
+    // PLATZHALTER MACHE ICH NOCH SPÄTER
+    private void generateButtonForRenter(String renovationTitle, int buttonId) {
+
+        if (renovationTitle != null) {
+            Button renoButton = new Button(this);
+
+            setButtonValues(renovationTitle, buttonId, renoButton);
+
+            setButtonConstraints(buttonId, renoButton);
+
+            lastButton = renoButton;
+        }
+    }
+
 
     private void setDoorValues(ImageView door) {
         int doorId = View.generateViewId();
