@@ -25,7 +25,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.net.Uri;
 public class MainActivityTest extends AppCompatActivity {
-
     private ProgressBar rentProgressBar;
     private TextView rentCostPercentage;
     private ProgressBar co2ProgressBar;
@@ -33,15 +32,17 @@ public class MainActivityTest extends AppCompatActivity {
     private String userId;
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
-    ScrollView mainScrollView;
-    TextView upcomingRenovationsTitle;
+    private ScrollView mainScrollView;
+    private TextView upcomingRenovationsTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_test);
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
+
+        setContentView(R.layout.activity_main_test);
 
         userId = getIntent().getStringExtra("userId"); // entnimmt die übergebene user id von der LoginActivity
 
