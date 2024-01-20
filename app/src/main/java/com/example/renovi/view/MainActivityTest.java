@@ -135,7 +135,7 @@ public class MainActivityTest extends AppCompatActivity {
 
     private void setRentCost() {
         TextView rentcostString = findViewById(R.id.mietpreisString);
-        rentcostString.setText(String.format("%.2f €", renter.getRent()));
+        rentcostString.setText(renter.getRoundedRentasString() + "€");
 
         TextView rentCostPercentage = findViewById(R.id.rentCostPercentage);
         rentCostPercentage.setText(String.format("%.0f%%", renter.getRentDifferenceInPercentage()));

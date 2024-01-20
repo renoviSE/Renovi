@@ -2,6 +2,7 @@ package com.example.renovi.model;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.math.RoundingMode;
 
 public class Renter {
     private String id;
@@ -30,6 +31,10 @@ public class Renter {
 
     public BigDecimal getRent() {
         return rent;
+    }
+
+    public String getRoundedRentasString() {
+        return rent.setScale(2, RoundingMode.HALF_UP).toString().replace(".", ",");
     }
 
     public BigDecimal getRentDifferenceInPercentage() {return rentDifference;}
