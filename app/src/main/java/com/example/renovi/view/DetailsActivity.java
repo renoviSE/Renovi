@@ -7,14 +7,13 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
-import com.example.renovi.model.Renovierung;
+import com.example.renovi.model.Renovation;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -38,7 +37,7 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Renovierung renovierung = (Renovierung) intent.getSerializableExtra("renovierung");
+        Renovation renovation = (Renovation) intent.getSerializableExtra("renovierung");
         String geplanteRenovierung = intent.getStringExtra(MainActivityTest.geplanteRenovierung);
         System.out.println("suchmich" + geplanteRenovierung);
 
@@ -50,9 +49,9 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 
-        renovierungTextView.setText(renovierung.getObject());
-        kostenTextview.setText(renovierung.getCost() + "€" );
-        paragraphenTextView.setText(renovierung.getParagraph());
+        renovierungTextView.setText(renovation.getObject());
+        kostenTextview.setText(renovation.getCost() + "€" );
+        paragraphenTextView.setText(renovation.getParagraph());
         //kostenTextview.setText(kosten);
         kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
 

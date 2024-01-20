@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
-import com.example.renovi.model.Renovierung;
+import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.RenterSession;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -28,7 +28,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import android.net.Uri;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 
 public class MainActivityTest extends AppCompatActivity {
     private ProgressBar rentProgressBar;
@@ -103,12 +102,12 @@ public class MainActivityTest extends AppCompatActivity {
                     for (DocumentSnapshot document : documents.getDocuments()) {
                         if (document.exists()) {
                             String objectValue = document.getString("object");
-                            Renovierung renovierung = new Renovierung(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"), document.getString("zustand"));
+                            Renovation renovation = new Renovation(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"), document.getString("zustand"));
                             // Erstelle einen Button für jeden Mieter
-                            generateButtonForRenter(objectValue,buttonId, renovierung);
+                            generateButtonForRenter(objectValue,buttonId, renovation);
 
                             // Speichere Kosten von allen Objekten
-                            allObjectsValue = allObjectsValue.add(renovierung.getObjectValue());
+                            allObjectsValue = allObjectsValue.add(renovation.getObjectValue());
 
                             buttonId+=1;
                             Log.i(TAG, "Good Job");
@@ -158,7 +157,7 @@ public class MainActivityTest extends AppCompatActivity {
         //startButton.setOnClickListener(view -> switchToDetails("1"));
     }
 
-    private void switchToDetails(Renovierung renovierung) {
+    private void switchToDetails(Renovation renovierung) {
         Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
         switchActivityIntent.putExtra("renovierung", renovierung);
         startActivity(switchActivityIntent);
@@ -221,7 +220,7 @@ public class MainActivityTest extends AppCompatActivity {
         return Math.round((float) dp * density);
     }
 
-    private void generateButtonForRenter(String renovationTitle, int buttonId, Renovierung renovierung) {
+    private void generateButtonForRenter(String renovationTitle, int buttonId, Renovation renovierung) {
 
         if (renovationTitle != null) {
             Button renoButton = new Button(this);

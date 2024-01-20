@@ -3,7 +3,7 @@ package com.example.renovi.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-public class Renovierung implements Serializable {
+public class Renovation implements Serializable {
     //private int id;
     private String object;
     private String advantages;
@@ -15,7 +15,7 @@ public class Renovierung implements Serializable {
 
 //private int mieterId;
 
-    public Renovierung(String object, String advantages, String disadvantages, String cost, String paragraph, String condition) {
+    public Renovation(String object, String advantages, String disadvantages, String cost, String paragraph, String condition) {
         this.object = object;
         this.advantages = advantages;
         this.disadvantages = disadvantages;

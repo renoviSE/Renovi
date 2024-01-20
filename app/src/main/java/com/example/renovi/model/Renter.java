@@ -43,6 +43,4 @@ public class Renter {
             rentDifference = BigDecimal.ZERO;
         }
     }
-
-    public String getRentasString() {return String.valueOf(rent).replace(".", ",");}
 }
