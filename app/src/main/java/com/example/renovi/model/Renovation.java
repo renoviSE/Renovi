@@ -51,8 +51,8 @@ public class Renovation implements Serializable {
     public BigDecimal getObjectValue() { // BigDecimal soll der beste Datentyp sein um mit Währung zurechnen
         BigDecimal bigDecimalcost = new BigDecimal(cost);
         switch (condition) {
-            case "katastrophe": return bigDecimalcost.subtract(bigDecimalcost.multiply(new BigDecimal("0.08"))); // cost - (cost * %)
-            case "schlecht": return bigDecimalcost.subtract(bigDecimalcost.multiply(new BigDecimal("0.04")));
+            case "gut": return bigDecimalcost.multiply(new BigDecimal("0.08")); // cost - (cost * %)
+            case "mittel": return bigDecimalcost.multiply(new BigDecimal("0.04"));
             default: return bigDecimalcost;
         }
     }
