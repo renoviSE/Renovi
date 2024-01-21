@@ -86,6 +86,7 @@
     <string name="fenster_button_title">Fenster</string>
     <string name="tuer_button_title">Tür</string>
     <string name="wc_button_title">WC</string>
+    <string name="dach_button_title">Dach</string>
     <!-- button strings -->
 
 </resources>

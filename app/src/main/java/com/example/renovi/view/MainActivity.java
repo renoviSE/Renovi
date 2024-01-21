@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
-import com.example.renovi.model.ButtonCreator;
+import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.RenterSession;
@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
-    private ScrollView mainScrollView;
-    TextView mietepreisTitle;
     private Renter renter;
     private RenterSession renterSession;
 
@@ -163,15 +161,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-    private void initializeMainButton() { //main button scrolls down to the TextView "mietepreisTitle"
+    private void initializeMainButton() { //main button scrolls down
         Button mainButton = findViewById(R.id.navBarButton);
-        mainScrollView = findViewById(R.id.scrollView2);
-        mietepreisTitle = findViewById(R.id.mietepreisTitle);
         mainButton.setOnClickListener(view -> scrollToTextView());
     }
     private void scrollToTextView() {
+        ScrollView mainScrollView = findViewById(R.id.scrollView2);
+
         mainScrollView.post(() -> {
-            mainScrollView.smoothScrollTo(0, mietepreisTitle.getTop()); // smoothScrollTo(horizontalScroll, verticalScroll)
+            mainScrollView.smoothScrollTo(0, mainScrollView.getBottom()); // smoothScrollTo(horizontalScroll, verticalScroll)
         });
     }
 

@@ -1,4 +1,4 @@
-package com.example.renovi.model;
+package com.example.renovi.viewmodel;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -21,55 +21,49 @@ public class ButtonCreator {
 
     public Button createButton(ConstraintLayout layout, String objectName) {
         // Erstellen des Buttons
-        Button tuerRenovierungButton = new Button(context);
-        tuerRenovierungButton.setId(View.generateViewId());
+        Button renovierungButton = new Button(context);
+        renovierungButton.setId(View.generateViewId());
 
         // Setzen der Layout-Parameter
         ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.MATCH_PARENT, // Breite entspricht der Breite des Parent-Layouts
                 (int) (85 * context.getResources().getDisplayMetrics().density) // Höhe
         );
-        tuerRenovierungButton.setLayoutParams(params);
+        renovierungButton.setLayoutParams(params);
 
         // Hintergrund und Texteigenschaften setzen
-        tuerRenovierungButton.setBackgroundResource(R.drawable.bg_gray_round_corner);
-        tuerRenovierungButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
-        tuerRenovierungButton.setPaddingRelative(
+        renovierungButton.setBackgroundResource(R.drawable.bg_gray_round_corner);
+        renovierungButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+        renovierungButton.setPaddingRelative(
                 (int) (20 * context.getResources().getDisplayMetrics().density), // start
                 0, // top
                 (int) (20 * context.getResources().getDisplayMetrics().density), // end
                 0  // bottom
         );
 
-        configureButtonBasedOnName(tuerRenovierungButton, objectName);
-
-        //tuerRenovierungButton.setText(R.string.tuer_renovierung_button_title);
-
-
-        // Drawable hinzufügen
+        configureButtonBasedOnName(renovierungButton, objectName);
 
         // Button zum Layout hinzufügen
-        layout.addView(tuerRenovierungButton);
+        layout.addView(renovierungButton);
 
         // Constraints setzen
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
 
-        // Wenn es der erste Button ist, setzen Sie ihn unter R.id.upcomingRenovationsTitle
-        // Ansonsten setzen Sie ihn unter den zuletzt hinzugefügten Button
-        constraintSet.connect(tuerRenovierungButton.getId(), ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, 16);
+        // Wenn es der erste Button ist, wird er unter R.id.upcomingRenovationsTitle gesetzt
+        // Ansonsten wird er unter den zuletzt hinzugefügten Button gesetzt
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, 16);
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
 
-        constraintSet.connect(tuerRenovierungButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
-        constraintSet.connect(tuerRenovierungButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
-
-        constraintSet.connect(R.id.mietepreisTitle, ConstraintSet.TOP, tuerRenovierungButton.getId(), ConstraintSet.BOTTOM, 36);
+        constraintSet.connect(R.id.mietepreisTitle, ConstraintSet.TOP, renovierungButton.getId(), ConstraintSet.BOTTOM, 36);
 
         constraintSet.applyTo(layout);
 
         // Aktualisieren der ID des zuletzt hinzugefügten Buttons
-        lastButtonId = tuerRenovierungButton.getId();
+        lastButtonId = renovierungButton.getId();
 
-        return tuerRenovierungButton;
+        return renovierungButton;
     }
 
     public void configureButtonBasedOnName(Button button, String buttonName) {
