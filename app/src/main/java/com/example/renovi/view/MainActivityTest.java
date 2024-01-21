@@ -56,11 +56,9 @@ public class MainActivityTest extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
 
-
-        setRenterNameAsHeadline();
-
         setContentView(R.layout.activity_main_test);
-
+        
+        setRenterNameAsHeadline();
         initializeButtons();
         declareViews();
         initializeViews();
@@ -130,7 +128,6 @@ public class MainActivityTest extends AppCompatActivity {
     private void setRenterNameAsHeadline() {
         TextView userName = findViewById(R.id.userName);
         userName.setText(renter.getFirstName() + " " + renter.getLastName());
-
     }
 
     private void setRentCost() {
