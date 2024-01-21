@@ -20,9 +20,7 @@ public class InboxActivity extends AppCompatActivity {
         Button startButton = findViewById(R.id.InboxToMainButton);
         startButton.setOnClickListener(view -> switchToMain());
     }
-
     private void switchToMain() {
-        Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
-        startActivity(switchActivityIntent);
+        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
     }
 }

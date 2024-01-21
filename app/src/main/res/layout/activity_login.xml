@@ -31,7 +31,7 @@
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_marginTop="35dp"
-		android:text="@string/signin_title"
+		android:text="@string/login_title"
 		android:textColor="@color/black1"
 		android:textSize="20sp"
 		android:textStyle="bold"

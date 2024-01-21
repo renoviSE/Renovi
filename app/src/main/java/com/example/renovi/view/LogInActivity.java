@@ -126,7 +126,7 @@ public class LogInActivity extends Activity {
 		AnimationUtil.animateInputAndDrawableColor(firstNameData, currentDrawableColor, hintColor, 1000);
 		AnimationUtil.animateInputAndDrawableColor(lastNameData, currentDrawableColor, hintColor, 1000);
 
-		Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
+		Intent switchActivityIntent = new Intent(this, MainActivity.class);
 		startActivity(switchActivityIntent);
 	}
 }

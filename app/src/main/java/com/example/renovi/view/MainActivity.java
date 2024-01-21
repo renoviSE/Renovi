@@ -2,23 +2,20 @@ package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.ContextCompat;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.ButtonCreator;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.RenterSession;
@@ -29,17 +26,11 @@ import android.net.Uri;
 
 import java.math.BigDecimal;
 
-public class MainActivityTest extends AppCompatActivity {
-    private ProgressBar rentProgressBar;
-    private TextView rentCostPercentage;
-    private ProgressBar co2ProgressBar;
-    private Button lastButton;
+public class MainActivity extends AppCompatActivity {
+
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
-
     private ScrollView mainScrollView;
-    private TextView upcomingRenovationsTitle;
-
     TextView mietepreisTitle;
     private Renter renter;
     private RenterSession renterSession;
@@ -48,7 +39,7 @@ public class MainActivityTest extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_main_test);
+        setContentView(R.layout.activity_main);
 
         getRenterFromSession();
 
@@ -56,12 +47,10 @@ public class MainActivityTest extends AppCompatActivity {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         getRenovierungen(db);
 
-        setContentView(R.layout.activity_main_test);
-        
+        setContentView(R.layout.activity_main);
+
         setRenterNameAsHeadline();
         initializeButtons();
-        declareViews();
-        initializeViews();
     }
 
     private void getRenterFromSession() {
@@ -76,15 +65,6 @@ public class MainActivityTest extends AppCompatActivity {
         initializeFaqButton();
     }
 
-    private void declareViews() {
-        co2ProgressBar = (ProgressBar) findViewById(R.id.co2ProgressBar);
-    }
-
-    private void initializeViews() {
-        int co2CurrentProgress = 75;
-        co2ProgressBar.setProgress(co2CurrentProgress);
-        co2ProgressBar.setMax(100);
-    }
 
     private void getRenovierungen(FirebaseFirestore db) {
         Log.i(TAG, "We´re trying");
@@ -99,10 +79,10 @@ public class MainActivityTest extends AppCompatActivity {
                     int buttonId = 1;
                     for (DocumentSnapshot document : documents.getDocuments()) {
                         if (document.exists()) {
-                            String objectValue = document.getString("object");
+                            String objectName = document.getString("object");
                             Renovation renovation = new Renovation(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"), document.getString("zustand"));
                             // Erstelle einen Button für jeden Mieter
-                            generateButtonForRenter(objectValue,buttonId, renovation);
+                            generateButtonForRenter(objectName, renovation);
 
                             // Speichere Kosten von allen Objekten
                             allObjectsValue = allObjectsValue.add(renovation.getObjectValue());
@@ -111,9 +91,12 @@ public class MainActivityTest extends AppCompatActivity {
                             Log.i(TAG, "Good Job");
                         }
                     }
+                    // Wenn keine Renovierungen vorhanden sind
                     if (buttonId == 1) {
-                        generateButtonForRenter("Keine bevorstehenden Renovierungen",buttonId);
+                        TextView noRenovations = findViewById(R.id.noRenovations);
+                        noRenovations.setVisibility(View.VISIBLE);
                     }
+
                     renter.setRent(allObjectsValue);
                     renter.setRentDifferenceInPercentage(allObjectsValue);
                     setRentCost();
@@ -125,6 +108,7 @@ public class MainActivityTest extends AppCompatActivity {
                 });
     }
 
+
     private void setRenterNameAsHeadline() {
         TextView userName = findViewById(R.id.userName);
         userName.setText(renter.getFirstName() + " " + renter.getLastName());
@@ -134,16 +118,12 @@ public class MainActivityTest extends AppCompatActivity {
         TextView rentcostString = findViewById(R.id.mietpreisString);
         rentcostString.setText(renter.getRoundedRentasString() + "€");
 
-        TextView rentCostPercentage = findViewById(R.id.rentCostPercentage);
-        rentCostPercentage.setText(String.format("%.0f%%", renter.getRentDifferenceInPercentage()));
+        TextView bannerDescription = findViewById(R.id.bannerDescription);
+        String formattedPercentage = String.format("%.0f%%", renter.getRentDifferenceInPercentage());
+        String bannerDescriptionText = getString(R.string.banner_description_string, formattedPercentage);
+        bannerDescription.setText(bannerDescriptionText);
 
-        // Prüfen ob der Wert von getRentDifferenceInPercentage größer als 17
-        if (renter.getRentDifferenceInPercentage().compareTo(new BigDecimal("17")) > 0) {
-            rentCostPercentage.setTextColor(ContextCompat.getColor(this, R.color.gray4));
-        } else {
-            rentCostPercentage.setTextColor(ContextCompat.getColor(this, R.color.black1));
-        }
-        
+
         ProgressBar rentCostProgressBar = findViewById(R.id.rentCostProgressBar);
         rentCostProgressBar.setProgress(renter.getRentDifferenceInPercentage().intValue());
         rentCostProgressBar.setMax(100);
@@ -159,8 +139,6 @@ public class MainActivityTest extends AppCompatActivity {
         switchActivityIntent.putExtra("renovierung", renovierung);
         startActivity(switchActivityIntent);
     }
-
-
 
     private void initializeInboxButton() {
         Button notificationButton = findViewById(R.id.notificationButton);
@@ -185,7 +163,7 @@ public class MainActivityTest extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-    private void initializeMainButton() { //main button scrolls down to the TextView "upcomingRenovationsTitle"
+    private void initializeMainButton() { //main button scrolls down to the TextView "mietepreisTitle"
         Button mainButton = findViewById(R.id.navBarButton);
         mainScrollView = findViewById(R.id.scrollView2);
         mietepreisTitle = findViewById(R.id.mietepreisTitle);
@@ -211,122 +189,20 @@ public class MainActivityTest extends AppCompatActivity {
         }
     }
 
-
     private int dpToPx(int dp) {
         float density = getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
     }
 
-    private void generateButtonForRenter(String renovationTitle, int buttonId, Renovation renovierung) {
+    private void generateButtonForRenter(String renovationTitle, Renovation renovierung) {
+        // Zugriff auf das Haupt-ConstraintLayout
+        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
 
+        // Erstellen und Hinzufügen des Buttons zum Layout
         if (renovationTitle != null) {
-            Button renoButton = new Button(this);
+            ButtonCreator buttonCreator  = new ButtonCreator(this);
+            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle);
             renoButton.setOnClickListener(view -> switchToDetails(renovierung)); //hier renoId eigentlich
-
-            setButtonValues(renovationTitle, buttonId, renoButton);
-
-            ImageView arrow = new ImageView(this);
-            setImageValues(arrow);
-            setImageConstraints(arrow, renoButton);
-
-            if(renovationTitle.contains("Tür")){
-                //ImageView door = new ImageView(this);
-                //setDoorValues(door);
-                //setImageConstraints(door, renoButton, 300);
-            } else if (renovationTitle.contains("Fenster")) {
-
-            }
-
-            setButtonConstraints(buttonId, renoButton);
-
-            lastButton = renoButton;
         }
-    }
-
-    // PLATZHALTER MACHE ICH NOCH SPÄTER
-    private void generateButtonForRenter(String renovationTitle, int buttonId) {
-
-        if (renovationTitle != null) {
-            Button renoButton = new Button(this);
-
-            setButtonValues(renovationTitle, buttonId, renoButton);
-
-            setButtonConstraints(buttonId, renoButton);
-
-            lastButton = renoButton;
-        }
-    }
-
-
-    private void setDoorValues(ImageView door) {
-        int doorId = View.generateViewId();
-        door.setId(doorId);
-
-        door.setBackgroundResource(R.drawable.il_tuer);
-        door.setMaxHeight(dpToPx(38));
-        door.setMaxWidth(dpToPx(42));
-        door.setElevation(6);
-    }
-
-    private static void setImageValues(ImageView arrow) {
-        int arrowId = View.generateViewId();
-        arrow.setId(arrowId);
-
-        arrow.setPadding(0, 0, 0, 0);
-        arrow.setBackgroundResource(R.drawable.il_next);
-        arrow.setElevation(6);
-    }
-
-    private void setImageConstraints(ImageView arrow, Button renoButton) {
-        ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
-        constraintLayout.addView(arrow);
-
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(constraintLayout);
-
-        constraintSet.connect(arrow.getId(), ConstraintSet.END, renoButton.getId(), ConstraintSet.END);
-        //constraintSet.connect(arrow.getId(), ConstraintSet.START, renoButton.getId(), ConstraintSet.START);
-        constraintSet.setMargin(arrow.getId(), ConstraintSet.END, dpToPx(30));
-        
-        constraintSet.connect(arrow.getId(),ConstraintSet.BOTTOM,renoButton.getId(),ConstraintSet.BOTTOM);
-        constraintSet.connect(arrow.getId(),ConstraintSet.TOP,renoButton.getId(),ConstraintSet.TOP);
-
-        constraintSet.applyTo(constraintLayout);
-    }
-
-    private void setButtonConstraints(int buttonId, Button renoButton) {
-        ConstraintLayout constraintLayout = findViewById(R.id.inner_constraint);
-        constraintLayout.addView(renoButton);
-
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(constraintLayout);
-
-        if (buttonId == 1) {
-            constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM);
-        }else{
-            constraintSet.connect(renoButton.getId(), ConstraintSet.TOP, lastButton.getId(), ConstraintSet.BOTTOM);
-            constraintSet.connect(lastButton.getId(), ConstraintSet.BOTTOM, renoButton.getId(), ConstraintSet.TOP);
-        }
-        constraintSet.connect(renoButton.getId(), ConstraintSet.END, R.id.verbrauchssenkungTitle, ConstraintSet.END);
-        constraintSet.connect(renoButton.getId(), ConstraintSet.START, R.id.verbrauchssenkungTitle, ConstraintSet.START);
-        constraintSet.connect(R.id.verbrauchssenkungTitle,ConstraintSet.TOP, renoButton.getId(),ConstraintSet.BOTTOM);
-        constraintSet.setMargin(renoButton.getId(), ConstraintSet.TOP, dpToPx(16));
-
-
-        constraintSet.connect(renoButton.getId(),ConstraintSet.BOTTOM,R.id.verbrauchssenkungTitle,ConstraintSet.TOP);
-
-        constraintSet.applyTo(constraintLayout);
-    }
-
-    private void setButtonValues(String renovationTitle, int buttonId, Button renoButton) {
-        renoButton.setText(renovationTitle);
-        renoButton.setId(buttonId);
-        renoButton.setWidth(dpToPx(340));
-        renoButton.setHeight(dpToPx(85));
-        renoButton.setPadding(0, 0, 0, 0);
-        renoButton.setTextSize(14);
-        renoButton.setTypeface(null, Typeface.BOLD);
-        renoButton.setTextColor(ContextCompat.getColor(this, R.color.gray4));
-        renoButton.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_lightblue));
     }
 }

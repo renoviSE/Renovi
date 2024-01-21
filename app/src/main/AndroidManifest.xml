@@ -25,7 +25,7 @@
             android:name=".view.DetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".view.MainActivityTest"
+            android:name=".view.MainActivity"
             android:exported="true"
             android:label="@string/title_activity_main_test" />
         <activity
@@ -42,10 +42,7 @@
         <activity
             android:name=".view.LogInActivity"
             android:exported="true"
-            android:label="@string/title_activity_signin" />
-        <activity
-            android:name=".view.AddNewRenterActivity"
-            android:exported="true"></activity>
+            android:label="@string/title_activity_login" />
     </application>
 
 </manifest>

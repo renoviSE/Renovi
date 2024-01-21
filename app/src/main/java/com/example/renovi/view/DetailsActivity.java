@@ -5,10 +5,12 @@ import androidx.core.content.ContextCompat;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Renovation renovation = (Renovation) intent.getSerializableExtra("renovierung");
-        String geplanteRenovierung = intent.getStringExtra(MainActivityTest.geplanteRenovierung);
+        String geplanteRenovierung = intent.getStringExtra(MainActivity.geplanteRenovierung);
         System.out.println("suchmich" + geplanteRenovierung);
 
         //getRenovierungsDaten(db, geplanteRenovierung);
@@ -56,20 +58,15 @@ public class DetailsActivity extends AppCompatActivity {
         kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
 
 
-
-
-
-
+        configureImageViewBasedOnName(renovation.getObject());
     }
 
     private void initializeBackToMainButton() {
         Button startButton = findViewById(R.id.InboxToMainButton);
         startButton.setOnClickListener(view -> switchToMain());
     }
-
     private void switchToMain() {
-        Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
-        startActivity(switchActivityIntent);
+        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen zurück
     }
 
     private void initializeReadMoreLink() { //reade more redirects to website
@@ -91,4 +88,28 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    public void configureImageViewBasedOnName(String imageName) {
+        ImageView imageView = findViewById(R.id.objectIllustration);
+
+        // Umwandlung von Umlauten und Konvertierung in Kleinbuchstaben
+        String normalizedImageName = normalizeString(imageName.toLowerCase());
+
+        // Generieren des Ressourcen-Identifikators für das Bild
+        String resourceImageName = "il_" + normalizedImageName; // z.B. "il_fenster"
+        int imageResId = this.getResources().getIdentifier(resourceImageName, "drawable", this.getPackageName());
+
+        if (imageResId != 0) {
+            Drawable drawable = ContextCompat.getDrawable(this, imageResId);
+            imageView.setBackground(drawable);
+        }
+    }
+    private String normalizeString(String input) {
+        return input.replace("ä", "ae")
+                .replace("ö", "oe")
+                .replace("ü", "ue")
+                .replace("Ä", "Ae")
+                .replace("Ö", "Oe")
+                .replace("Ü", "Ue")
+                .replace("ß", "ss");
+    }
 }

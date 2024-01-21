@@ -11,7 +11,7 @@
         android:id="@+id/constraint"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.MainActivityTest">
+        tools:context=".view.MainActivity">
 
         <ScrollView
             android:id="@+id/scrollView2"
@@ -21,7 +21,6 @@
             android:layout_marginEnd="24dp"
             android:fillViewport="true"
             android:scrollbars="none"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -31,7 +30,7 @@
                 android:id="@+id/inner_constraint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".view.MainActivityTest">
+                tools:context=".view.MainActivity">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/header_constraint"
@@ -41,7 +40,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:context=".view.MainActivityTest">
+                    tools:context=".view.MainActivity">
 
                     <TextView
                         android:id="@+id/welcomeMassage"
@@ -90,28 +89,18 @@
                     app:layout_constraintTop_toBottomOf="@+id/header_constraint" />
 
                 <TextView
-                    android:id="@+id/verbrauchssenkungTitle"
+                    android:id="@+id/noRenovations"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/verbrauchssenkung_title"
-                    android:textColor="@color/black1"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_gray_round_corner"
+                    android:backgroundTint="@color/gray4"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    android:text="@string/kein_button_tittle"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/upcomingRenovationsTitle" />
-
-                <ImageView
-                    android:id="@+id/verbrauchssenkungBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/il_verbrauchssenkung"
-                    android:padding="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/verbrauchssenkungTitle" />
 
                 <TextView
                     android:id="@+id/mietepreisTitle"
@@ -124,17 +113,15 @@
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/verbrauchssenkungBackground" />
+                    app:layout_constraintTop_toBottomOf="@+id/noRenovations" />
 
                 <ImageView
                     android:id="@+id/banner"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:layout_marginTop="24dp"
-                    android:layout_marginBottom="100dp"
                     android:background="@drawable/il_banner"
                     android:padding="10dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/mietepreisTitle" />
@@ -147,7 +134,7 @@
                     android:layout_marginTop="32dp"
                     android:text="@string/banner_title_string"
                     android:textColor="@color/gray4"
-                    android:textSize="16dp"
+                    android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/banner"
                     app:layout_constraintTop_toTopOf="@+id/banner" />
@@ -160,7 +147,7 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/banner_description_string"
                     android:textColor="@color/gray4"
-                    android:textSize="12dp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="@+id/banner"
                     app:layout_constraintTop_toBottomOf="@+id/bannerTitle" />
 
@@ -192,6 +179,7 @@
                     android:layout_width="106dp"
                     android:layout_height="106dp"
                     android:background="@drawable/bg_eclipse"
+                    android:backgroundTint="@color/gray4"
                     app:layout_constraintBottom_toBottomOf="@+id/banner"
                     app:layout_constraintEnd_toEndOf="@+id/banner"
                     app:layout_constraintHorizontal_bias="0.85"
@@ -210,83 +198,13 @@
                     app:layout_constraintTop_toTopOf="@+id/eclipseBackground"
                     tools:progress="20" />
 
-                <TextView
-                    android:id="@+id/rentCostPercentage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/percentage"
-                    android:textColor="@color/gray4"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/eclipseBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/eclipseBackground"
-                    app:layout_constraintHorizontal_bias="0.85"
-                    app:layout_constraintStart_toStartOf="@+id/eclipseBackground"
-                    app:layout_constraintTop_toTopOf="@+id/eclipseBackground"
-                    app:layout_constraintVertical_bias="0.1" />
-
                 <ImageView
-                    android:id="@+id/co2Background"
-                    android:layout_width="130dp"
-                    android:layout_height="58dp"
-                    android:layout_marginTop="-16dp"
-                    android:background="@drawable/bg_gray_round_corner"
-                    android:backgroundTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@+id/verbrauchssenkungBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/verbrauchssenkungBackground"
-                    app:layout_constraintStart_toStartOf="@+id/verbrauchssenkungBackground"
-                    app:layout_constraintTop_toTopOf="@+id/verbrauchssenkungBackground"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <TextView
-                    android:id="@+id/co2Title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/co2_title"
-                    android:textColor="@color/gray2"
-                    android:textSize="8dp"
-                    app:layout_constraintStart_toStartOf="@+id/co2Background"
-                    app:layout_constraintTop_toTopOf="@+id/co2Background" />
-
-                <TextView
-                    android:id="@+id/co2Percantage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/co2_percantage"
-                    android:textColor="@color/success"
-                    android:textSize="8dp"
-                    app:layout_constraintStart_toEndOf="@+id/co2Title"
-                    app:layout_constraintTop_toTopOf="@+id/co2Background" />
-
-                <TextView
-                    android:id="@+id/co2ProgressbarTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/co2_progressbar_title"
-                    android:textColor="@color/gray1"
-                    android:textSize="10dp"
-                    app:layout_constraintStart_toStartOf="@+id/co2Background"
-                    app:layout_constraintTop_toBottomOf="@+id/co2Title" />
-
-                <ProgressBar
-                    android:id="@+id/co2ProgressBar"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="113dp"
-                    android:layout_height="6dp"
-                    android:layout_marginTop="-8dp"
-                    android:backgroundTint="@color/black"
-                    android:progressDrawable="@drawable/bg_progressbar"
-                    app:layout_constraintBottom_toBottomOf="@+id/co2Background"
-                    app:layout_constraintEnd_toEndOf="@+id/co2Background"
-                    app:layout_constraintStart_toStartOf="@+id/co2Background"
-                    app:layout_constraintTop_toBottomOf="@+id/co2ProgressbarTitle"
-                    tools:progress="75" />
+                    android:id="@+id/scrollSpacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="110dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/banner" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,7 +2,7 @@
     <string name="app_name">Renovi</string>
     <string name="title_activity_overview">OverviewActivity</string>
     <string name="title_activity_welcome">Welcome</string>
-    <string name="title_activity_signin">Sign In</string>
+    <string name="title_activity_login">Log In</string>
     <string name="title_activity_main_test">Main (Test)</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -18,28 +18,28 @@
     <string name="renter_id">ID</string>
 
 
-    <!-- welcomescreen strings @bamboo-->
+    <!-- welcomescreen strings -->
     <string name="logo_char">R</string>
     <string name="logo_string">enovi</string>
     <string name="slogan_string">sehr cooler slogan</string>
     <string name="start_button_string">Get Started</string>
-    <!-- welcomescreen strings @bamboo-->
+    <!-- welcomescreen strings -->
 
-    <!-- signin strings @bamboo-->
-    <string name="signin_title">Melden Sie sich an</string>
+    <!-- login strings -->
+    <string name="login_title">Melden Sie sich an</string>
     <string name="descriptiontext_string">Den Verifizierungscode erhalten Sie vom Vermieter</string>
     <string name="verify_id_placeholder_string">Verifizierungscode</string>
     <string name="first_name_placeholder_string">Vorname</string>
     <string name="last_name_placeholder_string">Nachname</string>
     <string name="login_button_string">Anmelden</string>
-    <!-- signin strings @bamboo-->
+    <!-- login strings -->
 
-    <!-- mainTest strings @bamboo-->
+    <!-- mainTest strings -->
     <string name="welcome_string">Willkommen zurück,</string>
     <string name="user_name_string">Herr Mieter</string>
     <string name="kosten_title_string">Kostenänderung</string>
     <string name="banner_title_string">Kaltmiete</string>
-    <string name="banner_description_string">Mieterhöhung um xx%</string>
+    <string name="banner_description_string">Mieterhöhung um %1$s</string>
     <string name="miete_price_string">450,00€</string>
     <string name="percentage">20%</string>
     <string name="reperatur_title">Reperaturen</string>
@@ -55,9 +55,9 @@
     <string name="fenster_renovierung_button_description">Kosten: 30€</string>
     <string name="badsanierung_renovierung_button_title">Badsanierung</string>
     <string name="badsanierung_renovierung_button_description">Kosten: 100€</string>
-    <!-- mainTest strings @bamboo-->
+    <!-- mainTest strings -->
 
-    <!-- inbox strings @bamboo-->
+    <!-- inbox strings -->
     <string name="details_title">Haustür</string>
     <string name="details_price_string">Kosten:</string>
     <string name="details_price_double">50€</string>
@@ -67,17 +67,25 @@
     <string name="redirect_title">Weitere Renovierungen</string>
     <string name="object_count_string">6 Objekte</string>
     <string name="details_button_string">Reperatur vermerken</string>
-    <!-- inbox strings @bamboo-->
+    <!-- inbox strings -->
 
-    <!-- inbox strings @bamboo-->
+    <!-- inbox strings -->
     <string name="inbox_title">Postfach</string>
     <string name="back_button_string">&lt;</string>
     <string name="more_button_string">&#8226;&#8226;</string>
-    <!-- inbox strings @bamboo-->
+    <!-- inbox strings -->
 
-    <!-- profile strings @bamboo-->
+    <!-- profile strings -->
     <string name="profile_title">Profil</string>
     <string name="app_information_string">Renovi\n\v 1.2.18 - Build 1</string> <!-- version.sprint.deployment-Nr.-->
     <string name="role_string">Mieter</string>
-    <!-- profile strings @bamboo-->
+    <!-- profile strings -->
+
+    <!-- button strings -->
+    <string name="kein_button_tittle">Keine bevorstehenden Renovierungen</string>
+    <string name="fenster_button_title">Fenster</string>
+    <string name="tuer_button_title">Tür</string>
+    <string name="wc_button_title">WC</string>
+    <!-- button strings -->
+
 </resources>

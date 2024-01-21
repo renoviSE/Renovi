@@ -40,7 +40,7 @@ public class ProfileActivity extends AppCompatActivity {
         profileLastName = findViewById(R.id.profileLastName);
         profileVerifyId = findViewById(R.id.profileVerifyId);
 
-        initializeHomeButton();
+        initializeBackToMainButton();
         initializeCopyButton();
         initializeInboxButton();
         initializeFaqButton();
@@ -68,14 +68,12 @@ public class ProfileActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeHomeButton() {
+    private void initializeBackToMainButton() {
         Button homeButton = findViewById(R.id.homeButton);
-        homeButton.setOnClickListener(view -> switchToHome());
+        homeButton.setOnClickListener(view -> switchToMain());
     }
-    private void switchToHome() {
-        Intent switchActivityIntent = new Intent(this, MainActivityTest.class);
-        switchActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-        startActivity(switchActivityIntent);
+    private void switchToMain() {
+        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
         overridePendingTransition(0,0); //disables animation
     }
 
