@@ -66,19 +66,16 @@ public class LogInActivity extends Activity {
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
 		try {
 			db.collection("Mieter").document(id).get()
-					.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-						@Override
-						public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-							if (task.isSuccessful()) {
-								DocumentSnapshot document = task.getResult();
-								if (document.exists()) {
-									Log.i(TAG, "Mieter mit ID gefunden");
-									renter = new Renter(id, document.getString("vorname"), document.getString("nachname"), new BigDecimal(document.getString("miete")));
-									checkIfValid();
-								} else {
-									Log.i(TAG, "kein Mieter mit ID gefunden");
-									onFalseLoginData();
-								}
+					.addOnCompleteListener(task -> {
+						if (task.isSuccessful()) {
+							DocumentSnapshot document = task.getResult();
+							if (document.exists()) {
+								Log.i(TAG, "Mieter mit ID gefunden");
+								renter = new Renter(id, document.getString("vorname"), document.getString("nachname"), new BigDecimal(document.getString("miete")));
+								checkIfValid();
+							} else {
+								Log.i(TAG, "kein Mieter mit ID gefunden");
+								onFalseLoginData();
 							}
 						}
 					});

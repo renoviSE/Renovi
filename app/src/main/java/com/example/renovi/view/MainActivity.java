@@ -132,11 +132,6 @@ public class MainActivity extends AppCompatActivity {
         rentCostProgressBar.setMax(100);
     }
 
-    private void initializeOverviewButton() {
-        Button startButton = findViewById(R.id.mailButton);
-        //startButton.setOnClickListener(view -> switchToDetails("1"));
-    }
-
     private void switchToDetails(Renovation renovierung) {
         Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
         switchActivityIntent.putExtra("renovierung", renovierung);
@@ -190,11 +185,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (ActivityNotFoundException e) {
             Toast.makeText(this, "Keine Anwendung gefunden, um diese URL zu öffnen", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private int dpToPx(int dp) {
-        float density = getResources().getDisplayMetrics().density;
-        return Math.round((float) dp * density);
     }
 
     private void generateButtonForRenter(String renovationTitle, Renovation renovierung) {
