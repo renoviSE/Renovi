@@ -53,7 +53,7 @@ public class Renovation implements Serializable {
         switch (condition) {
             case "gut": return bigDecimalcost.multiply(new BigDecimal("0.08")); // cost - (cost * %)
             case "mittel": return bigDecimalcost.multiply(new BigDecimal("0.04"));
-            default: return bigDecimalcost;
+            default: return new BigDecimal("0");
         }
     }
 }
