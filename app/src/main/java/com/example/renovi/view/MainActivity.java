@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         initializeButtons();
     }
 
+    @Override
+    public void onBackPressed() {
+        // soll nicht wieder ins Login
+    }
+
     private void getRenterFromSession() {
         renterSession = new RenterSession(this);
         renter = renterSession.getRenter();
