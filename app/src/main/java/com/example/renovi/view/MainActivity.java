@@ -132,9 +132,9 @@ public class MainActivity extends AppCompatActivity {
         rentCostProgressBar.setMax(100);
     }
 
-    private void switchToDetails(Renovation renovierung) {
+    private void switchToDetails(Renovation renovation) {
         Intent switchActivityIntent = new Intent(this, DetailsActivity.class);
-        switchActivityIntent.putExtra("renovierung", renovierung);
+        switchActivityIntent.putExtra("renovierung", renovation);
         startActivity(switchActivityIntent);
     }
 
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void generateButtonForRenter(String renovationTitle, Renovation renovierung) {
+    private void generateButtonForRenter(String renovationTitle, Renovation renovation) {
         // Zugriff auf das Haupt-ConstraintLayout
         ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
 
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
         if (renovationTitle != null) {
             ButtonCreator buttonCreator  = new ButtonCreator(this);
             Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle);
-            renoButton.setOnClickListener(view -> switchToDetails(renovierung)); //hier renoId eigentlich
+            renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
         }
     }
 }
