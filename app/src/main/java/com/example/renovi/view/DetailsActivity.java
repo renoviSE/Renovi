@@ -19,14 +19,6 @@ import com.example.renovi.model.Renovation;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailsActivity extends AppCompatActivity {
-    private String id;
-    private String kosten;
-    private String nachteile;
-    private String object;
-    private String vorteile;
-    private String paragraph;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +27,15 @@ public class DetailsActivity extends AppCompatActivity {
         initializeBackToMainButton();
         initializeReadMoreLink();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-
         Intent intent = getIntent();
         Renovation renovation = (Renovation) intent.getSerializableExtra("renovierung");
-        String geplanteRenovierung = intent.getStringExtra(MainActivity.geplanteRenovierung);
-        System.out.println("suchmich" + geplanteRenovierung);
-
-        //getRenovierungsDaten(db, geplanteRenovierung);
         TextView kostenTextview = findViewById(R.id.kosten);
         TextView renovierungTextView = findViewById(R.id.detailsTitle);
         TextView paragraphenTextView = findViewById(R.id.descriptionString);
 
-
-
-
         renovierungTextView.setText(renovation.getObject());
         kostenTextview.setText(renovation.getCost() + "€" );
         paragraphenTextView.setText(renovation.getParagraph());
-        //kostenTextview.setText(kosten);
         kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
 
 
