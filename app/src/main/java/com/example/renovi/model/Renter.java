@@ -33,13 +33,17 @@ public class Renter {
         return rent;
     }
 
+    public void setRent(BigDecimal rent) {
+        this.rent = rent;
+    }
+
     public String getRoundedRentasString() {
         return rent.setScale(2, RoundingMode.HALF_UP).toString().replace(".", ",");
     }
 
     public BigDecimal getRentDifferenceInPercentage() {return rentDifference;}
 
-    public void setRent(BigDecimal allObjectsValue) {rent = rent.add(allObjectsValue);}
+    public void updateRent(BigDecimal allObjectsValue) {rent = rent.add(allObjectsValue);}
 
     public void setRentDifferenceInPercentage(BigDecimal allObjectsValue) {
         if (rent.compareTo(BigDecimal.ZERO) != 0) {

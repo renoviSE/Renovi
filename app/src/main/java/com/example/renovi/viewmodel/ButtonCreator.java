@@ -92,7 +92,7 @@ public class ButtonCreator {
         }
     }
 
-    private String normalizeString(String input) {
+    public String normalizeString(String input) {
         return input.replace("ä", "ae")
                 .replace("ö", "oe")
                 .replace("ü", "ue")

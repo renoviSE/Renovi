@@ -18,7 +18,6 @@ public class RenterSession {
     private SharedPreferences.Editor editor;
 
     public RenterSession(Context context) {
-
         sharedPreferences = context.getSharedPreferences(PREF_RENTER, Context.MODE_PRIVATE);
     }
 

@@ -48,6 +48,14 @@ public class Renovation implements Serializable {
         return condition;
     }
 
+    public void setCost(String cost) {
+        this.cost = cost;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
     public BigDecimal getObjectValue() { // BigDecimal soll der beste Datentyp sein um mit Währung zurechnen
         BigDecimal bigDecimalcost = new BigDecimal(cost);
         switch (condition) {

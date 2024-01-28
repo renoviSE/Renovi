@@ -70,9 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getRenovierungen(FirebaseFirestore db) {
-        Log.i(TAG, "We´re trying");
         db.collection("Renovierung")
-                // document = eingeloggter User!
                 .whereEqualTo("mieter", db.collection("mieter").document(renter.getId()))
                 .get()
                 .addOnSuccessListener(documents -> {
@@ -100,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                         noRenovations.setVisibility(View.VISIBLE);
                     }
 
-                    renter.setRent(allObjectsValue);
+                    renter.updateRent(allObjectsValue);
                     renter.setRentDifferenceInPercentage(allObjectsValue);
                     setRentCost();
                 })
