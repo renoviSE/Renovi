@@ -49,7 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getRenterFromSession() {
-        renterSession = new RenterSession(this);
+        renterSession = RenterSession.getInstance(this);
         renter = renterSession.getRenter();
     }
 

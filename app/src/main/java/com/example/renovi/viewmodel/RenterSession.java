@@ -7,18 +7,35 @@ import com.example.renovi.model.Renter;
 
 import java.math.BigDecimal;
 
-public class RenterSession {
+import javax.inject.Inject;
+
+public final class RenterSession {
     final String PREF_RENTER = "renter_prefs";
     final String KEY_ID = "key_id";
     final String KEY_FIRSTNAME = "key_firstname";
     final String KEY_LASTNAME = "key_lastname";
     final String KEY_RENT = "key_rent";
+    private static volatile RenterSession INSTANCE = null;
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    public RenterSession(Context context) {
+    private RenterSession(Context context) {
         sharedPreferences = context.getSharedPreferences(PREF_RENTER, Context.MODE_PRIVATE);
+    }
+
+    public static RenterSession getInstance(Context context) {
+        // Check if the instance is already created
+        if (INSTANCE == null) {
+            // synchronize the block to ensure only one thread can execute at a time
+            synchronized (RenterSession.class) {
+                // check again if the instance is already created
+                if (INSTANCE == null) {
+                    INSTANCE = new RenterSession(context);
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public void putRenter(Renter renter) {

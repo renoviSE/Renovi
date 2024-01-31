@@ -51,7 +51,7 @@ public class LogInActivity extends Activity {
 	}
 
 	private void initializeRenterSession() {
-		renterSession = new RenterSession(this);
+		renterSession = RenterSession.getInstance(this);
 		renterSession.deleteSession();
 	}
 
