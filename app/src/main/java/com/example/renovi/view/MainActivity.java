@@ -15,10 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
-import com.example.renovi.viewmodel.RenterSession;
+import com.example.renovi.viewmodel.Session;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -30,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     final String TAG = "myTag";
     public static final String geplanteRenovierung ="com.exemple.renovi";
-    private Renter renter;
-    private RenterSession renterSession;
+    private Person user;
+    private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        getRenovierungen(db);
+        if (user instanceof Renter) {
+            getRenovierungen(db);
+        }
 
         setContentView(R.layout.activity_main);
 
-        setRenterNameAsHeadline();
+        setUserNameAsHeadline();
         initializeButtons();
     }
 
@@ -57,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getRenterFromSession() {
-        renterSession = RenterSession.getInstance(this);
-        renter = renterSession.getRenter();
+        session = Session.getInstance(this);
+        user = session.getUser();
     }
 
     private void initializeButtons() {
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getRenovierungen(FirebaseFirestore db) {
         db.collection("Renovierung")
-                .whereEqualTo("mieter", db.collection("mieter").document(renter.getId()))
+                .whereEqualTo("mieter", db.collection("mieter").document(user.getId()))
                 .get()
                 .addOnSuccessListener(documents -> {
                     BigDecimal allObjectsValue = new BigDecimal("0");
@@ -98,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
                         noRenovations.setVisibility(View.VISIBLE);
                     }
 
-                    renter.updateRent(allObjectsValue);
-                    renter.setRentDifferenceInPercentage(allObjectsValue);
+                    ((Renter) user).updateRent(allObjectsValue);
+                    ((Renter) user).setRentDifferenceInPercentage(allObjectsValue);
                     setRentCost();
                 })
                 .addOnFailureListener(e -> {
@@ -110,23 +113,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void setRenterNameAsHeadline() {
+    private void setUserNameAsHeadline() {
         TextView userName = findViewById(R.id.userName);
-        userName.setText(renter.getFirstName() + " " + renter.getLastName());
+        userName.setText(user.getFirstName() + " " + user.getLastName());
     }
 
     private void setRentCost() {
         TextView rentcostString = findViewById(R.id.mietpreisString);
-        rentcostString.setText(renter.getRoundedRentasString() + "€");
+        rentcostString.setText(((Renter) user).getRoundedRentasString() + "€");
 
         TextView bannerDescription = findViewById(R.id.bannerDescription);
-        String formattedPercentage = String.format("%.0f%%", renter.getRentDifferenceInPercentage());
+        String formattedPercentage = String.format("%.0f%%", ((Renter) user).getRentDifferenceInPercentage());
         String bannerDescriptionText = getString(R.string.banner_description_string, formattedPercentage);
         bannerDescription.setText(bannerDescriptionText);
 
 
         ProgressBar rentCostProgressBar = findViewById(R.id.rentCostProgressBar);
-        rentCostProgressBar.setProgress(renter.getRentDifferenceInPercentage().intValue());
+        rentCostProgressBar.setProgress(((Renter) user).getRentDifferenceInPercentage().intValue());
         rentCostProgressBar.setMax(100);
     }
 

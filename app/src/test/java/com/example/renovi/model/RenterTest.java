@@ -12,7 +12,7 @@ public class RenterTest {
     @Test
     public void testGetRoundedRentasString() {
         // Arrange
-        Renter renter = new Renter("xyz", "Max", "Mustermann", new BigDecimal(0));
+        Renter renter = new Renter("Renter", "xyz", "Max", "Mustermann", new BigDecimal(0));
 
         // Act
         renter.setRent(new BigDecimal("500.123"));
@@ -25,7 +25,7 @@ public class RenterTest {
     @Test
     public void testUpdateRent() {
         // Arrange
-        Renter renter = new Renter("1", "John", "Doe", new BigDecimal("100.00"));
+        Renter renter = new Renter("Renter", "1", "John", "Doe", new BigDecimal("100.00"));
         BigDecimal allObjectsValue = new BigDecimal("50.00");
 
         // Act
@@ -38,7 +38,7 @@ public class RenterTest {
     @Test
     public void testSetRentDifferenceInPercentage() {
         // Arrange
-        Renter renter = new Renter("1", "John", "Doe", new BigDecimal("100.00"));
+        Renter renter = new Renter("Renter", "1", "John", "Doe", new BigDecimal("100.00"));
         BigDecimal allObjectsValue = new BigDecimal("50.00");
 
         // Act
@@ -51,7 +51,7 @@ public class RenterTest {
     @Test
     public void testSetRentDifferenceInPercentageWithZeroRent() {
         // Arrange
-        Renter renter = new Renter("1", "John", "Doe", BigDecimal.ZERO);
+        Renter renter = new Renter("Renter", "1", "John", "Doe", BigDecimal.ZERO);
         BigDecimal allObjectsValue = new BigDecimal("50.00");
 
         // Act

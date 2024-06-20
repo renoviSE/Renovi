@@ -4,30 +4,17 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
 
-public class Renter {
-    private String id;
-    private String firstName;
-    private String lastName;
+public class Renter extends Person {
+
     private BigDecimal rent;
     private BigDecimal rentDifference;
 
-    public Renter(String id, String firstName, String lastName, BigDecimal rent) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Renter(String role, String id, String firstName, String lastName, BigDecimal rent) {
+        super(role, id, firstName, lastName);
         this.rent = rent;
         this.rentDifference = new BigDecimal("0");
     }
 
-    public String getId() {return id;}
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
 
     public BigDecimal getRent() {
         return rent;

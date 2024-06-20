@@ -11,19 +11,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
+import com.example.renovi.model.Landlord;
 import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.model.Renter;
-import com.example.renovi.viewmodel.RenterSession;
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.Session;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class LogInActivity extends Activity {
@@ -33,8 +35,8 @@ public class LogInActivity extends Activity {
 	EditText firstNameData;
 	EditText lastNameData;
 	EditText verifyIdInput;
-	private Renter renter;
-	private RenterSession renterSession;
+	private Person person;
+	private Session session;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +53,8 @@ public class LogInActivity extends Activity {
 	}
 
 	private void initializeRenterSession() {
-		renterSession = RenterSession.getInstance(this);
-		renterSession.deleteSession();
+		session = Session.getInstance(this);
+		session.deleteSession();
 	}
 
 	private void initializeLogInButton() {
@@ -62,36 +64,60 @@ public class LogInActivity extends Activity {
 
 	private void checkIfIdExists() {
 		String id = verifyIdInput.getText().toString();
-
 		FirebaseFirestore db = FirebaseFirestore.getInstance();
+		AtomicBoolean found = new AtomicBoolean(false);
+
 		try {
-			db.collection("Mieter").document(id).get()
-					.addOnCompleteListener(task -> {
-						if (task.isSuccessful()) {
-							DocumentSnapshot document = task.getResult();
-							if (document.exists()) {
-								Log.i(TAG, "Mieter mit ID gefunden");
-								renter = new Renter(id, document.getString("vorname"), document.getString("nachname"), new BigDecimal(document.getString("miete")));
-								checkIfValid();
-							} else {
-								Log.i(TAG, "kein Mieter mit ID gefunden");
-								onFalseLoginData();
-							}
-						}
-					});
-		}
-		catch (Exception e) {
-			Log.i(TAG, "keine ID");
+			// Erstelle Tasks für beide Sammlungen
+			Task<DocumentSnapshot> mieterTask = db.collection("Mieter").document(id).get();
+			Task<DocumentSnapshot> vermieterTask = db.collection("Vermieter").document(id).get();
+
+			// Führe beide Tasks gleichzeitig aus und reagiere auf den ersten Erfolg
+			mieterTask.addOnSuccessListener(document -> {
+				try {
+					if (document.exists() && !found.get()) {
+						found.set(true);
+						Log.i(TAG, "Mieter mit ID gefunden");
+						person = new Renter("Renter",id, document.getString("vorname"), document.getString("nachname"), new BigDecimal(document.getString("miete")));
+						checkIfValid();
+					}
+				} catch (Exception e) {
+					Log.e(TAG, "Fehler bei der Verarbeitung des Mieter-Dokuments: " + e.getMessage());
+				}
+			});
+
+			vermieterTask.addOnSuccessListener(document -> {
+				try {
+					if (document.exists() && !found.get()) {
+						found.set(true);
+						Log.i(TAG, "Vermieter mit ID gefunden");
+						person = new Landlord("Landlord", id, document.getString("vorname"), document.getString("nachname"));
+						checkIfValid();
+					}
+				} catch (Exception e) {
+					Log.e(TAG, "Fehler bei der Verarbeitung des Vermieter-Dokuments: " + e.getMessage());
+				}
+			});
+
+			Tasks.whenAll(mieterTask, vermieterTask).addOnCompleteListener(task -> {
+				if (!found.get()) {
+					Log.i(TAG, "Kein Benutzer mit ID in Mieter oder Vermieter gefunden");
+					onFalseLoginData();
+				}
+			});
+		} catch (Exception e) {
+			Log.e(TAG, "Fehler beim Zugriff auf Firestore oder bei der Ausführung der Tasks: " + e.getMessage());
 			onFalseLoginData();
 		}
 	}
+
 
 	private void checkIfValid() {
 		String firstName = firstNameData.getText().toString();
 		String lastName = lastNameData.getText().toString();
 
-		if (firstName.equals(renter.getFirstName()) && lastName.equals(renter.getLastName())) {
-			renterSession.putRenter(renter);
+		if (firstName.equals(person.getFirstName()) && lastName.equals(person.getLastName())) {
+			session.putUser(person);
 			switchToMain();
 		}
 		else {

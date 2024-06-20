@@ -15,8 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
-import com.example.renovi.viewmodel.RenterSession;
-import com.example.renovi.model.Renter;
+import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.Session;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -26,8 +26,8 @@ public class ProfileActivity extends AppCompatActivity {
     String userId;
     private static final String TAG = ProfileActivity.class.getSimpleName(); //getSimpleName() gibt einfachen Namen der Klasse als String, ohne jeglichen Paketnamen, zurück, mit der die Instanz assoziiert ist.
 
-    private RenterSession renterSession;
-    private Renter renter;
+    private Session session;
+    private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +49,8 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void getRenterFromSession() {
-        renterSession = RenterSession.getInstance(this);
-        renter = renterSession.getRenter();
+        session = Session.getInstance(this);
+        user = session.getUser();
     }
 
     private void initializeCopyButton() {
@@ -106,9 +106,9 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setUserProfile() {
-        profileFirstName.setText(renter.getFirstName());
-        profileLastName.setText(renter.getLastName());
-        profileVerifyId.setText(renter.getId());
+        profileFirstName.setText(user.getFirstName());
+        profileLastName.setText(user.getLastName());
+        profileVerifyId.setText(user.getId());
 
     }
 }
