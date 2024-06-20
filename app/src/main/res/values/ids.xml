@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="header_constraint" type="id"/>
+    <item name="upcomingRenovationsTitle" type="id"/>
+    <item name="noRenovations" type="id"/>
+    <item name="mietepreisTitle" type="id"/>
+    <item name="banner" type="id"/>
+    <item name="bannerTitle" type="id"/>
+    <item name="bannerDescription" type="id"/>
+    <item name="mieteBackground" type="id"/>
+    <item name="mietpreisString" type="id"/>
+    <item name="eclipseBackground" type="id"/>
+    <item name="rentCostProgressBar" type="id"/>
+</resources>

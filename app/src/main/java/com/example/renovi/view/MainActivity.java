@@ -2,11 +2,18 @@ package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -16,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.BannerCreator;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
@@ -33,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String geplanteRenovierung ="com.exemple.renovi";
     private Person user;
     private Session session;
+    private ProgressBar rentCostProgressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         getRenterFromSession();
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (user instanceof Renter) {
@@ -97,8 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     // Wenn keine Renovierungen vorhanden sind
                     if (buttonId == 1) {
-                        TextView noRenovations = findViewById(R.id.noRenovations);
-                        noRenovations.setVisibility(View.VISIBLE);
+                        generatePlaceholder();
                     }
 
                     ((Renter) user).updateRent(allObjectsValue);
@@ -119,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setRentCost() {
+        generateRentBannerForRenter();
+
+
         TextView rentcostString = findViewById(R.id.mietpreisString);
         rentcostString.setText(((Renter) user).getRoundedRentasString() + "€");
 
@@ -129,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ProgressBar rentCostProgressBar = findViewById(R.id.rentCostProgressBar);
+        rentCostProgressBar.setVisibility(View.VISIBLE);
         rentCostProgressBar.setProgress(((Renter) user).getRentDifferenceInPercentage().intValue());
         rentCostProgressBar.setMax(100);
     }
@@ -199,4 +211,31 @@ public class MainActivity extends AppCompatActivity {
             renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
         }
     }
+
+    private void generatePlaceholder() {
+        // Zugriff auf das Haupt-ConstraintLayout
+        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
+
+        // Erstellen und Hinzufügen des Platzhalers zum Layout
+        ButtonCreator buttonCreator  = new ButtonCreator(this);
+        buttonCreator.createNoRenovationsView(mainLayout);
+
+    }
+
+    private void generateRentBannerForRenter() {
+        // Zugriff auf das Haupt-ConstraintLayout
+        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
+
+        // Erstellen und Hinzufügen des Banners zum Layout
+        BannerCreator bannerCreator  = new BannerCreator(this);
+        bannerCreator.createBanner(mainLayout);
+    }
+    public static int dpToPx(Context context, float dp) {
+        return (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                dp,
+                context.getResources().getDisplayMetrics()
+        );
+    }
+
 }

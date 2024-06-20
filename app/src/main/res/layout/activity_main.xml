@@ -75,117 +75,6 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/upcomingRenovationsTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="36dp"
-                    android:text="@string/bevorstehende_renovierungen_title"
-                    android:textColor="@color/black1"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/header_constraint" />
-
-                <TextView
-                    android:id="@+id/noRenovations"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/bg_gray_round_corner"
-                    android:backgroundTint="@color/gray4"
-                    android:gravity="center"
-                    android:visibility="gone"
-                    android:text="@string/kein_button_tittle"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/upcomingRenovationsTitle" />
-
-                <TextView
-                    android:id="@+id/mietepreisTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:text="@string/kosten_title_string"
-                    android:textColor="@color/black1"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/noRenovations" />
-
-                <ImageView
-                    android:id="@+id/banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="180dp"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/il_banner"
-                    android:padding="10dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/mietepreisTitle" />
-
-                <TextView
-                    android:id="@+id/bannerTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="32dp"
-                    android:text="@string/banner_title_string"
-                    android:textColor="@color/gray4"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    app:layout_constraintStart_toStartOf="@+id/banner"
-                    app:layout_constraintTop_toTopOf="@+id/banner" />
-
-                <TextView
-                    android:id="@+id/bannerDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/banner_description_string"
-                    android:textColor="@color/gray4"
-                    android:textSize="14sp"
-                    app:layout_constraintStart_toStartOf="@+id/banner"
-                    app:layout_constraintTop_toBottomOf="@+id/bannerTitle" />
-
-                <ImageView
-                    android:id="@+id/mieteBackground"
-                    android:layout_width="95dp"
-                    android:layout_height="35dp"
-                    android:layout_marginStart="24dp"
-                    android:background="@drawable/bg_miete"
-                    app:layout_constraintBottom_toBottomOf="@+id/banner"
-                    app:layout_constraintStart_toStartOf="@+id/banner"
-                    app:layout_constraintTop_toBottomOf="@+id/bannerDescription" />
-
-                <TextView
-                    android:id="@+id/mietpreisString"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/miete_price_string"
-                    android:textColor="@color/gray4"
-                    android:textSize="14dp"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/mieteBackground"
-                    app:layout_constraintEnd_toEndOf="@+id/mieteBackground"
-                    app:layout_constraintStart_toStartOf="@+id/mieteBackground"
-                    app:layout_constraintTop_toTopOf="@+id/mieteBackground" />
-
-                <ImageView
-                    android:id="@+id/eclipseBackground"
-                    android:layout_width="106dp"
-                    android:layout_height="106dp"
-                    android:background="@drawable/bg_eclipse"
-                    android:backgroundTint="@color/gray4"
-                    app:layout_constraintBottom_toBottomOf="@+id/banner"
-                    app:layout_constraintEnd_toEndOf="@+id/banner"
-                    app:layout_constraintHorizontal_bias="0.85"
-                    app:layout_constraintStart_toStartOf="@+id/banner"
-                    app:layout_constraintTop_toTopOf="@+id/banner" />
-
                 <ProgressBar
                     android:id="@+id/rentCostProgressBar"
                     style="@style/Widget.Material3.CircularProgressIndicator"
@@ -196,7 +85,9 @@
                     app:layout_constraintEnd_toEndOf="@+id/eclipseBackground"
                     app:layout_constraintStart_toStartOf="@+id/eclipseBackground"
                     app:layout_constraintTop_toTopOf="@+id/eclipseBackground"
-                    tools:progress="20" />
+                    tools:progress="20"
+                    android:visibility="gone"
+                    android:elevation="10dp"/>
 
                 <ImageView
                     android:id="@+id/scrollSpacer"
@@ -215,7 +106,7 @@
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="@drawable/bg_navbar"
-            android:textSize="12dp"
+            android:textSize="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
