@@ -10,9 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.renovi.R;
-import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
-import com.example.renovi.viewmodel.Session;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -66,11 +64,11 @@ public class RenterListActivity extends AppCompatActivity {
         ButtonCreator buttonCreator = new ButtonCreator(this);
 
         Button renterButton = buttonCreator.createButton(mainLayout, fullname, R.id.renterListConstraintLayout, R.id.renterListScrollSpacer);
-        renterButton.setOnClickListener(v -> switchToRenterDetails(renterId));
+        renterButton.setOnClickListener(v -> switchToRenterRenovationList(renterId));
     }
 
-    private void switchToRenterDetails(String renterId) {
-        Intent intent = new Intent(this, RenterDetailsActivity.class);
+    private void switchToRenterRenovationList(String renterId) {
+        Intent intent = new Intent(this, RenterRenovationsListActivity.class);
         intent.putExtra("renterId", renterId);
         startActivity(intent);
     }
@@ -78,10 +76,7 @@ public class RenterListActivity extends AppCompatActivity {
     private void generatePlaceholder() {
         // Erstellen und Hinzufügen des Platzhalers zum Layout
         ButtonCreator buttonCreator  = new ButtonCreator(this);
-        TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.no_renter_found_string, R.id.renterListConstraintLayout);
-        int topConstraint = buttonsTitle.getId();
-
-        buttonCreator.createPlaceholderView(mainLayout, topConstraint);
+        buttonCreator.createPlaceholderView(mainLayout, R.id.renterListConstraintLayout);
 
     }
 }

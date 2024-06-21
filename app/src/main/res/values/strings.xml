@@ -98,4 +98,8 @@
     <string name="large_text">dasdafwdfaf</string>
     <!-- renterList strings -->
 
+    <!-- renovationsList strings -->
+    <string name="renovationsList_title">Modernisierungen</string>
+    <!-- renterList strings -->
+
 </resources>
