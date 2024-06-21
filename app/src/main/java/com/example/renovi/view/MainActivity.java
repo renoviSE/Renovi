@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
             String objectName = menuItem.first;
             Class<?> destination = menuItem.second;
 
-            Button menuButton = buttonCreator.createButton(mainLayout, objectName, topConstraint);
+            Button menuButton = buttonCreator.createButton(mainLayout, objectName, topConstraint, R.id.mainScrollSpacer);
 
             Intent intent = new Intent(this, destination);
             menuButton.setOnClickListener(view -> startActivity(intent));
@@ -235,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.bevorstehende_renovierungen_title, R.id.header_constraint);
             int topConstraint = buttonsTitle.getId();
 
-            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, topConstraint);
+            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, topConstraint, R.id.mainScrollSpacer);
             renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
         }
     }
@@ -259,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Erstellen und Hinzufügen des Banners zum Layout
         BannerCreator bannerCreator  = new BannerCreator(this);
-        bannerCreator.createBanner(mainLayout);
+        bannerCreator.createBanner(mainLayout, R.id.mainScrollSpacer);
     }
     public static int dpToPx(Context context, float dp) {
         return (int) TypedValue.applyDimension(

@@ -52,7 +52,7 @@ public class ButtonCreator {
     }
 
 
-    public Button createButton(ConstraintLayout layout, String objectName, int topConstraint) {
+    public Button createButton(ConstraintLayout layout, String objectName, int topConstraint, int scrollSpacerId) {
 
         // Erstellen des Buttons
         Button renovierungButton = new Button(context);
@@ -95,6 +95,9 @@ public class ButtonCreator {
         }
         constraintSet.connect(renovierungButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
         constraintSet.connect(renovierungButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
+
+        constraintSet.connect(scrollSpacerId, ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, 0);
+
         constraintSet.applyTo(layout);
 
         // Aktualisieren der ID des zuletzt hinzugefügten Buttons

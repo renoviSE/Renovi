@@ -65,7 +65,7 @@ public class RenterListActivity extends AppCompatActivity {
     private void generateButtonForRenter(String renterId, String fullname) {
         ButtonCreator buttonCreator = new ButtonCreator(this);
 
-        Button renterButton = buttonCreator.createButton(mainLayout, fullname, R.id.renterListConstraintLayout);
+        Button renterButton = buttonCreator.createButton(mainLayout, fullname, R.id.renterListConstraintLayout, R.id.renterListScrollSpacer);
         renterButton.setOnClickListener(v -> switchToRenterDetails(renterId));
     }
 

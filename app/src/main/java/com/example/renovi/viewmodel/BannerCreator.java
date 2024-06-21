@@ -23,9 +23,9 @@ public class BannerCreator {
         this.context = context;
     }
 
-    public void createBanner(ConstraintLayout mainLayout) {
+    public void createBanner(ConstraintLayout mainLayout, int scrollSpacerId) {
         createTextView(mainLayout);
-        createBannerImageView(mainLayout);
+        createBannerImageView(mainLayout, scrollSpacerId);
         createBannerTitle(mainLayout);
         createBannerDescription(mainLayout);
         createMieteBackground(mainLayout);
@@ -60,7 +60,7 @@ public class BannerCreator {
         return textView;
     }
 
-    public ImageView createBannerImageView(ConstraintLayout layout) {
+    public ImageView createBannerImageView(ConstraintLayout layout, int scrollSpacerId) {
         ImageView imageView = new ImageView(context);
         imageView.setId(R.id.banner);
 
@@ -84,6 +84,9 @@ public class BannerCreator {
         constraintSet.connect(imageView.getId(), ConstraintSet.TOP, R.id.mietepreisTitle, ConstraintSet.BOTTOM, dpToPx(context, 24));
         constraintSet.connect(imageView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
         constraintSet.connect(imageView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
+
+        constraintSet.connect(scrollSpacerId, ConstraintSet.TOP, imageView.getId(), ConstraintSet.BOTTOM, 0);
+
         constraintSet.applyTo(layout);
 
         return imageView;
