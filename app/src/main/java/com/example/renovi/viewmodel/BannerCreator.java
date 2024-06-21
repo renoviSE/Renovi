@@ -53,8 +53,8 @@ public class BannerCreator {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
         constraintSet.connect(textView.getId(), ConstraintSet.TOP, ButtonCreator.getLastButtonId(), ConstraintSet.BOTTOM, dpToPx(context, 30));
-        constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
-        constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
+        constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
+        constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
         constraintSet.applyTo(layout);
 
         return textView;
@@ -82,8 +82,8 @@ public class BannerCreator {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
         constraintSet.connect(imageView.getId(), ConstraintSet.TOP, R.id.mietepreisTitle, ConstraintSet.BOTTOM, dpToPx(context, 24));
-        constraintSet.connect(imageView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
-        constraintSet.connect(imageView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
+        constraintSet.connect(imageView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
+        constraintSet.connect(imageView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
         constraintSet.applyTo(layout);
 
         return imageView;

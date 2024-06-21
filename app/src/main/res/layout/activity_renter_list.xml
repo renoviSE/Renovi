@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:id="@+id/renterListHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.RenterListActivity" >
+
+        <ImageView
+            android:id="@+id/titleBackground"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/white1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/inboxTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="41dp"
+            android:text="@string/renterList_title"
+            android:textAlignment="center"
+            android:textColor="@color/black1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/InboxToMainButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="59dp"
+            android:layout_height="49dp"
+            android:layout_marginTop="34dp"
+            android:background="@drawable/bg_gray_round_corner"
+            android:backgroundTint="@color/gray4"
+            android:text="@string/back_button_string"
+            android:textColor="@color/black1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/inboxTitle"
+            app:layout_constraintHorizontal_bias="0.25"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/verifyIdInput"
+            android:layout_width="350dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/bg_gray_round_corner"
+            android:backgroundTint="@color/white"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="20dp"
+            android:drawableTint="@color/gray2"
+            android:elevation="8dp"
+            android:hint="@string/search_placeholder_string"
+            android:inputType="textVisiblePassword"
+            android:paddingLeft="22dp"
+            android:textColorHint="@color/gray2"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleBackground" />
+
+        <ImageView
+            android:id="@+id/shadowSpacer"
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/verifyIdInput" />
+
+        <ScrollView
+            android:id="@+id/renterListScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="false"
+            android:scrollbars="none"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shadowSpacer">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/renterListConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".view.RenterListActivity">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

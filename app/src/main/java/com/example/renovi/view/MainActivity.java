@@ -2,18 +2,14 @@ package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -22,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.Landlord;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.BannerCreator;
 import com.example.renovi.viewmodel.ButtonCreator;
@@ -34,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import android.net.Uri;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Person user;
     private Session session;
     private ProgressBar rentCostProgressBar;
+    private List<Pair<String, Class<?>>> menuItems;
 
 
     @Override
@@ -50,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        getRenterFromSession();
+        getUserFromSession();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         if (user instanceof Renter) {
             getRenovierungen(db);
+        } else if (user instanceof Landlord) {
+            generateMenuButtons();
         }
-
-        setContentView(R.layout.activity_main);
 
         setUserNameAsHeadline();
         initializeButtons();
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         // soll nicht wieder ins Login
     }
 
-    private void getRenterFromSession() {
+    private void getUserFromSession() {
         session = Session.getInstance(this);
         user = session.getUser();
     }
@@ -120,6 +120,31 @@ public class MainActivity extends AppCompatActivity {
                 });
     }
 
+    private void initializeMenuItems() {
+        menuItems = new ArrayList<>();
+        menuItems.add(new Pair<>("Mieter", RenterListActivity.class));
+        menuItems.add(new Pair<>("Mieter hinzufügen", CreateRenterActivity.class));
+    }
+
+    public void generateMenuButtons() {
+        initializeMenuItems();
+
+        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
+
+        ButtonCreator buttonCreator = new ButtonCreator(this);
+        TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.menu_title_string, R.id.header_constraint);
+        int topConstraint = buttonsTitle.getId();
+
+        for (Pair<String, Class<?>> menuItem : menuItems) {
+            String objectName = menuItem.first;
+            Class<?> destination = menuItem.second;
+
+            Button menuButton = buttonCreator.createButton(mainLayout, objectName, topConstraint);
+
+            Intent intent = new Intent(this, destination);
+            menuButton.setOnClickListener(view -> startActivity(intent));
+        }
+    }
 
     private void setUserNameAsHeadline() {
         TextView userName = findViewById(R.id.userName);
@@ -207,7 +232,10 @@ public class MainActivity extends AppCompatActivity {
         // Erstellen und Hinzufügen des Buttons zum Layout
         if (renovationTitle != null) {
             ButtonCreator buttonCreator  = new ButtonCreator(this);
-            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle);
+            TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.bevorstehende_renovierungen_title, R.id.header_constraint);
+            int topConstraint = buttonsTitle.getId();
+
+            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, topConstraint);
             renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
         }
     }
@@ -218,7 +246,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Erstellen und Hinzufügen des Platzhalers zum Layout
         ButtonCreator buttonCreator  = new ButtonCreator(this);
-        buttonCreator.createNoRenovationsView(mainLayout);
+        TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.bevorstehende_renovierungen_title, R.id.header_constraint);
+        int topConstraint = buttonsTitle.getId();
+
+        buttonCreator.createPlaceholderView(mainLayout, topConstraint);
 
     }
 

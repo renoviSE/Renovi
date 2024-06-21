@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.graphics.Typeface;
 import android.widget.Button;
@@ -19,17 +18,18 @@ import com.example.renovi.R;
 public class ButtonCreator {
 
     private Context context;
-    private static int lastButtonId = R.id.upcomingRenovationsTitle; // Anfangswert auf die ID des ersten Referenz-Views setzen
+    private static boolean firstButton = true;
+    private static int lastButtonId = -1;
 
     public ButtonCreator(Context context) {
 
         this.context = context;
     }
 
-    public TextView createUpcomingRenovationsTitle(ConstraintLayout layout) {
+    public TextView createUpcomingSectionTitle(ConstraintLayout layout, int title, int topConstraint) {
         TextView textView = new TextView(context);
         textView.setId(R.id.upcomingRenovationsTitle);
-        textView.setText(R.string.bevorstehende_renovierungen_title);
+        textView.setText(title);
         textView.setTextColor(ContextCompat.getColor(context, R.color.black1));
         textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
         textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
@@ -43,18 +43,16 @@ public class ButtonCreator {
 
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
-        constraintSet.connect(textView.getId(), ConstraintSet.TOP, R.id.header_constraint, ConstraintSet.BOTTOM, dpToPx(context, 36));
-        constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
-        constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
+        constraintSet.connect(textView.getId(), ConstraintSet.TOP, topConstraint, ConstraintSet.BOTTOM, dpToPx(context, 36));
+        constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
+        constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
         constraintSet.applyTo(layout);
 
         return textView;
     }
 
 
-    public Button createButton(ConstraintLayout layout, String objectName) {
-        // Erstellen des Titels
-        createUpcomingRenovationsTitle(layout);
+    public Button createButton(ConstraintLayout layout, String objectName, int topConstraint) {
 
         // Erstellen des Buttons
         Button renovierungButton = new Button(context);
@@ -70,6 +68,7 @@ public class ButtonCreator {
         // Hintergrund und Texteigenschaften setzen
         renovierungButton.setBackgroundResource(R.drawable.bg_gray_round_corner);
         renovierungButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
+        renovierungButton.setElevation(dpToPx(context, 5));
         renovierungButton.setPaddingRelative(
                 dpToPx(context, 20), // start
                 0, // top
@@ -77,7 +76,7 @@ public class ButtonCreator {
                 0  // bottom
         );
 
-        configureButtonBasedOnName(renovierungButton, objectName);
+        configureButtonBasedOnName(renovierungButton, "il_", objectName);
 
         // Button zum Layout hinzufügen
         layout.addView(renovierungButton);
@@ -88,10 +87,14 @@ public class ButtonCreator {
 
         // Wenn es der erste Button ist, wird er unter R.id.upcomingRenovationsTitle gesetzt
         // Ansonsten wird er unter den zuletzt hinzugefügten Button gesetzt
-        constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, dpToPx(context, 4));
-        constraintSet.connect(renovierungButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        constraintSet.connect(renovierungButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END);
-        constraintSet.connect(R.id.mietepreisTitle, ConstraintSet.TOP, renovierungButton.getId(), ConstraintSet.BOTTOM);
+        if (firstButton) {
+            constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, topConstraint, ConstraintSet.BOTTOM, dpToPx(context, 24));
+            firstButton = false;
+        } else {
+            constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, dpToPx(context, 4));
+        }
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
         constraintSet.applyTo(layout);
 
         // Aktualisieren der ID des zuletzt hinzugefügten Buttons
@@ -100,16 +103,16 @@ public class ButtonCreator {
         return renovierungButton;
     }
 
-    public void configureButtonBasedOnName(Button button, String buttonName) {
-        // Umwandlung von Umlauten und Konvertierung in Kleinbuchstaben
-        String normalizedButtonName = normalizeString(buttonName.toLowerCase());
+    public void configureButtonBasedOnName(Button button, String type, String buttonName) {
+        // Umwandlung von Umlauten, Konvertierung in Kleinbuchstaben und Ersetzen von Leerzeichen durch Unterstriche
+        String normalizedButtonName = normalizeString(buttonName.toLowerCase().replace(" ", "_"));
 
         // Generieren des Ressourcen-Identifikators für das Bild
-        String imageName = "il_" + normalizedButtonName; // z.B. "il_fenster"
+        String imageName = type + normalizedButtonName; // "il_" = illustration, "ic_" = icon ... z.B.: "il_mieter_hinzufuegen"
         int imageResId = context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
 
         // Generieren des Ressourcen-Identifikators für den Titel
-        String titleName = normalizedButtonName + "_button_title"; // z.B. "fenster_button_title"
+        String titleName = normalizedButtonName + "_button_title"; // z.B. "mieter_hinzufuegen_button_title"
         int titleResId = context.getResources().getIdentifier(titleName, "string", context.getPackageName());
 
         if (imageResId != 0) {
@@ -120,15 +123,16 @@ public class ButtonCreator {
 
         if (titleResId != 0) {
             button.setText(context.getString(titleResId));
-            button.setAllCaps(false);
-            button.setTextColor(ContextCompat.getColor(context, R.color.gray1));
-            button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+        } else {
+            button.setText(buttonName);
         }
+
+        button.setAllCaps(false);
+        button.setTextColor(ContextCompat.getColor(context, R.color.gray1));
+        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
     }
 
-    public TextView createNoRenovationsView(ConstraintLayout layout) {
-        // Erstellen des Titels
-        createUpcomingRenovationsTitle(layout);
+    public TextView createPlaceholderView(ConstraintLayout layout, int title) {
 
         TextView textView = new TextView(context);
         textView.setId(R.id.noRenovations);
@@ -152,8 +156,8 @@ public class ButtonCreator {
         constraintSet.clone(layout);
 
         constraintSet.connect(textView.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM, dpToPx(context, 24));
-        constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, 0);
-        constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, 0);
+        constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
+        constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
 
         constraintSet.applyTo(layout);
 

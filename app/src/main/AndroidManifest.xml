@@ -16,6 +16,16 @@
         android:theme="@style/Theme.Renovi"
         tools:targetApi="31">
         <activity
+            android:name=".view.RenterDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.CreateRenterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.RenterListActivity"
+            android:exported="true"
+            android:label="@string/title_activity_renter_list" />
+        <activity
             android:name=".view.ProfileActivity"
             android:exported="true" />
         <activity
