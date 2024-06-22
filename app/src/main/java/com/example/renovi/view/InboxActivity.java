@@ -14,13 +14,13 @@ public class InboxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inbox);
-        initializeBackToMainButton();
+        initializeBackToPreviousActivityButton();
     }
-    private void initializeBackToMainButton() {
+    private void initializeBackToPreviousActivityButton() {
         Button startButton = findViewById(R.id.InboxToMainButton);
-        startButton.setOnClickListener(view -> switchToMain());
+        startButton.setOnClickListener(view -> switchToPreviousActivity());
     }
-    private void switchToMain() {
+    private void switchToPreviousActivity() {
         finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
     }
 }

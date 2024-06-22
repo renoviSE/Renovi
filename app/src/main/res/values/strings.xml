@@ -83,7 +83,8 @@
     <!-- profile strings -->
 
     <!-- button strings -->
-    <string name="kein_button_tittle">Keine bevorstehenden Renovierungen</string>
+    <string name="no_renter_placeholder_message">Keine Mieter gefunden</string>
+    <string name="no_renovations_placeholder_message">Keine bevorstehenden Renovierungen</string>
     <string name="fenster_button_title">Fenster</string>
     <string name="tuer_button_title">Tür</string>
     <string name="wc_button_title">WC</string>
@@ -93,7 +94,8 @@
     <!-- renterList strings -->
     <string name="title_activity_renter_list">Alle Mieter</string>
     <string name="renterList_title">Mieter</string>
-    <string name="search_placeholder_string">Suche Mieter ...</string>
+    <string name="search_renter_placeholder_string">Suche Mieter ...</string>
+    <string name="search_renovation_placeholder_string">Suche Modernisierung ...</string>
     <string name="no_renter_found_string">jyhfg</string>
     <string name="large_text">dasdafwdfaf</string>
     <!-- renterList strings -->

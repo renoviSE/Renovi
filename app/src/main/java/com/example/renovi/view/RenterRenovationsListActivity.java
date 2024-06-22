@@ -7,16 +7,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Renovation;
-import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.math.BigDecimal;
 
@@ -34,7 +31,7 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_renter_renovations);
         mainLayout = findViewById(R.id.renovationsListConstraintLayout);
 
-        initializeBackToMainButton();
+        initializeBackToPreviousActivityButton();
 
         // Empfangen des Intent, der diese Activity gestartet hat
         Intent intent = getIntent();
@@ -87,12 +84,13 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
                 });
     }
 
-    private void initializeBackToMainButton() {
+    private void initializeBackToPreviousActivityButton() {
         Button startButton = findViewById(R.id.InboxToMainButton);
-        startButton.setOnClickListener(view -> switchToMain());
+        startButton.setOnClickListener(view -> switchToPreviousActivity());
     }
-    private void switchToMain() {
+    private void switchToPreviousActivity() {
         finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
+        overridePendingTransition(0, 0); // Deaktiviert Animation beim Zurückkehren
     }
 
     private void generateButtonForRenter(String renovationTitle, Renovation renovation) {
@@ -116,7 +114,7 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         // Erstellen und Hinzufügen des Platzhalers zum Layout
         ButtonCreator buttonCreator  = new ButtonCreator(this);
 
-        buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListConstraintLayout);
+        buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_renovations_placeholder_message);
 
     }
 }

@@ -65,7 +65,7 @@
             android:drawablePadding="20dp"
             android:drawableTint="@color/gray2"
             android:elevation="8dp"
-            android:hint="@string/search_placeholder_string"
+            android:hint="@string/search_renter_placeholder_string"
             android:inputType="textVisiblePassword"
             android:paddingLeft="22dp"
             android:textColorHint="@color/gray2"
@@ -98,6 +98,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".view.RenterListActivity">
+
+                <ImageView
+                    android:id="@+id/renterListTopConstraintForPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/renterListScrollSpacer"

@@ -135,11 +135,11 @@ public class ButtonCreator {
         button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
     }
 
-    public TextView createPlaceholderView(ConstraintLayout layout, int title) {
+    public TextView createPlaceholderView(ConstraintLayout layout, int title, int placeholderMessage) {
 
         TextView textView = new TextView(context);
         textView.setId(R.id.noRenovations);
-        textView.setText(R.string.kein_button_tittle);  // Text aus den Ressourcen
+        textView.setText(placeholderMessage);  // Text aus den Ressourcen
         textView.setBackgroundColor(ContextCompat.getColor(context, R.color.gray4)); // Hintergrundfarbe
         textView.setGravity(Gravity.CENTER);  // Text zentrieren
 
@@ -158,7 +158,7 @@ public class ButtonCreator {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(layout);
 
-        constraintSet.connect(textView.getId(), ConstraintSet.TOP, R.id.upcomingRenovationsTitle, ConstraintSet.BOTTOM, dpToPx(context, 24));
+        constraintSet.connect(textView.getId(), ConstraintSet.TOP, title, ConstraintSet.BOTTOM, dpToPx(context, 24));
         constraintSet.connect(textView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
         constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
 

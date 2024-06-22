@@ -249,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
         TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.bevorstehende_renovierungen_title, R.id.header_constraint);
         int topConstraint = buttonsTitle.getId();
 
-        buttonCreator.createPlaceholderView(mainLayout, topConstraint);
+        buttonCreator.createPlaceholderView(mainLayout, topConstraint, R.string.no_renovations_placeholder_message);
 
     }
 
