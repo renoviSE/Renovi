@@ -80,6 +80,15 @@
     <string name="profile_title">Profil</string>
     <string name="app_information_string">Renovi\n\v 1.2.18 - Build 1</string> <!-- version.sprint.deployment-Nr.-->
     <string name="role_string">Mieter</string>
+    <string name="account_setting_banner_title">Account</string>
+    <string name="notification_setting_banner_title">Benachrichtigung</string>
+    <string name="other_setting_banner_title">Other</string>
+    <string name="logout_button_title">Abmelden</string>
+    <string name="personal_data_button_title">Persönliche Daten</string>
+    <string name="notification_button_title">Pop-up Nachrichten</string>
+    <string name="contact_us_button_title">Contact Us</string>
+    <string name="privacy_policy_button_title">Privacy Policy</string>
+    <string name="settings_button_title">Settings</string>
     <!-- profile strings -->
 
     <!-- button strings -->

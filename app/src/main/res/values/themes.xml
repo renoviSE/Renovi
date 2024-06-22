@@ -2,8 +2,11 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Renovi" parent="Theme.AppCompat.Light.NoActionBar"> <!-- um buttons designen zu koennen | Vorher: "Theme.Material3.DayNight.NoActionBar" -->
         <!-- Customize your light theme here. -->
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Renovi" parent="Base.Theme.Renovi" />
+    <style name="Theme.Renovi" parent="Base.Theme.Renovi">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
 </resources>

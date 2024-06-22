@@ -15,7 +15,7 @@
         android:textAlignment="center"
         android:textColor="@color/black1"
         android:textSize="20sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/poppins_bold"
         android:elevation="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,134 +40,431 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 -->
-
-    <ImageView
-        android:id="@+id/profileBanner"
-        android:layout_width="340dp"
-        android:layout_height="180dp"
-        android:layout_marginTop="51dp"
-        android:background="@drawable/il_banner"
+    <ScrollView
+        android:id="@+id/profileScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:scrollbars="none"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/profileTitle">
 
-    <TextView
-        android:id="@+id/profileFirstName"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:drawableStart="@drawable/ic_person"
-        android:drawablePadding="12dp"
-        android:drawableTint="@color/gray4"
-        android:paddingLeft="10dp"
-        android:text="@string/first_name_placeholder_string"
-        android:textAlignment="textStart"
-        android:textColor="@color/gray4"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/profileBanner"
-        app:layout_constraintStart_toStartOf="@+id/profileBanner"
-        app:layout_constraintTop_toTopOf="@+id/profileBanner" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/profileLastName"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:drawableStart="@drawable/ic_person"
-        android:drawablePadding="12dp"
-        android:drawableTint="@color/gray4"
-        android:paddingLeft="10dp"
-        android:text="@string/last_name_placeholder_string"
-        android:textAlignment="textStart"
-        android:textColor="@color/gray4"
-        android:textSize="16dp"
-        app:layout_constraintEnd_toEndOf="@+id/profileBanner"
-        app:layout_constraintStart_toStartOf="@+id/profileBanner"
-        app:layout_constraintTop_toBottomOf="@+id/profileFirstName" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profileBannerConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/il_banner"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/profileVerifyIdBackground"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/bg_verylightblue"
-        android:drawableStart="@drawable/ic_lock"
-        android:drawablePadding="12dp"
-        android:drawableTint="@color/gray4"
-        android:paddingLeft="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/profileBanner"
-        app:layout_constraintStart_toStartOf="@+id/profileBanner"
-        app:layout_constraintTop_toBottomOf="@+id/profileLastName" />
 
-    <TextView
-        android:id="@+id/profileVerifyId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="38dp"
-        android:text="@string/verify_id_placeholder_string"
-        android:textAlignment="textStart"
-        android:textColor="@color/gray4"
-        android:textSize="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profileVerifyIdBackground"
-        app:layout_constraintStart_toStartOf="@+id/profileVerifyIdBackground"
-        app:layout_constraintTop_toTopOf="@+id/profileVerifyIdBackground" />
+                <TextView
+                    android:id="@+id/profileFirstName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:drawableStart="@drawable/ic_person_thick"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/gray4"
+                    android:paddingLeft="10dp"
+                    android:text="@string/first_name_placeholder_string"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray4"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/copyVerifyIdButton"
-        android:layout_width="45dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/bg_lightblue"
-        android:drawableStart="@drawable/ic_copy"
-        android:paddingLeft="12dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profileVerifyIdBackground"
-        app:layout_constraintEnd_toEndOf="@+id/profileVerifyIdBackground"
-        app:layout_constraintTop_toTopOf="@+id/profileVerifyIdBackground" />
+                <TextView
+                    android:id="@+id/profileLastName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:drawableStart="@drawable/ic_person_thick"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/gray4"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingLeft="10dp"
+                    android:text="@string/last_name_placeholder_string"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/gray4"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profileFirstName" />
 
-    <ImageView
-        android:id="@+id/roleImg"
-        android:layout_width="58dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="20dp"
-        android:background="@drawable/ic_house"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="@+id/profileBanner"
-        app:layout_constraintTop_toTopOf="@+id/profileBanner" />
+                <TextView
+                    android:id="@+id/profileVerifyIdBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="24dp"
+                    android:background="@drawable/bg_verylightblue"
+                    android:drawableStart="@drawable/ic_lock_thick"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/gray4"
+                    android:gravity="center_vertical|start"
+                    android:paddingLeft="15dp"
+                    android:text="@string/verify_id_placeholder_string"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/gray4"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/profileLastName" />
 
-<!--
-    <TextView
-        android:id="@+id/roleText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/role_string"
-        android:textAlignment="center"
-        android:textColor="@color/gray4"
-        android:textSize="14dp"
-        app:layout_constraintEnd_toEndOf="@+id/roleImg"
-        app:layout_constraintStart_toStartOf="@+id/roleImg"
-        app:layout_constraintTop_toBottomOf="@+id/roleImg" />
--->
 
-    <TextView
-        android:id="@+id/appInformation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_information_string"
-        android:textAlignment="center"
-        android:textColor="@color/gray2"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toTopOf="@+id/navBarBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+                <Button
+                    android:id="@+id/copyVerifyIdButton"
+                    android:layout_width="45dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_lightblue"
+                    android:drawableStart="@drawable/ic_copy"
+                    android:paddingLeft="12dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/profileVerifyIdBackground"
+                    app:layout_constraintEnd_toEndOf="@+id/profileVerifyIdBackground"
+                    app:layout_constraintTop_toTopOf="@+id/profileVerifyIdBackground" />
 
-    <ImageView
-        android:id="@+id/navBarBackground"
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:background="@drawable/bg_navbar"
-        android:textSize="12dp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+                <ImageView
+                    android:id="@+id/roleImg"
+                    android:layout_width="58dp"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="32dp"
+                    android:layout_marginEnd="26dp"
+                    android:background="@drawable/ic_house"
+                    android:textSize="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profileSettingsConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/bg_white_round_corner"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileBannerConstraintLayout">
+
+                <TextView
+                    android:id="@+id/accountSettingsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/account_setting_banner_title"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/personalDataButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_person_gradient"
+                    android:drawablePadding="9dp"
+                    android:paddingLeft="-2dp"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/personal_data_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/accountSettingsTitle" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_arrow_right"
+                    android:backgroundTint="@color/gray1"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/personalDataButton"
+                    app:layout_constraintEnd_toEndOf="@+id/personalDataButton"
+                    app:layout_constraintTop_toTopOf="@+id/personalDataButton" />
+
+                <Button
+                    android:id="@+id/signOutButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_logout"
+                    android:drawablePadding="9dp"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/logout_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/personalDataButton" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_arrow_right"
+                    android:backgroundTint="@color/gray1"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/signOutButton"
+                    app:layout_constraintEnd_toEndOf="@+id/signOutButton"
+                    app:layout_constraintTop_toTopOf="@+id/signOutButton" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/notificationSettingsConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/bg_white_round_corner"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/profileSettingsConstraintLayout">
+
+                <TextView
+                    android:id="@+id/notificationSettingsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/notification_setting_banner_title"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/notificationSwitch"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_notifications_gradient"
+                    android:drawablePadding="9dp"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/notification_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="16sp"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_purple_gradient"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/notificationSettingsTitle" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/otherSettingsConstraintLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="24dp"
+                android:background="@drawable/bg_white_round_corner"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/notificationSettingsConstraintLayout">
+
+                <TextView
+                    android:id="@+id/otherSettingsTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:elevation="5dp"
+                    android:text="@string/other_setting_banner_title"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/contactUsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_envelope"
+                    android:drawablePadding="9dp"
+                    android:text="@string/contact_us_button_title"
+                    android:gravity="center_vertical|start"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/otherSettingsTitle" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_arrow_right"
+                    android:backgroundTint="@color/gray1"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/contactUsButton"
+                    app:layout_constraintEnd_toEndOf="@+id/contactUsButton"
+                    app:layout_constraintTop_toTopOf="@+id/contactUsButton" />
+
+                <Button
+                    android:id="@+id/privacyDataButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_shield"
+                    android:drawablePadding="9dp"
+                    android:paddingLeft="-2dp"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/privacy_policy_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/contactUsButton" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_arrow_right"
+                    android:backgroundTint="@color/gray1"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/privacyDataButton"
+                    app:layout_constraintEnd_toEndOf="@+id/privacyDataButton"
+                    app:layout_constraintTop_toTopOf="@+id/privacyDataButton" />
+
+                <Button
+                    android:id="@+id/settingsButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_settings"
+                    android:drawablePadding="9dp"
+                    android:gravity="center_vertical|start"
+                    android:text="@string/settings_button_title"
+                    android:textAllCaps="false"
+                    android:textColor="@color/gray1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/privacyDataButton" />
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/ic_arrow_right"
+                    android:backgroundTint="@color/gray1"
+                    android:elevation="2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/settingsButton"
+                    app:layout_constraintEnd_toEndOf="@+id/settingsButton"
+                    app:layout_constraintTop_toTopOf="@+id/settingsButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/appVersion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/app_information_string"
+                android:textAlignment="center"
+                android:textColor="@color/gray2"
+                android:textSize="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/otherSettingsConstraintLayout" />
+
+            <ImageView
+                android:id="@+id/profileScrollSpacer"
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appVersion" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <!--
+        <TextView
+            android:id="@+id/roleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/role_string"
+            android:textAlignment="center"
+            android:textColor="@color/gray4"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="@+id/roleImg"
+            app:layout_constraintStart_toStartOf="@+id/roleImg"
+            app:layout_constraintTop_toBottomOf="@+id/roleImg" />
+    -->
+
+        <ImageView
+            android:id="@+id/navBarBackground"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:background="@drawable/bg_navbar"
+            android:textSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
 
     <Button
         android:id="@+id/navBarButton"
@@ -233,8 +530,8 @@
 
     <Button
         android:id="@+id/profileButton"
-        android:layout_width="25dp"
-        android:layout_height="32dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginTop="24dp"
         android:background="@drawable/ic_person_active"
         android:elevation="2dp"

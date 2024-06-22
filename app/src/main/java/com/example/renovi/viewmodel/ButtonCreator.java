@@ -66,7 +66,7 @@ public class ButtonCreator {
         renovierungButton.setLayoutParams(params);
 
         // Hintergrund und Texteigenschaften setzen
-        renovierungButton.setBackgroundResource(R.drawable.bg_gray_round_corner);
+        renovierungButton.setBackgroundResource(R.drawable.bg_white_round_corner);
         renovierungButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.white));
         renovierungButton.setElevation(dpToPx(context, 5));
         renovierungButton.setPaddingRelative(
@@ -144,7 +144,7 @@ public class ButtonCreator {
         textView.setGravity(Gravity.CENTER);  // Text zentrieren
 
         // Hintergrund mit abgerundeten Ecken
-        Drawable background = ContextCompat.getDrawable(context, R.drawable.bg_gray_round_corner);
+        Drawable background = ContextCompat.getDrawable(context, R.drawable.bg_white_round_corner);
         DrawableCompat.setTint(background, ContextCompat.getColor(context, R.color.gray4));
         textView.setBackground(background);
 

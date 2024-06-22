@@ -38,14 +38,14 @@ public class ProfileActivity extends AppCompatActivity {
 
         profileFirstName = findViewById(R.id.profileFirstName);
         profileLastName = findViewById(R.id.profileLastName);
-        profileVerifyId = findViewById(R.id.profileVerifyId);
+        profileVerifyId = findViewById(R.id.profileVerifyIdBackground);
 
         initializeBackToMainButton();
         initializeCopyButton();
         initializeInboxButton();
         initializeFaqButton();
         setUserProfile();
-
+        initializeSignOutButton();
     }
 
     private void getRenterFromSession() {
@@ -54,7 +54,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void initializeCopyButton() {
-        TextView profileVerifyId = findViewById(R.id.profileVerifyId);
         Button copyVerifyIdButton = findViewById(R.id.copyVerifyIdButton);
         copyVerifyIdButton.setOnClickListener(new View.OnClickListener() { //This Button copies the string from "profileVerifyId"
             @Override
@@ -84,6 +83,27 @@ public class ProfileActivity extends AppCompatActivity {
     private void switchToInbox() {
         Intent switchActivityIntent = new Intent(this, InboxActivity.class);
         startActivity(switchActivityIntent);
+    }
+
+    private void initializeSignOutButton() {
+        Button notificationButtonNavBar = findViewById(R.id.signOutButton);
+        notificationButtonNavBar.setOnClickListener(view -> switchToLogIn());
+    }
+
+    private void switchToLogIn() {
+        // Lösche die gespeicherte Sitzung, wenn der Benutzer sich abmeldet
+        session.deleteSession();
+
+        // Erstelle einen neuen Intent für die LoginActivity
+        Intent switchActivityIntent = new Intent(this, LogInActivity.class);
+        // Setze die Flags, um den Backstack zu bereinigen
+        switchActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        // Starte die LoginActivity
+        startActivity(switchActivityIntent);
+
+        // Beende die aktuelle Aktivität, um Ressourcen freizugeben und sicherzustellen,
+        // dass der Benutzer nicht zur vorherigen Aktivität zurückkehren kann
+        finish();
     }
 
     private void initializeFaqButton() {
