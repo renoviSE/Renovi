@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private Session session;
     private ProgressBar rentCostProgressBar;
     private List<Pair<String, Class<?>>> menuItems;
+    private ConstraintLayout mainLayout;
 
 
     @Override
@@ -52,15 +54,26 @@ public class MainActivity extends AppCompatActivity {
 
         getUserFromSession();
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        if (user instanceof Renter) {
-            getRenovierungen(db);
-        } else if (user instanceof Landlord) {
-            generateMenuButtons();
-        }
+        // Wait for the layout to be completely drawn
+        mainLayout = findViewById(R.id.inner_constraint);
 
-        setUserNameAsHeadline();
-        initializeButtons();
+        mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // Remove the listener to prevent repeated calls
+                mainLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                if (user instanceof Renter) {
+                    getRenovierungen(db);
+                } else if (user instanceof Landlord) {
+                    generateMenuButtons();
+                }
+
+                setUserNameAsHeadline();
+                initializeButtons();
+            }
+        });
     }
 
     @Override
@@ -129,17 +142,14 @@ public class MainActivity extends AppCompatActivity {
     public void generateMenuButtons() {
         initializeMenuItems();
 
-        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
-
         ButtonCreator buttonCreator = new ButtonCreator(this);
         TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.menu_title_string, R.id.header_constraint);
-        int topConstraint = buttonsTitle.getId();
 
         for (Pair<String, Class<?>> menuItem : menuItems) {
             String objectName = menuItem.first;
             Class<?> destination = menuItem.second;
 
-            Button menuButton = buttonCreator.createButton(mainLayout, objectName, topConstraint, R.id.mainScrollSpacer);
+            Button menuButton = buttonCreator.createButton(mainLayout, objectName, R.id.mainScrollSpacer);
 
             Intent intent = new Intent(this, destination);
             menuButton.setOnClickListener(view -> startActivity(intent));
@@ -226,24 +236,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generateButtonForRenter(String renovationTitle, Renovation renovation) {
-        // Zugriff auf das Haupt-ConstraintLayout
-        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
-
         // Erstellen und Hinzufügen des Buttons zum Layout
         if (renovationTitle != null) {
             ButtonCreator buttonCreator  = new ButtonCreator(this);
             TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.bevorstehende_renovierungen_title, R.id.header_constraint);
-            int topConstraint = buttonsTitle.getId();
 
-            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, topConstraint, R.id.mainScrollSpacer);
+            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, R.id.mainScrollSpacer);
             renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
         }
     }
 
     private void generatePlaceholder() {
-        // Zugriff auf das Haupt-ConstraintLayout
-        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
-
         // Erstellen und Hinzufügen des Platzhalers zum Layout
         ButtonCreator buttonCreator  = new ButtonCreator(this);
         TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.bevorstehende_renovierungen_title, R.id.header_constraint);
@@ -254,9 +257,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void generateRentBannerForRenter() {
-        // Zugriff auf das Haupt-ConstraintLayout
-        ConstraintLayout mainLayout = findViewById(R.id.inner_constraint);
-
         // Erstellen und Hinzufügen des Banners zum Layout
         BannerCreator bannerCreator  = new BannerCreator(this);
         bannerCreator.createBanner(mainLayout, R.id.mainScrollSpacer);

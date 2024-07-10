@@ -99,7 +99,7 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         if (renovationTitle != null) {
             ButtonCreator buttonCreator  = new ButtonCreator(this);
 
-            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, R.id.renovationsListConstraintLayout, R.id.renovationsListScrollSpacer);
+            Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, R.id.renovationsListScrollSpacer);
             renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
         }
     }

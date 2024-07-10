@@ -20,6 +20,7 @@ public class ButtonCreator {
     private Context context;
     private static boolean firstButton = true;
     private static int lastButtonId = -1;
+    private int  textViewId;
 
     public ButtonCreator(Context context) {
 
@@ -48,11 +49,13 @@ public class ButtonCreator {
         constraintSet.connect(textView.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
         constraintSet.applyTo(layout);
 
+        textViewId = textView.getId();
+
         return textView;
     }
 
 
-    public Button createButton(ConstraintLayout layout, String objectName, int topConstraint, int scrollSpacerId) {
+    public Button createButton(ConstraintLayout layout, String objectName, int scrollSpacerId) {
 
         // Erstellen des Buttons
         Button renovierungButton = new Button(context);
@@ -88,7 +91,7 @@ public class ButtonCreator {
         // Wenn es der erste Button ist, wird er unter R.id.upcomingRenovationsTitle gesetzt
         // Ansonsten wird er unter den zuletzt hinzugefügten Button gesetzt
         if (firstButton) {
-            constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, topConstraint, ConstraintSet.BOTTOM, dpToPx(context, 24));
+            constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, textViewId, ConstraintSet.BOTTOM, dpToPx(context, 24));
             firstButton = false;
         } else {
             constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, dpToPx(context, 4));
@@ -190,4 +193,8 @@ public class ButtonCreator {
     public static int getLastButtonId() {
         return lastButtonId;
     }
+
+    public boolean getFirstButton() { return firstButton; };
+    public static void setFirstButton(boolean state) { firstButton = state; }
+
 }

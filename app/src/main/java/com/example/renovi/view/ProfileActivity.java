@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
 
 public class ProfileActivity extends AppCompatActivity {
@@ -93,6 +94,9 @@ public class ProfileActivity extends AppCompatActivity {
     private void switchToLogIn() {
         // Lösche die gespeicherte Sitzung, wenn der Benutzer sich abmeldet
         session.deleteSession();
+
+        // Setzt den FirstButton Zustand zurück, um beim nächsten Login eine Verschiebung der Buttons zu verhindern
+        ButtonCreator.setFirstButton(true);
 
         // Erstelle einen neuen Intent für die LoginActivity
         Intent switchActivityIntent = new Intent(this, LogInActivity.class);
