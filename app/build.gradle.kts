@@ -46,14 +46,8 @@ dependencies {
     // Use the Firebase BoM to manage Firebase dependencies' versions
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
-<<<<<<< Updated upstream
-    implementation("com.google.firebase:firebase-firestore:25.0.0")
-    implementation("com.google.firebase:firebase-common:20.4.2")
-    implementation("com.google.firebase:firebase-storage:21.0.0")
-=======
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-storage")
->>>>>>> Stashed changes
 
     // (Required) Writing and executing Unit Tests on the JUnit Platform
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.10.0")
