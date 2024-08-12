@@ -109,10 +109,25 @@
 		app:layout_constraintTop_toBottomOf="@+id/firstNameInput" />
 
 	<Button
+		android:id="@+id/changeToLandlordSignInButton"
+		android:layout_width="315dp"
+		android:layout_height="50dp"
+		android:layout_marginBottom="72dp"
+		android:background="@drawable/bg_button"
+		android:text="@string/landlord_login_button_string"
+		android:textColor="@color/white"
+		android:textSize="16sp"
+		android:textStyle="bold"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/lastNameInput" />
+
+	<Button
 		android:id="@+id/signinButton"
 		android:layout_width="315dp"
 		android:layout_height="65dp"
-		android:layout_marginBottom="32dp"
+		android:layout_marginTop="2dp"
 		android:background="@drawable/bg_button"
 		android:text="@string/login_button_string"
 		android:textColor="@color/white"
@@ -120,6 +135,7 @@
 		android:textStyle="bold"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent" />
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/changeToLandlordSignInButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

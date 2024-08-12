@@ -27,11 +27,15 @@
 
     <!-- login strings -->
     <string name="login_title">Melden Sie sich an</string>
+    <string name="Landlordlogin_title">Melden Sie sich  als Vermieter*in an</string>
     <string name="descriptiontext_string">Den Verifizierungscode erhalten Sie vom Vermieter</string>
+    <string name="landlorddescriptiontext_string">Vermieter Description Text XYZ</string>
     <string name="verify_id_placeholder_string">Verifizierungscode</string>
+    <string name="landlord_password_placeholder_string">Passwort</string>
     <string name="first_name_placeholder_string">Vorname</string>
     <string name="last_name_placeholder_string">Nachname</string>
     <string name="login_button_string">Anmelden</string>
+    <string name="landlord_login_button_string">Als Vermieter anmelden</string>
     <!-- login strings -->
 
     <!-- main strings -->
