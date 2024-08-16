@@ -10,7 +10,7 @@ public class Renovation implements Serializable {
     private String disadvantages;
     private String cost;
     private String paragraph;
-    private String condition;
+    private String state;
 
 
 //private int mieterId;
@@ -21,7 +21,7 @@ public class Renovation implements Serializable {
         this.disadvantages = disadvantages;
         this.cost = cost;
         this.paragraph = paragraph;
-        this.condition = condition;
+        this.state = condition;
     }
 
     public String getCost() {
@@ -45,7 +45,7 @@ public class Renovation implements Serializable {
     }
 
     public String getCondition() {
-        return condition;
+        return state;
     }
 
     public void setCost(String cost) {
@@ -53,12 +53,12 @@ public class Renovation implements Serializable {
     }
 
     public void setCondition(String condition) {
-        this.condition = condition;
+        this.state = condition;
     }
 
     public BigDecimal getObjectValue() { // BigDecimal soll der beste Datentyp sein um mit Währung zurechnen
         BigDecimal bigDecimalcost = new BigDecimal(cost);
-        switch (condition) {
+        switch (state) {
             case "gut": return bigDecimalcost.multiply(new BigDecimal("0.08")); // cost - (cost * %)
             case "mittel": return bigDecimalcost.multiply(new BigDecimal("0.04"));
             default: return new BigDecimal("0");

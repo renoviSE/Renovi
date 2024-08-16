@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Renovi"
         tools:targetApi="31">
         <activity
+            android:name=".view.CreateRenovationActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.RenterRenovationsListActivity"
             android:exported="false" />
         <activity

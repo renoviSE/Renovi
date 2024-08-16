@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white1">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".view.CreateRenovationActivity">
+
+        <ImageView
+            android:id="@+id/titleBackground"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:background="@color/white1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/createRenovationTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="41dp"
+            android:text="@string/create_renovation_title"
+            android:textAlignment="center"
+            android:textColor="@color/black1"
+            android:textSize="20sp"
+            android:fontFamily="@font/poppins_bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/CreateRenovationToMainButton"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="34dp"
+            android:background="@drawable/bg_white_round_corner"
+            android:backgroundTint="@color/gray5"
+            android:drawableStart="@drawable/ic_arrow_left"
+            android:drawableTint="@color/black1"
+            android:padding="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            android:scrollbars="none"
+            app:layout_constraintTop_toBottomOf="@+id/titleBackground">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraintLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".view.CreateRenovationActivity">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/createRenovationConstraintLayout3"
+                    android:layout_width="331dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:context=".view.CreateRenovationActivity">
+
+                    <EditText
+                        android:id="@+id/renovationCostInput"
+                        android:layout_width="155dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_white_round_corner"
+                        android:drawableStart="@drawable/ic_euro"
+                        android:drawablePadding="12dp"
+                        android:drawableTint="@color/gray2"
+                        android:elevation="5dp"
+                        android:hint="@string/create_renovation_amount_placeholder"
+                        android:inputType="textVisiblePassword"
+                        android:paddingLeft="10dp"
+                        android:textColorHint="@color/gray2"
+                        android:textCursorDrawable="@drawable/bg_cursor"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/createRenovationTimestamp"
+                        android:layout_width="155dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_white_round_corner"
+                        android:drawableStart="@drawable/ic_calendar"
+                        android:drawablePadding="12dp"
+                        android:drawableTint="@color/gray2"
+                        android:elevation="5dp"
+                        android:hint="@string/create_renovation_timestamp_placeholder"
+                        android:inputType="textVisiblePassword"
+                        android:paddingLeft="10dp"
+                        android:textColorHint="@color/gray2"
+                        android:textCursorDrawable="@drawable/bg_cursor"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <EditText
+                    android:id="@+id/createRenovationParagraph"
+                    android:layout_width="315dp"
+                    android:layout_height="148dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_white_round_corner"
+                    android:drawableTint="@color/gray2"
+                    android:elevation="5dp"
+                    android:gravity="top|start"
+                    android:hint="@string/create_renovation_paragraph_placeholder"
+                    android:paddingVertical="12dp"
+                    android:paddingStart="12dp"
+                    android:textColorHint="@color/gray2"
+                    android:textCursorDrawable="@drawable/bg_cursor"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/createRenovationConstraintLayout3" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/createRenovationConstraintLayout4"
+                    android:layout_width="331dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/createRenovationParagraph"
+                    tools:context=".view.CreateRenovationActivity">
+
+                    <TextView
+                        android:id="@+id/create_renovation_benefits"
+                        android:layout_width="155dp"
+                        android:layout_height="48dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_white_round_corner"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawablePadding="12dp"
+                        android:drawableTint="@color/gray2"
+                        android:elevation="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/create_renovation_benefits_placeholder"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="10dp"
+                        android:textColorHint="@color/gray2"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/create_renovation_state"
+                        android:layout_width="155dp"
+                        android:layout_height="48dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/bg_white_round_corner"
+                        android:drawableEnd="@drawable/ic_arrow_down"
+                        android:drawablePadding="12dp"
+                        android:drawableTint="@color/gray2"
+                        android:elevation="5dp"
+                        android:gravity="center_vertical"
+                        android:hint="@string/create_renovation_state_placeholder"
+                        android:paddingLeft="12dp"
+                        android:paddingEnd="10dp"
+                        android:textColorHint="@color/gray2"
+                        android:textSize="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/create_renovation_renovations"
+                    android:layout_width="315dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_white_round_corner"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/gray2"
+                    android:elevation="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/create_renovation_renovations_placeholder"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:textColorHint="@color/gray2"
+                    android:textSize="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/createRenovationConstraintLayout4" />
+
+                <TextView
+                    android:id="@+id/create_renovation_Renter"
+                    android:layout_width="315dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/bg_white_round_corner"
+                    android:drawableEnd="@drawable/ic_arrow_down"
+                    android:drawablePadding="12dp"
+                    android:drawableTint="@color/gray2"
+                    android:elevation="5dp"
+                    android:gravity="center_vertical"
+                    android:hint="@string/create_renovation_renter_placeholder"
+                    android:paddingLeft="12dp"
+                    android:paddingEnd="10dp"
+                    android:textColorHint="@color/gray2"
+                    android:textSize="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/create_renovation_renovations" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

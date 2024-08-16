@@ -137,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         menuItems = new ArrayList<>();
         menuItems.add(new Pair<>("Mieter", RenterListActivity.class));
         menuItems.add(new Pair<>("Mieter hinzufügen", CreateRenterActivity.class));
+        menuItems.add(new Pair<>("Renovation hinzufügen", CreateRenovationActivity.class));
     }
 
     public void generateMenuButtons() {
