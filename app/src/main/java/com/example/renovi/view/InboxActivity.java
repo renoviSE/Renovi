@@ -17,8 +17,8 @@ public class InboxActivity extends AppCompatActivity {
         initializeBackToPreviousActivityButton();
     }
     private void initializeBackToPreviousActivityButton() {
-        Button startButton = findViewById(R.id.InboxToMainButton);
-        startButton.setOnClickListener(view -> switchToPreviousActivity());
+        Button returnButton = findViewById(R.id.InboxToMainButton);
+        returnButton.setOnClickListener(view -> switchToPreviousActivity());
     }
     private void switchToPreviousActivity() {
         finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück

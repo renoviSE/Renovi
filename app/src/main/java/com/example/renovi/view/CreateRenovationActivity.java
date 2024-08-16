@@ -1,328 +1,270 @@
 package com.example.renovi.view;
 
-import android.content.DialogInterface;
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
+import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.AnimationUtil;
+import com.example.renovi.viewmodel.MultiSelectDialogUtil;
+import com.example.renovi.viewmodel.Session;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class CreateRenovationActivity extends AppCompatActivity {
 
-    TextView benefits;
+    EditText renovationCostInput, createRenovationTimestamp, createRenovationParagraph;
+    TextView benefits, states, object, renter;
     boolean[] selectedBenefit;
-    ArrayList<Integer> benefitsList = new ArrayList<>();
-    String[] benefitsArray = {"Brandschutz", "Einbruchschutz", "Isoaltion"};
-
-    TextView states;
-    boolean[] selectedState;
-    ArrayList<Integer> statesList = new ArrayList<>();
-    String[] statesArray = {"gut", "mittel", "schlecht"};
-
-    TextView renovations;
-    boolean[] selectedRenovation;
-    ArrayList<Integer> renovationsList = new ArrayList<>();
-    String[] renovationsArray = {"Tür", "Fenster", "WC", "Dach"};
-
-    TextView renter;
     boolean[] selectedRenter;
+    int[] selectedState = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
+    int[] selectedObject = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
+    ArrayList<Integer> benefitsList = new ArrayList<>();
     ArrayList<Integer> renterList = new ArrayList<>();
-    String[] renterArray = {"Beispiel", "Test", "Fake", "DB"};
+    ArrayList<String> renterDocIds = new ArrayList<>();
+    String[] benefitsArray = {"Brandschutz", "Einbruchschutz", "Isolation"};
+    String[] statesArray = {"gut", "mittel", "schlecht"};
+    String[] objectsArray = {"Tür", "Fenster", "WC", "Dach"};
+    String[] renterArray;  // Dynamisch befüllt
+
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Session session;
+    private Person user;
+    private Calendar renovationDate = Calendar.getInstance(); // Zum Speichern des Datums
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_renovation_acitivity);
 
-        benefits = findViewById(R.id.create_renovation_benefits);
-        states = findViewById(R.id.create_renovation_state);
-        renovations = findViewById(R.id.create_renovation_renovations);
-        renter = findViewById(R.id.create_renovation_Renter);
+        try {
+            getUserFromSession();
 
-        selectedBenefit = new boolean[benefitsArray.length];
-        selectedState = new boolean[statesArray.length];
-        selectedRenovation = new boolean[renovationsArray.length];
-        selectedRenter = new boolean[renterArray.length];
+            renovationCostInput = findViewById(R.id.renovationCostInput);
+            createRenovationTimestamp = findViewById(R.id.createRenovationTimestamp);
+            createRenovationParagraph = findViewById(R.id.createRenovationParagraph);
+            benefits = findViewById(R.id.create_renovation_benefits);
+            states = findViewById(R.id.create_renovation_state);
+            object = findViewById(R.id.create_renovation_object);
+            renter = findViewById(R.id.create_renovation_Renter);
 
-        initializeBackToPreviousActivityButton();
+            selectedBenefit = new boolean[benefitsArray.length];
 
-        benefits.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        CreateRenovationActivity.this
-                );
-                builder.setTitle(R.string.selection_view_benefits_title);
-                builder.setCancelable(false);
-                builder.setMultiChoiceItems(benefitsArray, selectedBenefit, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if (isChecked) {
-                            //When checkbox selected
-                            //Add position in benefits List
-                            benefitsList.add(which);
-                            //Sort benefits List
-                            Collections.sort(benefitsList);
-                        } else {
-                            //When checkbox unselected
-                            //Remove position from day list
-                            benefitsList.remove(which);
+            loadRenter();  // Lade die Mieter aus der Firebase-Datenbank
+
+            createRenovationTimestamp.setOnClickListener(v -> showDatePickerDialog());
+
+            benefits.setOnClickListener(v ->
+                    MultiSelectDialogUtil.showMultiSelectDialog(this, getString(R.string.selection_view_benefits_title),
+                            benefitsArray, selectedBenefit, benefitsList, benefits)
+            );
+
+            states.setOnClickListener(v ->
+                    MultiSelectDialogUtil.showSingleSelectDialog(this, getString(R.string.selection_view_states_title),
+                            statesArray, selectedState, states)
+            );
+
+            object.setOnClickListener(v ->
+                    MultiSelectDialogUtil.showSingleSelectDialog(this, getString(R.string.selection_view_renovations_title),
+                            objectsArray, selectedObject, object)
+            );
+
+            renter.setOnClickListener(v -> {
+                if (renterArray != null && renterArray.length > 0) {
+                    // Update the selectedRenter array based on renterList
+                    selectedRenter = new boolean[renterArray.length];
+                    for (int i = 0; i < renterArray.length; i++) {
+                        if (renterList.contains(i)) {
+                            selectedRenter[i] = true;
                         }
                     }
-                });
 
-                builder.setPositiveButton(R.string.selection_view_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int j = 0; j < benefitsList.size(); j++) {
-                            //Concat array value
-                            stringBuilder.append(benefitsArray[benefitsList.get(j)]);
-                            if (j != benefitsList.size() - 1) {
-                                //When j value not equal to benefit list size -1
-                                //Add comma
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        //Set text on text view
-                        benefits.setText(stringBuilder.toString());
-                    }
-                });
+                    // Show the multi-select dialog
+                    MultiSelectDialogUtil.showMultiSelectDialog(this, getString(R.string.selection_view_renter_title),
+                            renterArray, selectedRenter, renterList, renter);
+                }
+            });
 
-                builder.setNegativeButton(R.string.selection_view_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Dismiss dialog
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNeutralButton(R.string.selection_view_deselect, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        for (int j = 0; j < selectedBenefit.length; j++) {
-                            //Remove all selection
-                            selectedBenefit[j] = false;
-                            //Clear benefits list
-                            benefitsList.clear();
-                            //Cleat text view value
-                            benefits.setText("");
-                        }
-                    }
-                });
-                //Show dialog
-                builder.show();
-            }
-        });
-
-        states.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        CreateRenovationActivity.this
-                );
-                builder.setTitle(R.string.selection_view_states_title);
-                builder.setCancelable(false);
-                builder.setMultiChoiceItems(statesArray, selectedState, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if (isChecked) {
-                            statesList.add(which);
-                            Collections.sort(statesList);
-                        } else {
-                            //When checkbox unselected
-                            //Remove position from day list
-                            statesList.remove(which);
-                        }
-                    }
-                });
-
-                builder.setPositiveButton(R.string.selection_view_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int j = 0; j < statesList.size(); j++) {
-                            //Concat array value
-                            stringBuilder.append(statesArray[statesList.get(j)]);
-                            if (j != statesList.size() - 1) {
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        //Set text on text view
-                        states.setText(stringBuilder.toString());
-                    }
-                });
-
-                builder.setNegativeButton(R.string.selection_view_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Dismiss dialog
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNeutralButton(R.string.selection_view_deselect, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        for (int j = 0; j < selectedState.length; j++) {
-                            //Remove all selection
-                            selectedState[j] = false;
-                            //Clear states list
-                            statesList.clear();
-                            //Cleat text view value
-                            states.setText("");
-                        }
-                    }
-                });
-                //Show dialog
-                builder.show();
-            }
-        });
-
-        renovations.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        CreateRenovationActivity.this
-                );
-                builder.setTitle(R.string.selection_view_renovations_title);
-                builder.setCancelable(false);
-                builder.setMultiChoiceItems(renovationsArray, selectedRenovation, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if (isChecked) {
-                            renovationsList.add(which);
-                            Collections.sort(renovationsList);
-                        } else {
-                            //When checkbox unselected
-                            //Remove position from day list
-                            renovationsList.remove(which);
-                        }
-                    }
-                });
-
-                builder.setPositiveButton(R.string.selection_view_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int j = 0; j < renovationsList.size(); j++) {
-                            //Concat array value
-                            stringBuilder.append(renovationsArray[renovationsList.get(j)]);
-                            if (j != renovationsList.size() - 1) {
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        //Set text on text view
-                        renovations.setText(stringBuilder.toString());
-                    }
-                });
-
-                builder.setNegativeButton(R.string.selection_view_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Dismiss dialog
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNeutralButton(R.string.selection_view_deselect, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        for (int j = 0; j < selectedRenovation.length; j++) {
-                            //Remove all selection
-                            selectedRenovation[j] = false;
-                            //Clear renovations list
-                            renovationsList.clear();
-                            //Cleat text view value
-                            renovations.setText("");
-                        }
-                    }
-                });
-                //Show dialog
-                builder.show();
-            }
-        });
-
-        renter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Initialize alert dialog
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        CreateRenovationActivity.this
-                );
-                builder.setTitle(R.string.selection_view_renter_title);
-                builder.setCancelable(false);
-                builder.setMultiChoiceItems(renterArray, selectedRenter, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if (isChecked) {
-                            renterList.add(which);
-                            Collections.sort(renterList);
-                        } else {
-                            //When checkbox unselected
-                            //Remove position from day list
-                            renterList.remove(which);
-                        }
-                    }
-                });
-
-                builder.setPositiveButton(R.string.selection_view_accept, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int j = 0; j < renterList.size(); j++) {
-                            //Concat array value
-                            stringBuilder.append(renterArray[renterList.get(j)]);
-                            if (j != renterList.size() - 1) {
-                                stringBuilder.append(", ");
-                            }
-                        }
-                        //Set text on text view
-                        renter.setText(stringBuilder.toString());
-                    }
-                });
-
-                builder.setNegativeButton(R.string.selection_view_cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Dismiss dialog
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNeutralButton(R.string.selection_view_deselect, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        for (int j = 0; j < selectedRenter.length; j++) {
-                            //Remove all selection
-                            selectedRenter[j] = false;
-                            //Clear renter list
-                            renterList.clear();
-                            //Cleat text view value
-                            renter.setText("");
-                        }
-                    }
-                });
-                //Show dialog
-                builder.show();
-            }
-        });
+            Button saveButton = findViewById(R.id.create_renovation_Button);
+            saveButton.setOnClickListener(v -> saveRenovationToDatabase());
+            initializeBackToPreviousActivityButton();
+        } catch (Exception e) {
+            Log.e("CreateRenovationActivity", "Error initializing activity", e);
+            Toast.makeText(this, "Fehler beim Initialisieren der Aktivität", Toast.LENGTH_LONG).show();
+            finish(); // Schließt die Aktivität, falls ein kritischer Fehler aufgetreten ist
+        }
     }
+
+    private void showDatePickerDialog() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year, monthOfYear, dayOfMonth) -> {
+            renovationDate.set(Calendar.YEAR, year);
+            renovationDate.set(Calendar.MONTH, monthOfYear);
+            renovationDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+            createRenovationTimestamp.setText(sdf.format(renovationDate.getTime()));
+        }, renovationDate.get(Calendar.YEAR), renovationDate.get(Calendar.MONTH), renovationDate.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.show();
+    }
+
+    private void getUserFromSession() {
+        session = Session.getInstance(this);
+        user = session.getUser();
+    }
+
+    private void loadRenter() {
+        db.collection("Mieter")
+                .whereEqualTo("vermieter", user.getId())
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        ArrayList<String> renters = new ArrayList<>();
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String firstName = document.getString("vorname");
+                            String lastName = document.getString("nachname");
+                            String fullName = firstName + " " + lastName;
+                            renters.add(fullName);
+                            renterDocIds.add(document.getId()); // Dokument-ID speichern
+                        }
+                        renterArray = renters.toArray(new String[0]);  // Konvertiere in ein Array
+                    } else {
+                        Log.d("FirebaseError", "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+    private void saveRenovationToDatabase() {
+        // Daten sammeln
+        String kosten = renovationCostInput.getText().toString();
+        String timestamp = createRenovationTimestamp.getText().toString();
+        String paragraph = createRenovationParagraph.getText().toString();
+        String state = selectedState[0] != -1 ? statesArray[selectedState[0]] : "";
+        String renovationObject = selectedObject[0] != -1 ? objectsArray[selectedObject[0]] : "";
+
+        // Umwandlung der Benefits in einen String, getrennt durch Kommas
+        StringBuilder benefitsBuilder = new StringBuilder();
+        for (int i = 0; i < benefitsList.size(); i++) {
+            benefitsBuilder.append(benefitsArray[benefitsList.get(i)]);
+            if (i != benefitsList.size() - 1) {
+                benefitsBuilder.append(", ");
+            }
+        }
+        String vorteile = benefitsBuilder.toString();
+
+        // Farben für die Animation
+        int dangerColor = ContextCompat.getColor(this, R.color.danger);
+        int successColor = ContextCompat.getColor(this, R.color.lightBlue);
+        int currentDrawableColor = ContextCompat.getColor(this, R.color.gray2);
+        int animationDuration = 1000; // Dauer der Animation in Millisekunden
+
+        // Validierung der Eingabefelder, nicht required sind vorteile, mieter, paragraph
+        boolean isValid = true;
+        if (kosten.isEmpty()) {
+            AnimationUtil.animateHintAndDrawableColor(renovationCostInput, dangerColor, animationDuration);
+            isValid = false;
+        }
+        if (timestamp.isEmpty()) {
+            AnimationUtil.animateHintAndDrawableColor(createRenovationTimestamp, dangerColor, animationDuration);
+            isValid = false;
+        }
+        if (state.isEmpty()) {
+            AnimationUtil.animateHintAndDrawableColor(states, dangerColor, animationDuration);
+            isValid = false;
+        }
+        if (renovationObject.isEmpty()) {
+            AnimationUtil.animateHintAndDrawableColor(object, dangerColor, animationDuration);
+            isValid = false;
+        }
+
+        if (!isValid) {
+            Toast.makeText(this, "Bitte alle erforderlichen Felder ausfüllen", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Map<String, Object> renovationData = new HashMap<>();
+        renovationData.put("kosten", kosten);
+        renovationData.put("eintrittsdatum", new Timestamp(renovationDate.getTime()));
+        renovationData.put("paragraph", paragraph);
+        renovationData.put("vorteile", vorteile);
+        renovationData.put("zustand", state);
+        renovationData.put("object", renovationObject);
+        renovationData.put("nachteile", ""); // Immer leer
+
+        // Log die gesammelten Daten
+        Log.d("Firestore", "Renovation Data: " + renovationData.toString());
+
+        // Erstelle das Renovierung-Dokument in Firestore
+        db.collection("Renovierung").add(renovationData)
+                .addOnSuccessListener(documentReference -> {
+                    Log.d("Firestore", "Renovierung erfolgreich gespeichert. ID: " + documentReference.getId());
+
+                    // Verknüpfe das Renovierung-Dokument mit den Mietern
+                    for (int index : renterList) {
+                        String renterDocId = renterDocIds.get(index);
+                        DocumentReference renterDocRef = db.collection("Mieter").document(renterDocId);
+                        renterDocRef.collection("Renovierungen").add(renovationData)
+                                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Renovierung für Mieter erfolgreich verknüpft."))
+                                .addOnFailureListener(e -> Log.w("Firestore", "Fehler bei der Verknüpfung der Renovierung mit dem Mieter", e));
+                    }
+
+                    // Erfolgsanimation
+                    AnimationUtil.animateInputAndDrawableColor(renovationCostInput, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(createRenovationTimestamp, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(createRenovationParagraph, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(benefits, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(states, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(object, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(renter, currentDrawableColor, successColor, animationDuration);
+
+                    // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
+                    new android.os.Handler().postDelayed(() -> {
+                        // Felder leeren
+                        renovationCostInput.setText("");
+                        createRenovationTimestamp.setText("");
+                        createRenovationParagraph.setText("");
+                        benefits.setText("");
+                        states.setText("");
+                        object.setText("");
+                        renter.setText("");
+
+                        // Leeren der Auswahllisten
+                        benefitsList.clear();
+                        renterList.clear();
+                        selectedState[0] = -1;
+                        selectedObject[0] = -1;
+                        selectedRenter = new boolean[renterArray.length];
+                    }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
+
+                    Toast.makeText(CreateRenovationActivity.this, "Renovierung erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
+
+                })
+                .addOnFailureListener(e -> {
+                    Log.w("Firestore", "Fehler beim Speichern der Renovierung", e);
+                    Toast.makeText(CreateRenovationActivity.this, "Fehler beim Speichern der Renovierung", Toast.LENGTH_SHORT).show();
+                });
+    }
+
     private void initializeBackToPreviousActivityButton() {
-        Button startButton = findViewById(R.id.CreateRenovationToMainButton);
-        startButton.setOnClickListener(view -> switchToPreviousActivity());
+        Button returnButton = findViewById(R.id.CreateRenovationToMainButton);
+        returnButton.setOnClickListener(view -> switchToPreviousActivity());
     }
     private void switchToPreviousActivity() {
         finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück

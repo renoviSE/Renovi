@@ -6,10 +6,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class AnimationUtil {
 
-    public static void animateHintAndDrawableColor(final EditText editText, int targetColor, int duration) {
+    public static void animateHintAndDrawableColor(final TextView editText, int targetColor, int duration) {
         int originalColor = editText.getCurrentHintTextColor();
         ValueAnimator colorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), originalColor, targetColor, originalColor);
         colorAnimator.setDuration(duration);
@@ -31,7 +32,7 @@ public class AnimationUtil {
         colorAnimator.start();
     }
 
-    public static void animateInputAndDrawableColor(final EditText editText, int drawableCurrentColor, int targetColor, int duration) {
+    public static void animateInputAndDrawableColor(final TextView editText, int drawableCurrentColor, int targetColor, int duration) {
         int textCurrentColor = editText.getCurrentTextColor();
         ValueAnimator textColorAnimator = ValueAnimator.ofObject(new ArgbEvaluator(), textCurrentColor, targetColor, textCurrentColor);
         textColorAnimator.setDuration(duration);
