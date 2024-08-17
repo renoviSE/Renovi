@@ -47,10 +47,9 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         }
     }
 
-
     private void getRenovierungen(FirebaseFirestore db, String renterId) {
-        db.collection("Renovierung")
-                .whereEqualTo("mieter", db.collection("mieter").document(renterId))
+        // Greife auf die Sammlung "Renovationen" des aktuellen Mieters zu
+        db.collection("Mieter").document(renterId).collection("Renovierungen")
                 .get()
                 .addOnSuccessListener(documents -> {
                     BigDecimal allObjectsValue = new BigDecimal("0");
@@ -60,15 +59,23 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
                     for (DocumentSnapshot document : documents.getDocuments()) {
                         if (document.exists()) {
                             String objectName = document.getString("object");
-                            Renovation renovation = new Renovation(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"), document.getString("zustand"));
-                            // Erstelle einen Button für jeden Mieter
+                            Renovation renovation = new Renovation(
+                                    document.getString("object"),
+                                    document.getString("vorteile"),
+                                    document.getString("nachteile"),
+                                    document.getString("kosten"),
+                                    document.getString("paragraph"),
+                                    document.getString("zustand")
+                            );
+
+                            // Erstelle einen Button für jede Renovierung
                             generateButtonForRenter(objectName, renovation);
 
-                            // Speichere Kosten von allen Objekten
+                            // Summiere die Kosten aller Objekte
                             allObjectsValue = allObjectsValue.add(renovation.getObjectValue());
 
-                            buttonId+=1;
-                            Log.i(TAG, "Good Job");
+                            buttonId += 1;
+                            Log.i(TAG, "Renovierung erfolgreich geladen.");
                         }
                     }
                     // Wenn keine Renovierungen vorhanden sind
@@ -79,8 +86,7 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
                 })
                 .addOnFailureListener(e -> {
                     // Fehler beim Abrufen der Daten
-                    Log.i(TAG, "NO");
-
+                    Log.e(TAG, "Fehler beim Abrufen der Renovierungen", e);
                 });
     }
 
@@ -88,19 +94,19 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         Button startButton = findViewById(R.id.InboxToMainButton);
         startButton.setOnClickListener(view -> switchToPreviousActivity());
     }
+
     private void switchToPreviousActivity() {
         finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
         overridePendingTransition(0, 0); // Deaktiviert Animation beim Zurückkehren
     }
 
     private void generateButtonForRenter(String renovationTitle, Renovation renovation) {
-
         // Erstellen und Hinzufügen des Buttons zum Layout
         if (renovationTitle != null) {
-            ButtonCreator buttonCreator  = new ButtonCreator(this);
+            ButtonCreator buttonCreator = new ButtonCreator(this);
 
             Button renoButton = buttonCreator.createButton(mainLayout, renovationTitle, R.id.renovationsListScrollSpacer);
-            renoButton.setOnClickListener(view -> switchToDetails(renovation)); //hier renoId eigentlich
+            renoButton.setOnClickListener(view -> switchToDetails(renovation));
         }
     }
 
@@ -111,10 +117,9 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
     }
 
     private void generatePlaceholder() {
-        // Erstellen und Hinzufügen des Platzhalers zum Layout
-        ButtonCreator buttonCreator  = new ButtonCreator(this);
+        // Erstellen und Hinzufügen des Platzhalters zum Layout
+        ButtonCreator buttonCreator = new ButtonCreator(this);
 
         buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_renovations_placeholder_message);
-
     }
 }

@@ -173,72 +173,18 @@ android:background="@color/veryLightBlue">
                 app:layout_constraintTop_toBottomOf="@+id/prosTitle">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/detailsBenefitsConstraintLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
-
-                    <Button
-                        android:id="@+id/prosButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="32dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_white_round_corner"
-                        android:backgroundTint="@color/whiteBlue"
-                        android:drawableStart="@drawable/il_flame"
-                        android:drawablePadding="8dp"
-                        android:padding="10dp"
-                        android:text="Brandschutz"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/prosButton1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_white_round_corner"
-                        android:backgroundTint="@color/whiteBlue"
-                        android:drawableStart="@drawable/il_lock"
-                        android:drawablePadding="8dp"
-                        android:padding="10dp"
-                        android:text="Einbruchschutz"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/prosButton"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <Button
-                        android:id="@+id/prosButton2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/bg_white_round_corner"
-                        android:backgroundTint="@color/whiteBlue"
-                        android:drawableStart="@drawable/il_insulation"
-                        android:drawablePadding="8dp"
-                        android:padding="10dp"
-                        android:text="Isolation"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black1"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/prosButton1"
-                        app:layout_constraintTop_toTopOf="parent" />
 
                     <ImageView
                         android:id="@+id/scrollPadding"
                         android:layout_width="10dp"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="16dp"
                         android:layout_marginBottom="8dp"
                         android:background="@color/white1"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/prosButton2"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void getRenovierungen(FirebaseFirestore db) {
-        db.collection("Renovierung")
-                .whereEqualTo("mieter", db.collection("mieter").document(user.getId()))
+        // Zugriff auf die Sammlung "Renovationen" des aktuellen Mieters
+        db.collection("Mieter").document(user.getId()).collection("Renovierungen")
                 .get()
                 .addOnSuccessListener(documents -> {
                     BigDecimal allObjectsValue = new BigDecimal("0");
@@ -113,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             // Speichere Kosten von allen Objekten
                             allObjectsValue = allObjectsValue.add(renovation.getObjectValue());
 
-                            buttonId+=1;
+                            buttonId += 1;
                             Log.i(TAG, "Good Job");
                         }
                     }
@@ -164,7 +164,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void setRentCost() {
         generateRentBannerForRenter();
-
 
         TextView rentcostString = findViewById(R.id.mietpreisString);
         rentcostString.setText(((Renter) user).getRoundedRentasString() + "€");

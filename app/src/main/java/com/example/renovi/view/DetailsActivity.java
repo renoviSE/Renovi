@@ -1,6 +1,7 @@
 package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.content.ActivityNotFoundException;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Renovation;
+import com.example.renovi.viewmodel.ButtonCreator;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailsActivity extends AppCompatActivity {
@@ -34,12 +36,21 @@ public class DetailsActivity extends AppCompatActivity {
         TextView paragraphenTextView = findViewById(R.id.descriptionString);
 
         renovierungTextView.setText(renovation.getObject());
-        kostenTextview.setText(renovation.getCost() + "€" );
+        kostenTextview.setText(renovation.getCost() + "€");
         paragraphenTextView.setText(renovation.getParagraph());
         kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
 
-
         configureImageViewBasedOnName(renovation.getObject());
+
+        // Dynamische Erstellung der Benefit-Buttons
+        ConstraintLayout benefitsLayout = findViewById(R.id.detailsBenefitsConstraintLayout);
+        ButtonCreator buttonCreator = new ButtonCreator(this);
+        String[] benefits = renovation.getBenefits();
+        int lastButtonId = R.id.prosTitle; // Start-Constraint ist prosTitle
+
+        for (int i = 0; i < benefits.length; i++) {
+            lastButtonId = buttonCreator.createBenefitButton(benefitsLayout, benefits[i], lastButtonId, i == 0);
+        }
     }
 
     private void initializeBackToMainButton() {

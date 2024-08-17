@@ -79,7 +79,9 @@ public class ButtonCreator {
                 0  // bottom
         );
 
-        configureButtonBasedOnName(renovierungButton, "il_", objectName);
+        renovierungButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+
+        configureButtonBasedOnName(renovierungButton, "il_", objectName, true);
 
         // Button zum Layout hinzufügen
         layout.addView(renovierungButton);
@@ -109,7 +111,64 @@ public class ButtonCreator {
         return renovierungButton;
     }
 
-    public void configureButtonBasedOnName(Button button, String type, String buttonName) {
+    public int createBenefitButton(ConstraintLayout layout, String benefitName, int lastButtonId, boolean isFirst) {
+        // Erstellen des Buttons
+        Button benefitButton = new Button(context);
+        benefitButton.setId(View.generateViewId());
+
+        // Setzen der Layout-Parameter
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT, // Breite passt sich dem Inhalt an
+                dpToPx(context, 48) // Höhe
+        );
+        benefitButton.setLayoutParams(params);
+
+        // Hintergrund und Texteigenschaften setzen
+        benefitButton.setBackgroundResource(R.drawable.bg_white_round_corner);
+        benefitButton.setBackgroundTintList(ContextCompat.getColorStateList(context, R.color.whiteBlue));
+        benefitButton.setElevation(dpToPx(context, 5));
+        benefitButton.setPaddingRelative(
+                dpToPx(context, 10), // start
+                0, // top
+                dpToPx(context, 10), // end
+                0  // bottom
+        );
+
+        // Drawable Padding setzen
+        benefitButton.setCompoundDrawablePadding(dpToPx(context, 8));
+
+        benefitButton.setGravity(Gravity.CENTER);
+
+
+        // Textgröße setzen
+        benefitButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
+
+        // Setzen von Text und Icon auf der linken Seite
+        configureButtonBasedOnName(benefitButton, "il_", benefitName, false);
+
+        // Button zum Layout hinzufügen
+        layout.addView(benefitButton);
+
+        // Constraints setzen
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(layout);
+
+        if (isFirst) {
+            constraintSet.connect(benefitButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 32));
+        } else {
+            constraintSet.connect(benefitButton.getId(), ConstraintSet.START, lastButtonId, ConstraintSet.END, dpToPx(context, 16));
+        }
+
+        // Setzen der oberen und unteren Constraint, sowie des Bottom-Margin
+        constraintSet.connect(benefitButton.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP, 0);
+        constraintSet.connect(benefitButton.getId(), ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, dpToPx(context, 8));
+
+        constraintSet.applyTo(layout);
+
+        return benefitButton.getId(); // Gibt die ID des letzten Buttons zurück, um sie als Referenz für den nächsten Button zu verwenden
+    }
+
+    public void configureButtonBasedOnName(Button button, String type, String buttonName, Boolean nextButton) {
         // Umwandlung von Umlauten, Konvertierung in Kleinbuchstaben und Ersetzen von Leerzeichen durch Unterstriche
         String normalizedButtonName = normalizeString(buttonName.toLowerCase().replace(" ", "_"));
 
@@ -123,8 +182,12 @@ public class ButtonCreator {
 
         if (imageResId != 0) {
             Drawable drawableStart = ContextCompat.getDrawable(context, imageResId);
-            Drawable drawableEnd = ContextCompat.getDrawable(context, R.drawable.il_next);
-            button.setCompoundDrawablesWithIntrinsicBounds(drawableStart, null, drawableEnd, null);
+            if (nextButton) {
+                Drawable drawableEnd = ContextCompat.getDrawable(context, R.drawable.il_next);
+                button.setCompoundDrawablesWithIntrinsicBounds(drawableStart, null, drawableEnd, null);
+            } else {
+                button.setCompoundDrawablesWithIntrinsicBounds(drawableStart, null, null, null);
+            }
         }
 
         if (titleResId != 0) {
@@ -135,7 +198,6 @@ public class ButtonCreator {
 
         button.setAllCaps(false);
         button.setTextColor(ContextCompat.getColor(context, R.color.gray1));
-        button.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
     }
 
     public TextView createPlaceholderView(ConstraintLayout layout, int title, int placeholderMessage) {

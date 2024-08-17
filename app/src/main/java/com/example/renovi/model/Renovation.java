@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 public class Renovation implements Serializable {
     //private int id;
     private String object;
-    private String advantages;
+    private String benefits;
     private String disadvantages;
     private String cost;
     private String paragraph;
@@ -15,9 +15,9 @@ public class Renovation implements Serializable {
 
 //private int mieterId;
 
-    public Renovation(String object, String advantages, String disadvantages, String cost, String paragraph, String condition) {
+    public Renovation(String object, String benefits, String disadvantages, String cost, String paragraph, String condition) {
         this.object = object;
-        this.advantages = advantages;
+        this.benefits = benefits;
         this.disadvantages = disadvantages;
         this.cost = cost;
         this.paragraph = paragraph;
@@ -32,8 +32,8 @@ public class Renovation implements Serializable {
         return object;
     }
 
-    public String getAdvantages() {
-        return advantages;
+    public String[] getBenefits() {
+        return benefits.split(", ");
     }
 
     public String getDisadvantages() {
