@@ -6,4 +6,154 @@
     android:layout_height="match_parent"
     tools:context=".view.CreateRenterActivity">
 
+    <ImageView
+        android:id="@+id/titleBackground"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@color/white1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/createRenterTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="41dp"
+        android:text="@string/create_renter_title"
+        android:textAlignment="center"
+        android:textColor="@color/black1"
+        android:textSize="20sp"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/CreateRenterToMainButton"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="34dp"
+        android:background="@drawable/bg_white_round_corner"
+        android:backgroundTint="@color/gray5"
+        android:drawableStart="@drawable/ic_arrow_left"
+        android:drawableTint="@color/black1"
+        android:padding="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/createRenterConstraintLayout3"
+        android:layout_width="331dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleBackground"
+        tools:context=".view.CreateRenterActivity">
+
+        <EditText
+            android:id="@+id/renterFirstnameInput"
+            android:layout_width="155dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_white_round_corner"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/gray2"
+            android:elevation="5dp"
+            android:hint="@string/firstName"
+            android:inputType="numberDecimal"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/gray2"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/renterLastnameInput"
+            android:layout_width="155dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_white_round_corner"
+            android:drawableStart="@drawable/ic_person"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/gray2"
+            android:elevation="5dp"
+            android:focusable="false"
+            android:hint="@string/lastName"
+            android:inputType="none"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/gray2"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/create_renter_address"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_white_round_corner"
+        android:drawableEnd="@drawable/ic_arrow_down"
+        android:drawablePadding="12dp"
+        android:drawableTint="@color/gray2"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:hint="@string/create_renter_address_placeholder"
+        android:paddingLeft="12dp"
+        android:paddingEnd="10dp"
+        android:textColorHint="@color/gray2"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createRenterConstraintLayout3" />
+
+    <EditText
+        android:id="@+id/create_renter_rent"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_white_round_corner"
+        android:drawableStart="@drawable/ic_euro"
+        android:drawablePadding="12dp"
+        android:drawableTint="@color/gray2"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:hint="@string/create_renter_rent_placeholder"
+        android:paddingLeft="12dp"
+        android:paddingEnd="10dp"
+        android:textColorHint="@color/gray2"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_renter_address" />
+
+
+    <Button
+        android:id="@+id/create_renter_Button"
+        android:layout_width="315dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/bg_button"
+        android:text="@string/create_renter_button_string"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

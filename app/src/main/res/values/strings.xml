@@ -136,4 +136,13 @@
     <string name="create_renovation_button_string">Erstellen</string>
     <!-- create renovation strings -->
 
+    <!-- create renter strings -->
+    <string name="create_renter_title">Mieter</string>
+    <string name="selection_view_address_title">Adresse auswählen</string>
+    <string name="create_renter_rent_placeholder">Miete</string>
+    <string name="create_renter_address_placeholder">Adresse</string>
+    <string name="create_renter_button_string">Hinzufügen</string>
+
+    <!-- create renter strings -->
+
 </resources>
