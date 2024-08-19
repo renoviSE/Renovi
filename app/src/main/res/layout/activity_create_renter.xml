@@ -100,22 +100,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
+    <EditText
         android:id="@+id/create_renter_address"
         android:layout_width="315dp"
         android:layout_height="48dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/bg_white_round_corner"
-        android:drawableEnd="@drawable/ic_arrow_down"
-        android:drawablePadding="12dp"
-        android:drawableTint="@color/gray2"
         android:elevation="5dp"
-        android:gravity="center_vertical"
         android:hint="@string/create_renter_address_placeholder"
         android:paddingLeft="12dp"
         android:paddingEnd="10dp"
         android:textColorHint="@color/gray2"
         android:textSize="16dp"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createRenterConstraintLayout3" />
