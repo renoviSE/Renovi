@@ -13,4 +13,8 @@ id: 		abc	|	def	|	ghi	|	jkl
 vorname: 	Ai	|	Ismail	|	Cengiz	|	Emma
 nachname: 	Van	|	Zamar	|	Brüggen	|	Biegemann
 
+LOGIN DATA FOR THE ADMINS:
 
+id: 		admin1	|	admin2
+vorname: 	Herr	|	Frau
+nachname: 	Vermieter	|	Vermieterin
