@@ -139,7 +139,29 @@
         android:inputType="numberDecimal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_renter_address" />
+        app:layout_constraintTop_toBottomOf="@+id/create_renter_address"
+        app:layout_constraintBottom_toTopOf="@id/create_renter_squaremeters"/>
+
+    <EditText
+        android:id="@+id/create_renter_squaremeters"
+        android:layout_width="315dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg_white_round_corner"
+        android:drawableStart="@drawable/ic_house"
+        android:drawablePadding="12dp"
+        android:drawableTint="@color/gray2"
+        android:elevation="5dp"
+        android:gravity="center_vertical"
+        android:hint="@string/create_renter_squaremeters_placeholder"
+        android:paddingLeft="12dp"
+        android:paddingEnd="10dp"
+        android:textColorHint="@color/gray2"
+        android:textSize="16dp"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/create_renter_rent" />
 
 
     <Button

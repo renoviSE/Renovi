@@ -142,7 +142,13 @@
     <string name="create_renter_rent_placeholder">Miete</string>
     <string name="create_renter_address_placeholder">Adresse</string>
     <string name="create_renter_button_string">Hinzufügen</string>
+    <string name="create_renter_squaremeters_placeholder">Größe in Quadratmetern</string>
 
     <!-- create renter strings -->
+
+    <!-- create refurbishment strings -->
+    <string name="create_refurbishment_button_string">Weiter</string>
+    <string name="selection_view_refurbishment_title">Objekt auswählen</string>
+    <!-- create refurbishment strings -->
 
 </resources>

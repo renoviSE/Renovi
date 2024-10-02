@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -53,7 +52,7 @@ public class CreateRenovationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_renovation_acitivity);
+        setContentView(R.layout.activity_create_renovation);
 
         try {
             getUserFromSession();

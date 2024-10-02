@@ -21,7 +21,7 @@ import java.util.Map;
 
 public class CreateRenterActivity extends AppCompatActivity {
 
-    EditText renterFirstnameInput, renterLastnameInput, createRenterRent;
+    EditText renterFirstnameInput, renterLastnameInput, createRenterRent, createRenterSquareMeters;
     TextView createRenterAddress;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
@@ -39,6 +39,7 @@ public class CreateRenterActivity extends AppCompatActivity {
             renterLastnameInput = findViewById(R.id.renterLastnameInput);
             createRenterRent = findViewById(R.id.create_renter_rent);
             createRenterAddress = findViewById(R.id.create_renter_address);
+            createRenterSquareMeters = findViewById(R.id.create_renter_squaremeters);
 
             createRenterAddress.setOnClickListener(v -> showAddressSelectionDialog());
 
@@ -70,6 +71,7 @@ public class CreateRenterActivity extends AppCompatActivity {
         String nachname = renterLastnameInput.getText().toString();
         String mietpreis = createRenterRent.getText().toString();
         String adresse = createRenterAddress.getText().toString();
+        String quadratmeter = createRenterSquareMeters.getText().toString();
 
         // Farben für die Animation
         int dangerColor = ContextCompat.getColor(this, R.color.danger);
@@ -95,6 +97,10 @@ public class CreateRenterActivity extends AppCompatActivity {
             AnimationUtil.animateHintAndDrawableColor(createRenterAddress, dangerColor, animationDuration);
             isValid = false;
         }
+        if (quadratmeter.isEmpty()){
+            AnimationUtil.animateHintAndDrawableColor(createRenterSquareMeters, dangerColor, animationDuration);
+            isValid = false;
+        }
 
         if (!isValid) {
             Toast.makeText(this, "Bitte alle erforderlichen Felder ausfüllen", Toast.LENGTH_SHORT).show();
@@ -106,6 +112,7 @@ public class CreateRenterActivity extends AppCompatActivity {
         renterData.put("nachname", nachname);
         renterData.put("miete", mietpreis);
         renterData.put("adresse", adresse);
+        renterData.put("qm", quadratmeter);
         renterData.put("vermieter", user.getId());
 
         // Log die gesammelten Daten
@@ -121,6 +128,7 @@ public class CreateRenterActivity extends AppCompatActivity {
                     AnimationUtil.animateInputAndDrawableColor(renterLastnameInput, currentDrawableColor, successColor, animationDuration);
                     AnimationUtil.animateInputAndDrawableColor(createRenterRent, currentDrawableColor, successColor, animationDuration);
                     AnimationUtil.animateInputAndDrawableColor(createRenterAddress, currentDrawableColor, successColor, animationDuration);
+                    AnimationUtil.animateInputAndDrawableColor(createRenterSquareMeters, currentDrawableColor, successColor, animationDuration);
 
                     // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
                     new android.os.Handler().postDelayed(() -> {
@@ -129,6 +137,7 @@ public class CreateRenterActivity extends AppCompatActivity {
                         renterLastnameInput.setText("");
                         createRenterRent.setText("");
                         createRenterAddress.setText("");
+                        createRenterSquareMeters.setText("");
 
                         Toast.makeText(CreateRenterActivity.this, "Mieter erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
                     }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
