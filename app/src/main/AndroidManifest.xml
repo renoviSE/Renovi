@@ -19,6 +19,9 @@
             android:name=".view.CreateRenovationActivity"
             android:exported="false" />
         <activity
+            android:name=".view.CreateRefurbishmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.RenterRenovationsListActivity"
             android:exported="false" />
         <activity
