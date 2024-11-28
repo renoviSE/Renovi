@@ -31,16 +31,17 @@ import java.util.HashMap;
 
 public class CreateRefurbishmentActivity extends AppCompatActivity {
     EditText refurbishmentCostInput, createRefurbishmentTimestamp;
-    TextView object; // Bezieht sich auf die Adresse
+    TextView object;
 
-    int[] selectedObjectIndex = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
+    ArrayList<Integer> selectedObjectIndices = new ArrayList<>();
     ArrayList<String> renterDocIds = new ArrayList<>();
-    ArrayList<String> objectList = new ArrayList<>(); // Liste der Adressen
+    ArrayList<String> objectList = new ArrayList<>();
+    ArrayList<Double> qmList = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
-    private Calendar refurbishmentDate = Calendar.getInstance(); // Zum Speichern des Datums
+    private Calendar refurbishmentDate = Calendar.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +55,22 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             createRefurbishmentTimestamp = findViewById(R.id.createRefurbishmentTimestamp);
             object = findViewById(R.id.create_refurbishment_object);
 
-            loadObjects();  // Lade die Adressen aus der Firebase-Datenbank
+            loadObjects();
 
-            // Setze OnClickListener für den DatePicker
+            // Date Picker Dialog
             createRefurbishmentTimestamp.setOnClickListener(v -> showDatePickerDialog());
 
+            // Multi-Select Dialog for addresses
             object.setOnClickListener(v -> {
                 if (!objectList.isEmpty()) {
-                    // Show the single-select dialog für die Adressen
-                    MultiSelectDialogUtil.showSingleSelectDialog(this, getString(R.string.selection_view_refurbishment_title),
-                            objectList.toArray(new String[0]), selectedObjectIndex, object);
+                    MultiSelectDialogUtil.showMultiSelectDialog(
+                            this,
+                            getString(R.string.selection_view_refurbishment_title),
+                            objectList.toArray(new String[0]),
+                            new boolean[objectList.size()],
+                            selectedObjectIndices,
+                            object
+                    );
                 }
             });
 
@@ -73,7 +80,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
         } catch (Exception e) {
             Log.e("CreateRefurbishmentActivity", "Error initializing activity", e);
             Toast.makeText(this, "Fehler beim Initialisieren der Aktivität", Toast.LENGTH_LONG).show();
-            finish(); // Schließt die Aktivität, falls ein kritischer Fehler aufgetreten ist
+            finish();
         }
     }
 
@@ -100,12 +107,19 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        HashSet<String> uniqueAddresses = new HashSet<>(); // HashSet zur Vermeidung von Duplikaten
+                        HashSet<String> uniqueAddresses = new HashSet<>();
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String address = document.getString("adresse");
-                            if (address != null && uniqueAddresses.add(address)) { // Wenn die Adresse nicht bereits hinzugefügt wurde
-                                objectList.add(address); // Adresse zur Liste hinzufügen
-                                renterDocIds.add(document.getId()); // Dokument-ID speichern
+                            String qmString = document.getString("qm");
+                            if (address != null && uniqueAddresses.add(address)) {
+                                objectList.add(address);
+                                renterDocIds.add(document.getId());
+                                try {
+                                    qmList.add(Double.parseDouble(qmString));
+                                } catch (NumberFormatException e) {
+                                    Log.e("LoadObjects", "Invalid qm value: " + qmString, e);
+                                    qmList.add(0.0);
+                                }
                             }
                         }
                     } else {
@@ -115,20 +129,15 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
     }
 
     private void saveRenovationToDatabase() {
-        // Daten sammeln
-        String kosten = refurbishmentCostInput.getText().toString();
+        String kostenInput = refurbishmentCostInput.getText().toString();
         String timestamp = createRefurbishmentTimestamp.getText().toString();
-        String selectedObjectText = selectedObjectIndex[0] != -1 ? objectList.get(selectedObjectIndex[0]) : "";
 
-        // Farben für die Animation
+        // Farben für Validierung
         int dangerColor = ContextCompat.getColor(this, R.color.danger);
-        int successColor = ContextCompat.getColor(this, R.color.lightBlue);
-        int currentDrawableColor = ContextCompat.getColor(this, R.color.gray2);
-        int animationDuration = 1000; // Dauer der Animation in Millisekunden
+        int animationDuration = 1000;
 
-        // Validierung der Eingabefelder
         boolean isValid = true;
-        if (kosten.isEmpty()) {
+        if (kostenInput.isEmpty()) {
             AnimationUtil.animateHintAndDrawableColor(refurbishmentCostInput, dangerColor, animationDuration);
             isValid = false;
         }
@@ -136,7 +145,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             AnimationUtil.animateHintAndDrawableColor(createRefurbishmentTimestamp, dangerColor, animationDuration);
             isValid = false;
         }
-        if (selectedObjectText.isEmpty()) {
+        if (selectedObjectIndices.isEmpty()) {
             AnimationUtil.animateHintAndDrawableColor(object, dangerColor, animationDuration);
             isValid = false;
         }
@@ -146,46 +155,73 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             return;
         }
 
-        // Erstelle das Renovierung-Dokument in Firestore
-        Map<String, Object> renovationData = new HashMap<>();
-        renovationData.put("kosten", kosten);
-        renovationData.put("datum", new Timestamp(refurbishmentDate.getTime()));
-        renovationData.put("adresse", selectedObjectText);
+        double totalCost;
+        try {
+            totalCost = Double.parseDouble(kostenInput);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Ungültiger Betrag für Kosten", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        Log.d("Firestore", "Renovation Data: " + renovationData.toString());
+        for (int addressIndex : selectedObjectIndices) {
+            String address = objectList.get(addressIndex);
 
-        db.collection("Renovierung").add(renovationData)
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("Firestore", "Renovierung erfolgreich gespeichert. ID: " + documentReference.getId());
+            // Hole Mieter für die Adresse
+            db.collection("Mieter")
+                    .whereEqualTo("adresse", address)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        double totalSquareMeters = 0.0;
+                        ArrayList<QueryDocumentSnapshot> renters = new ArrayList<>();
 
-                    // Verknüpfe das Renovierung-Dokument mit den Mietern
-                    if (selectedObjectIndex[0] != -1) {
-                        String renterDocId = renterDocIds.get(selectedObjectIndex[0]);
-                        DocumentReference renterDocRef = db.collection("Mieter").document(renterDocId);
-                        renterDocRef.collection("Renovierungen").add(renovationData)
-                                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Renovierung für Mieter erfolgreich verknüpft."))
-                                .addOnFailureListener(e -> Log.w("Firestore", "Fehler bei der Verknüpfung der Renovierung mit dem Mieter", e));
-                    }
+                        for (QueryDocumentSnapshot renter : queryDocumentSnapshots) {
+                            renters.add(renter);
+                            String qmString = renter.getString("qm");
+                            try {
+                                totalSquareMeters += Double.parseDouble(qmString);
+                            } catch (NumberFormatException e) {
+                                Log.w("Renovierung", "Fehler beim Parsen von Quadratmetern für Mieter: " + renter.getId(), e);
+                            }
+                        }
 
-                    // Erfolgsanimation
-                    AnimationUtil.animateInputAndDrawableColor(refurbishmentCostInput, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(object, currentDrawableColor, successColor, animationDuration);
+                        // Verteilung der Kosten
+                        for (QueryDocumentSnapshot renter : renters) {
+                            String renterId = renter.getId();
+                            String qmString = renter.getString("qm");
+                            double renterSquareMeters = 0.0;
 
-                    // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
-                    new android.os.Handler().postDelayed(() -> {
-                        refurbishmentCostInput.setText("");
-                        object.setText("");
+                            try {
+                                renterSquareMeters = Double.parseDouble(qmString);
+                            } catch (NumberFormatException e) {
+                                Log.w("Renovierung", "Fehler beim Parsen von Quadratmetern für Mieter: " + renterId, e);
+                            }
 
-                    }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
+                            // Kostenberechnung und Rundung auf 2 Nachkommastellen
+                            double renterCost = totalSquareMeters > 0 ? (renterSquareMeters / totalSquareMeters) * totalCost : 0.0;
+                            renterCost = Math.round(renterCost * 100.0) / 100.0;
 
-                    Toast.makeText(CreateRefurbishmentActivity.this, "Renovierung erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
+                            // Renovierungsdaten erstellen
+                            Map<String, Object> renovationData = new HashMap<>();
+                            renovationData.put("kosten", String.valueOf(renterCost));
+                            renovationData.put("datum", new Timestamp(refurbishmentDate.getTime()));
+                            renovationData.put("object", "Fenster");
+                            renovationData.put("zustand", "schlecht");
 
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("Firestore", "Fehler beim Speichern der Renovierung", e);
-                    Toast.makeText(CreateRefurbishmentActivity.this, "Fehler beim Speichern der Renovierung", Toast.LENGTH_SHORT).show();
-                });
+                            // Renovierung für den Mieter direkt in seiner Sammlung "Renovierungen" speichern
+                            DocumentReference renterDocRef = db.collection("Mieter").document(renterId);
+                            renterDocRef.collection("Renovierungen")
+                                    .add(renovationData)
+                                    .addOnSuccessListener(aVoid -> Log.d("Renovierung", "Renovierung erfolgreich hinzugefügt für Mieter: " + renterId))
+                                    .addOnFailureListener(e -> Log.w("Renovierung", "Fehler beim Hinzufügen der Renovierung", e));
+                        }
+                    })
+                    .addOnFailureListener(e -> Log.w("Renovierung", "Fehler beim Abrufen der Mieter für Adresse: " + address, e));
+        }
+
+        Toast.makeText(this, "Renovierungen erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
     }
+
+
 
     private void initializeBackToPreviousActivityButton() {
         Button returnButton = findViewById(R.id.CreateRefurbishmentToMainButton);
@@ -193,6 +229,6 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
     }
 
     private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
+        finish();
     }
 }

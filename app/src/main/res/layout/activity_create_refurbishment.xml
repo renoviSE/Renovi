@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="41dp"
-            android:text="@string/create_renovation_title"
+            android:text="@string/create_refurbishment_title"
             android:textAlignment="center"
             android:textColor="@color/black1"
             android:textSize="20sp"
