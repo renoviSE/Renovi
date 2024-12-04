@@ -203,9 +203,12 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
                             // Renovierungsdaten erstellen
                             Map<String, Object> renovationData = new HashMap<>();
                             renovationData.put("kosten", String.valueOf(renterCost));
-                            renovationData.put("datum", new Timestamp(refurbishmentDate.getTime()));
+                            renovationData.put("eintrittsdatum", new Timestamp(refurbishmentDate.getTime()));
                             renovationData.put("object", "Fenster");
                             renovationData.put("zustand", "schlecht");
+                            renovationData.put("vorteile", "");
+                            renovationData.put("nachteile", "");
+                            renovationData.put("paragraph", "");
 
                             // Renovierung für den Mieter direkt in seiner Sammlung "Renovierungen" speichern
                             DocumentReference renterDocRef = db.collection("Mieter").document(renterId);
