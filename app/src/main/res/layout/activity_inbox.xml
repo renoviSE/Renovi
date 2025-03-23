@@ -12,6 +12,29 @@
         android:layout_height="wrap_content"
         tools:context=".view.InboxActivity">
 
+        <EditText
+            android:id="@+id/verifyIdInput2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/bg_white_round_corner"
+            android:backgroundTint="@color/white"
+            android:drawableStart="@drawable/ic_search"
+            android:drawablePadding="20dp"
+            android:drawableTint="@color/gray2"
+            android:elevation="8dp"
+            android:hint="@string/search_renter_placeholder_string"
+            android:inputType="textVisiblePassword"
+            android:paddingLeft="22dp"
+            android:textColorHint="@color/gray2"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleBackground" />
+
         <ImageView
             android:id="@+id/titleBackground"
             android:layout_width="match_parent"
@@ -74,16 +97,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fillViewport="true"
+            android:rotation="0"
             android:scrollbars="none"
             app:layout_constraintTop_toBottomOf="@+id/titleBackground">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout2"
+                android:id="@+id/renterListConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:context=".view.InboxActivity">
+                tools:context=".view.RenterListActivity">
 
+                <ImageView
+                    android:id="@+id/renterListTopConstraintForPlaceholder"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="104dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageView
+                    android:id="@+id/renterListScrollSpacer"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="104dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
