@@ -75,11 +75,11 @@ public class InboxActivity extends AppCompatActivity {
         ButtonCreator buttonCreator = new ButtonCreator(this);
 
         Button renterButton = buttonCreator.createButton(mainLayout, fullname, R.id.renterListScrollSpacer);
-        renterButton.setOnClickListener(v -> switchToRenterRenovationList(renterId));
+        renterButton.setOnClickListener(v -> switchToChat(renterId));
     }
 
-    private void switchToRenterRenovationList(String renterId) {
-        Intent intent = new Intent(this, RenterRenovationsListActivity.class);
+    private void switchToChat(String renterId) {
+        Intent intent = new Intent(this, ChatActivity.class);
         intent.putExtra("renterId", renterId);
         intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
         overridePendingTransition(0,0); //disables animation
