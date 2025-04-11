@@ -11,21 +11,27 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.renovi.R;
 import com.example.renovi.model.MChatMessage;
+import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.Session;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class ChatActivity extends AppCompatActivity {
 
     final String TAG = "myTag";
     private ConstraintLayout mainLayout;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private Session session;
+    private Person user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getUserFromSession();
 
         setContentView(R.layout.activity_chat);
         mainLayout = findViewById(R.id.renterListConstraintLayout);
@@ -46,6 +52,11 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
+    private void getUserFromSession() {
+        session = Session.getInstance(this);
+        user = session.getUser();
+    }
+
     private void getRenovierungen(FirebaseFirestore db, String renterId) {
         // Greife auf die Sammlung "Renovationen" des aktuellen Mieters zu
         db.collection("Mieter").document(renterId).collection("Chat")
@@ -57,7 +68,7 @@ public class ChatActivity extends AppCompatActivity {
                     int buttonId = 1;
                     for (DocumentSnapshot document : documents.getDocuments()) {
                         if (document.exists()) {
-                            String objectName = document.getString("object");
+                            //String objectName = document.getString("object");
                             MChatMessage chat = new MChatMessage(
                                     document.getString("message"),
                                     document.getString("from"),
@@ -66,7 +77,7 @@ public class ChatActivity extends AppCompatActivity {
                             );
 
                             // Erstelle einen Button für jede Renovierung
-                            generateButtonForMessage(objectName, chat);
+                            generateButtonForMessage(chat);
 
 
 
@@ -86,13 +97,17 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
-    private void generateButtonForMessage(String chat, MChatMessage message) {
+    private void generateButtonForMessage(MChatMessage chat) {
         // Erstellen und Hinzufügen des Buttons zum Layout
         if (chat != null) {
             ButtonCreator buttonCreator = new ButtonCreator(this);
-
-            Button renoButton = buttonCreator.createButton(mainLayout, chat, R.id.renovationsListScrollSpacer);
-            //renoButton.setOnClickListener(view -> switchToDetails(renovation));
+            String message = chat.getMessage();
+            if (Objects.equals(user.getId(), chat.getMessageFrom())) {
+                Button renoButton = buttonCreator.createColoredButton(mainLayout, message, R.color.midBlue, R.id.renovationsListScrollSpacer);
+            }
+            else if (Objects.equals(user.getId(), chat.getMessageTo())){
+                Button renoButton = buttonCreator.createColoredButton(mainLayout, message, R.color.lightPurple, R.id.renovationsListScrollSpacer);
+            }
         }
     }
 

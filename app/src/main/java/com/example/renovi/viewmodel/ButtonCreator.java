@@ -111,6 +111,62 @@ public class ButtonCreator {
         return renovierungButton;
     }
 
+    public Button createColoredButton(ConstraintLayout layout, String objectName, int color, int scrollSpacerId) {
+
+        // Erstellen des Buttons
+        Button renovierungButton = new Button(context);
+        renovierungButton.setId(View.generateViewId());
+
+        // Setzen der Layout-Parameter
+        ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT, // Breite entspricht der Breite des Parent-Layouts
+                dpToPx(context, 85) // Höhe
+        );
+        renovierungButton.setLayoutParams(params);
+
+        // Hintergrund und Texteigenschaften setzen
+        renovierungButton.setBackgroundResource(R.drawable.bg_white_round_corner);
+        renovierungButton.setBackgroundTintList(ContextCompat.getColorStateList(context, color));
+        renovierungButton.setElevation(dpToPx(context, 5));
+        renovierungButton.setPaddingRelative(
+                dpToPx(context, 20), // start
+                0, // top
+                dpToPx(context, 20), // end
+                0  // bottom
+        );
+
+        renovierungButton.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
+
+        configureButtonBasedOnName(renovierungButton, "il_", objectName, true);
+
+        // Button zum Layout hinzufügen
+        layout.addView(renovierungButton);
+
+        // Constraints setzen
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(layout);
+
+        // Wenn es der erste Button ist, wird er unter R.id.upcomingRenovationsTitle gesetzt
+        // Ansonsten wird er unter den zuletzt hinzugefügten Button gesetzt
+        if (firstButton) {
+            constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, textViewId, ConstraintSet.BOTTOM, dpToPx(context, 24));
+            firstButton = false;
+        } else {
+            constraintSet.connect(renovierungButton.getId(), ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, dpToPx(context, 4));
+        }
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START, dpToPx(context, 24));
+        constraintSet.connect(renovierungButton.getId(), ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END, dpToPx(context, 24));
+
+        constraintSet.connect(scrollSpacerId, ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM, 0);
+
+        constraintSet.applyTo(layout);
+
+        // Aktualisieren der ID des zuletzt hinzugefügten Buttons
+        lastButtonId = renovierungButton.getId();
+
+        return renovierungButton;
+    }
+
     public int createBenefitButton(ConstraintLayout layout, String benefitName, int lastButtonId, boolean isFirst) {
         // Erstellen des Buttons
         Button benefitButton = new Button(context);
