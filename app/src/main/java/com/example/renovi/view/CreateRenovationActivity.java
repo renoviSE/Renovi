@@ -34,8 +34,8 @@ public class CreateRenovationActivity extends AppCompatActivity {
     TextView benefits, states, object, renter;
     boolean[] selectedBenefit;
     boolean[] selectedRenter;
-    int[] selectedState = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
-    int[] selectedObject = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
+    int[] selectedState = {1}; // Für Single-Choice, -1 bedeutet keine Auswahl
+    int[] selectedObject = {1}; // Für Single-Choice, -1 bedeutet keine Auswahl
     ArrayList<Integer> benefitsList = new ArrayList<>();
     ArrayList<Integer> renterList = new ArrayList<>();
     ArrayList<String> renterDocIds = new ArrayList<>();
