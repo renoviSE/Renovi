@@ -211,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeMainButton() { //main button scrolls down
-        Button mainButton = findViewById(R.id.navBarButton);
+        Button mainButton = findViewById(R.id.addMessageButton);
         mainButton.setOnClickListener(view -> scrollToTextView());
     }
     private void scrollToTextView() {

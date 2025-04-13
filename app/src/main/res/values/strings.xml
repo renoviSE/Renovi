@@ -149,7 +149,7 @@
     <!-- create refurbishment strings -->
     <string name="create_refurbishment_title">Neue Fenster</string>
     <string name="create_refurbishment_button_string">Weiter</string>
-    <string name="selection_view_refurbishment_title">Objekt auswählen</string>
+    <string name="selection_view_refurbishment_title">Addresse auswählen</string>
     <!-- create refurbishment strings -->
 
 </resources>

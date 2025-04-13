@@ -114,7 +114,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/navBarButton"
+            android:id="@+id/addMessageButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="32dp"
@@ -126,15 +126,15 @@
             app:layout_constraintStart_toStartOf="@+id/navBarBackground" />
 
         <ImageView
-            android:id="@+id/navBarButtonIcon"
+            android:id="@+id/addMessageButtonIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/ic_arrow_down"
             android:elevation="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/navBarButton"
-            app:layout_constraintEnd_toEndOf="@+id/navBarButton"
-            app:layout_constraintStart_toStartOf="@+id/navBarButton"
-            app:layout_constraintTop_toTopOf="@+id/navBarButton" />
+            app:layout_constraintBottom_toBottomOf="@+id/addMessageButton"
+            app:layout_constraintEnd_toEndOf="@+id/addMessageButton"
+            app:layout_constraintStart_toStartOf="@+id/addMessageButton"
+            app:layout_constraintTop_toTopOf="@+id/addMessageButton" />
 
         <Button
             android:id="@+id/homeIcon"
@@ -158,7 +158,7 @@
             android:backgroundTint="@color/gray2"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
-            app:layout_constraintEnd_toStartOf="@+id/navBarButton"
+            app:layout_constraintEnd_toStartOf="@+id/addMessageButton"
             app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
 
         <Button
@@ -170,7 +170,7 @@
             android:background="@drawable/ic_faq"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
-            app:layout_constraintStart_toEndOf="@+id/navBarButton"
+            app:layout_constraintStart_toEndOf="@+id/addMessageButton"
             app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
 
         <Button

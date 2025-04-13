@@ -25,6 +25,9 @@
             android:name=".view.CreateRefurbishmentActivity"
             android:exported="false" />
         <activity
+            android:name=".view.AddMessageActivity"
+            android:exported="true" />
+        <activity
             android:name=".view.RenterRenovationsListActivity"
             android:exported="false" />
         <activity

@@ -31,11 +31,11 @@ import java.util.HashMap;
 
 public class CreateRefurbishmentActivity extends AppCompatActivity {
     EditText refurbishmentCostInput, createRefurbishmentTimestamp;
-    TextView object;
+    TextView address;
 
-    ArrayList<Integer> selectedObjectIndices = new ArrayList<>();
+    ArrayList<Integer> selectedAddressesIndices = new ArrayList<>();
     ArrayList<String> renterDocIds = new ArrayList<>();
-    ArrayList<String> objectList = new ArrayList<>();
+    ArrayList<String> addressList = new ArrayList<>();
     ArrayList<Double> qmList = new ArrayList<>();
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -53,7 +53,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
 
             refurbishmentCostInput = findViewById(R.id.refurbishmentCostInput);
             createRefurbishmentTimestamp = findViewById(R.id.createRefurbishmentTimestamp);
-            object = findViewById(R.id.create_refurbishment_object);
+            address = findViewById(R.id.create_refurbishment_address);
 
             loadObjects();
 
@@ -61,15 +61,15 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             createRefurbishmentTimestamp.setOnClickListener(v -> showDatePickerDialog());
 
             // Multi-Select Dialog for addresses
-            object.setOnClickListener(v -> {
-                if (!objectList.isEmpty()) {
+            address.setOnClickListener(v -> {
+                if (!addressList.isEmpty()) {
                     MultiSelectDialogUtil.showMultiSelectDialog(
                             this,
                             getString(R.string.selection_view_refurbishment_title),
-                            objectList.toArray(new String[0]),
-                            new boolean[objectList.size()],
-                            selectedObjectIndices,
-                            object
+                            addressList.toArray(new String[0]),
+                            new boolean[addressList.size()],
+                            selectedAddressesIndices,
+                            address
                     );
                 }
             });
@@ -112,7 +112,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
                             String address = document.getString("adresse");
                             String qmString = document.getString("qm");
                             if (address != null && uniqueAddresses.add(address)) {
-                                objectList.add(address);
+                                addressList.add(address);
                                 renterDocIds.add(document.getId());
                                 try {
                                     qmList.add(Double.parseDouble(qmString));
@@ -145,8 +145,8 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             AnimationUtil.animateHintAndDrawableColor(createRefurbishmentTimestamp, dangerColor, animationDuration);
             isValid = false;
         }
-        if (selectedObjectIndices.isEmpty()) {
-            AnimationUtil.animateHintAndDrawableColor(object, dangerColor, animationDuration);
+        if (selectedAddressesIndices.isEmpty()) {
+            AnimationUtil.animateHintAndDrawableColor(address, dangerColor, animationDuration);
             isValid = false;
         }
 
@@ -163,8 +163,8 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             return;
         }
 
-        for (int addressIndex : selectedObjectIndices) {
-            String address = objectList.get(addressIndex);
+        for (int addressIndex : selectedAddressesIndices) {
+            String address = addressList.get(addressIndex);
 
             // Hole Mieter für die Adresse
             db.collection("Mieter")

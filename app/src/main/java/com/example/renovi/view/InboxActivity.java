@@ -32,8 +32,20 @@ public class InboxActivity extends AppCompatActivity {
         mainLayout = findViewById(R.id.renterListConstraintLayout);
 
         initializeBackToPreviousActivityButton();
+        initializeAddMessageButton();
         loadRenter();
     }
+
+    private void initializeAddMessageButton() {
+        Button addMessageButton = findViewById(R.id.addMessageButton);
+        addMessageButton.setOnClickListener(view -> switchToAddMessageAcivity());
+    }
+
+    private void switchToAddMessageAcivity() {
+        Intent switchActivityIntent = new Intent(this, AddMessageActivity.class);
+        startActivity(switchActivityIntent);
+    }
+
     private void getUserFromSession() {
         session = Session.getInstance(this);
         user = session.getUser();
