@@ -49,6 +49,7 @@ public class AddMessageActivity extends AppCompatActivity {
         messageInput = findViewById(R.id.messageContentInput);
         recipientTextView = findViewById(R.id.messageRecipient);
         sendMessageButton = findViewById(R.id.sendMessageButton);
+        initializeBackToPreviousActivityButton();
 
         loadRenter();
 
@@ -128,13 +129,14 @@ public class AddMessageActivity extends AppCompatActivity {
 
             // Nachricht in die "Chat" Sammlung des Mieters speichern
             db.collection("Mieter")
-                    .document(renterDocId) // Mieter-Dokument
-                    .collection("Chat") // Chat-Subcollection
+                    .document(renterDocId)
+                    .collection("Chat")
                     .add(messageData)
                     .addOnSuccessListener(documentReference ->
                             Log.d("Firestore", "Nachricht an Mieter " + renterDocId + " gesendet."))
                     .addOnFailureListener(e ->
                             Log.w("Firestore", "Fehler beim Senden der Nachricht an " + renterDocId, e));
+
         }
 
         // Erfolgs-Feedback mit Animation
@@ -151,6 +153,14 @@ public class AddMessageActivity extends AppCompatActivity {
 
         // Toast, der den Erfolg anzeigt
         Toast.makeText(this, "Nachricht erfolgreich gesendet", Toast.LENGTH_SHORT).show();
+    }
+
+    private void initializeBackToPreviousActivityButton() {
+        Button returnButton = findViewById(R.id.sendMessageToMainButton);
+        returnButton.setOnClickListener(view -> switchToPreviousActivity());
+    }
+    private void switchToPreviousActivity() {
+        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
     }
 
 }

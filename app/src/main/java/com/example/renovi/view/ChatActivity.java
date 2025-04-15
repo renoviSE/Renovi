@@ -16,6 +16,7 @@ import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -45,7 +46,7 @@ public class ChatActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("renterId")) {
             String renterId = intent.getStringExtra("renterId");
 
-            getRenovierungen(db, renterId);
+            getChats(db, renterId);
 
         } else {
             Toast.makeText(this, "Keine Mieter-ID übertragen!", Toast.LENGTH_LONG).show();
@@ -57,9 +58,8 @@ public class ChatActivity extends AppCompatActivity {
         user = session.getUser();
     }
 
-    private void getRenovierungen(FirebaseFirestore db, String renterId) {
-        // Greife auf die Sammlung "Renovationen" des aktuellen Mieters zu
-        db.collection("Mieter").document(renterId).collection("Chat")
+    private void getChats(FirebaseFirestore db, String renterId) {
+        db.collection("Mieter").document(renterId).collection("Chat").orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnSuccessListener(documents -> {
                     BigDecimal allObjectsValue = new BigDecimal("0");
@@ -72,14 +72,15 @@ public class ChatActivity extends AppCompatActivity {
                             MChatMessage chat = new MChatMessage(
                                     document.getString("message"),
                                     document.getString("from"),
-                                    document.getString("to")
+                                    document.getString("to"),
+                                    document.getTimestamp("timestamp")
 
                             );
 
                             // Erstelle einen Button für jede Renovierung
-                            generateButtonForMessage(chat);
-
-
+                            if((Objects.equals(chat.getMessageFrom(), user.getId()) || Objects.equals(chat.getMessageTo(), user.getId())) && (Objects.equals(chat.getMessageFrom(), renterId) || Objects.equals(chat.getMessageTo(), renterId)) ){
+                                generateButtonForMessage(chat);
+                            }
 
                             buttonId += 1;
                             Log.i(TAG, "Renovierung erfolgreich geladen.");
