@@ -195,9 +195,14 @@ public class MainActivity extends AppCompatActivity {
     }
     private void switchToInbox() {
         Intent switchActivityIntent = new Intent(this, InboxActivity.class);
-        startActivity(switchActivityIntent);
-    }
+        Intent directlyToChat = new Intent(this, ChatActivity.class);
+        if (user.getRole() == "Landlord"){
+            startActivity(switchActivityIntent);
+        }else{
+            startActivity(directlyToChat);
+        }
 
+    }
     private void initializeProfileButton() {
         Button profileButton = findViewById(R.id.profileButton);
         profileButton.setOnClickListener(view -> switchToProfile());

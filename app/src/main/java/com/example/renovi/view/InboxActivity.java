@@ -15,6 +15,8 @@ import com.example.renovi.viewmodel.Session;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.Objects;
+
 public class InboxActivity extends AppCompatActivity {
 
     private ConstraintLayout mainLayout;
@@ -27,6 +29,9 @@ public class InboxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getUserFromSession();
+        if(Objects.equals(user.getRole(), "Renter")){
+            switchToChat(user.getId());
+        }
 
         setContentView(R.layout.activity_inbox);
         mainLayout = findViewById(R.id.renterListConstraintLayout);

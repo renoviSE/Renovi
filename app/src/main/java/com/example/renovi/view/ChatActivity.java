@@ -28,6 +28,7 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
+    private String renterId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +45,25 @@ public class ChatActivity extends AppCompatActivity {
 
         // Extrahieren der übertragenen Variable 'renterId'
         if (intent != null && intent.hasExtra("renterId")) {
-            String renterId = intent.getStringExtra("renterId");
-
-            getChats(db, renterId);
-
+            renterId = intent.getStringExtra("renterId");
+            getChats(db, renterId, user.getId());
         } else {
-            Toast.makeText(this, "Keine Mieter-ID übertragen!", Toast.LENGTH_LONG).show();
+            renterId = user.getId();
+            db.collection("Mieter")
+                    .document(user.getId())
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+                        if (documentSnapshot.exists()) {
+                            String landlordID = documentSnapshot.getString("vermieter");
+                            getChats(db, renterId, landlordID);
+
+                        } else {
+                            Log.d("Firestore", "Dokument nicht gefunden.");
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e("Firestore", "Fehler beim Abrufen des Dokuments", e);
+                    });
         }
     }
 
@@ -58,7 +72,7 @@ public class ChatActivity extends AppCompatActivity {
         user = session.getUser();
     }
 
-    private void getChats(FirebaseFirestore db, String renterId) {
+    private void getChats(FirebaseFirestore db, String renterId, String landlordId) {
         db.collection("Mieter").document(renterId).collection("Chat").orderBy("timestamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnSuccessListener(documents -> {
@@ -78,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
                             );
 
                             // Erstelle einen Button für jede Renovierung
-                            if((Objects.equals(chat.getMessageFrom(), user.getId()) || Objects.equals(chat.getMessageTo(), user.getId())) && (Objects.equals(chat.getMessageFrom(), renterId) || Objects.equals(chat.getMessageTo(), renterId)) ){
+                            if((Objects.equals(chat.getMessageFrom(), landlordId) || Objects.equals(chat.getMessageTo(), landlordId)) && (Objects.equals(chat.getMessageFrom(), renterId) || Objects.equals(chat.getMessageTo(), renterId)) ){
                                 generateButtonForMessage(chat);
                             }
 
