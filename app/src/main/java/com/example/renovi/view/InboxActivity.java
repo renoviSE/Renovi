@@ -3,6 +3,7 @@ package com.example.renovi.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class InboxActivity extends AppCompatActivity {
     private Person user;
 
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,7 @@ public class InboxActivity extends AppCompatActivity {
         }
 
         setContentView(R.layout.activity_inbox);
-        mainLayout = findViewById(R.id.renterListConstraintLayout);
+        mainLayout = findViewById(R.id.inboxConstraintLayout);
 
         initializeBackToPreviousActivityButton();
         initializeAddMessageButton();
@@ -56,7 +58,7 @@ public class InboxActivity extends AppCompatActivity {
         user = session.getUser();
     }
     private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.InboxToMainButton);
+        Button returnButton = findViewById(R.id.chatToPreviousButton);
         returnButton.setOnClickListener(view -> switchToPreviousActivity());
     }
     private void switchToPreviousActivity() {

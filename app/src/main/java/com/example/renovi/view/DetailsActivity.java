@@ -18,7 +18,6 @@ import android.widget.Toast;
 import com.example.renovi.R;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.viewmodel.ButtonCreator;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -54,7 +53,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void initializeBackToMainButton() {
-        Button startButton = findViewById(R.id.InboxToMainButton);
+        Button startButton = findViewById(R.id.chatToPreviousButton);
         startButton.setOnClickListener(view -> switchToMain());
     }
     private void switchToMain() {

@@ -76,6 +76,7 @@
 
     <!-- inbox strings -->
     <string name="inbox_title">Postfach</string>
+    <string name="chat_title">Chat</string>
     <string name="back_button_string">&lt;</string>
     <string name="more_button_string">&#8226;&#8226;</string>
     <!-- inbox strings -->
@@ -150,6 +151,7 @@
     <string name="create_refurbishment_title">Neue Fenster</string>
     <string name="create_refurbishment_button_string">Weiter</string>
     <string name="selection_view_refurbishment_title">Addresse auswählen</string>
+    <string name="neue_nachricht">Neue Nachricht</string>
     <!-- create refurbishment strings -->
 
 </resources>

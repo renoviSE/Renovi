@@ -91,7 +91,7 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
     }
 
     private void initializeBackToPreviousActivityButton() {
-        Button startButton = findViewById(R.id.InboxToMainButton);
+        Button startButton = findViewById(R.id.chatToPreviousButton);
         startButton.setOnClickListener(view -> switchToPreviousActivity());
     }
 

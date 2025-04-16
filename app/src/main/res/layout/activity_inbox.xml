@@ -60,7 +60,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/InboxToMainButton"
+            android:id="@+id/chatToPreviousButton"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -128,7 +128,7 @@
             app:layout_constraintTop_toBottomOf="@+id/titleBackground">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/renterListConstraintLayout"
+                android:id="@+id/inboxConstraintLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:context=".view.RenterListActivity">
