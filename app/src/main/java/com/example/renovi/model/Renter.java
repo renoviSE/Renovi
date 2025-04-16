@@ -44,23 +44,4 @@ public class Renter extends Person {
             rentDifference = BigDecimal.ZERO;
         }
     }
-
-    public String getLandlord(){
-        final String[] landLord = new String[1];
-        db.collection("Mieter")
-                .document(super.getId())
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String landlordID = documentSnapshot.getString("vermieter");
-                        landLord[0] =landlordID;
-                    } else {
-                        landLord[0]= "No landlord found";
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    Log.e("Firestore", "Fehler beim Abrufen des Dokuments", e);
-                });
-        return landLord[0];
-    }
 }
