@@ -248,7 +248,7 @@
                     app:layout_constraintTop_toTopOf="@+id/signOutButton" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+<!--
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/notificationSettingsConstraintLayout"
                 android:layout_width="match_parent"
@@ -302,7 +302,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/notificationSettingsTitle" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
+-->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/otherSettingsConstraintLayout"
                 android:layout_width="match_parent"
@@ -314,7 +314,7 @@
                 android:elevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/notificationSettingsConstraintLayout">
+                app:layout_constraintTop_toBottomOf="@+id/profileSettingsConstraintLayout">
 
                 <TextView
                     android:id="@+id/otherSettingsTitle"

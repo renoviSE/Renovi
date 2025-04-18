@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark Mode Farben -->
+    <color name="black">#FFFFFFFF</color> <!-- Heller Text auf dunklem Hintergrund -->
+    <color name="white">#FF000000</color> <!-- Dunkler Text auf hellem Hintergrund -->
+
+    <color name="midBlue">#5398FF</color>
+    <color name="lightBlue">#92A3FD</color>
+    <color name="veryLightBlue">#9DC1F6</color>
+    <color name="whiteBlue">#D4E5EE</color>
+    <color name="midPurple">#C58BF2</color>
+    <color name="lightPurple">#EEA4CE</color>
+    <color name="whitePurple">#E6D3EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="black1">#F2F2F2</color> <!-- Hellerer Hintergrund im Dark Mode -->
+    <color name="gray1">#7B6F72</color>
+    <color name="gray2">#ADA4A5</color>
+    <color name="gray3">#303030</color> <!-- Dunklerer Hintergrund -->
+    <color name="gray4">#3C3C3C</color>
+    <color name="gray5">#3C3C3C</color>
+    <color name="whiteGray">#F7F8F8</color>
+    <color name="white1">#303030</color> <!-- Dunklerer Weißton im Dark Mode -->
+    <color name="success">#42D742</color>
+    <color name="warning">#FFD600</color>
+    <color name="danger">#FF0000</color>
+</resources>

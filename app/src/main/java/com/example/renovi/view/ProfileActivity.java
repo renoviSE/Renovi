@@ -47,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
         initializeFaqButton();
         setUserProfile();
         initializeSignOutButton();
+        initializeContactUsButton();
+        initializeSettingsButton();
     }
 
     private void getRenterFromSession() {
@@ -119,6 +121,30 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initializeContactUsButton() {
+        Button contactUsButton = findViewById(R.id.contactUsButton);
+        contactUsButton.setOnClickListener(view -> {
+            // Öffne ein E-Mail-Intent
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "support@renovi.com", null));
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Support Anfrage");
+            try {
+                startActivity(Intent.createChooser(emailIntent, "E-Mail auswählen"));
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(ProfileActivity.this, "Keine E-Mail-Anwendung gefunden", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void initializeSettingsButton() {
+        Button settingsButton = findViewById(R.id.settingsButton);
+        settingsButton.setOnClickListener(view -> {
+            // Startet eine neue Activity für die Einstellungen
+            Intent settingsIntent = new Intent(ProfileActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
+        });
+    }
+
+
     private void openWebPage(String url) {
         Uri webpage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);

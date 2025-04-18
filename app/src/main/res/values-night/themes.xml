@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme for Dark Mode -->
+    <style name="Base.Theme.Renovi" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <!-- Customize your dark theme colors, e.g. -->
+        <item name="android:colorPrimary">@color/midBlue</item>
+        <item name="android:colorAccent">@color/lightPurple</item>
+        <!-- Define a darker background for dark mode -->
+        <item name="android:background">@color/black1</item>
+    </style>
+
+    <style name="Theme.Renovi" parent="Base.Theme.Renovi">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+</resources>
