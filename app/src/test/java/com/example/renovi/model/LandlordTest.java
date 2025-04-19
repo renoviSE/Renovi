@@ -81,4 +81,23 @@ class LandlordTest {
         assertEquals(firstName, landlord.getFirstName());
         assertEquals(lastName, landlord.getLastName());
     }
+    @Test
+    void testLandlordWithSpace() {
+        // Arrange
+        String role = "Land Lord";
+        String id = "123 456 ABC";
+        String firstName = "Jöh n";
+        String lastName = "D o e";
+
+        // Act
+        Landlord landlord = new Landlord(role, id, firstName, lastName);
+
+        // Assert
+        assertNotNull(landlord);
+        assertEquals(role, landlord.getRole());
+        assertEquals(id, landlord.getId());
+        assertEquals(firstName, landlord.getFirstName());
+        assertEquals(lastName, landlord.getLastName());
+    }
+
 }
