@@ -122,14 +122,14 @@
     <string name="create_renovation_title">Modernisierung</string>
     <string name="selection_view_benefits_title">Vorteile auswählen</string>
     <string name="selection_view_states_title">Zustand auswählen</string>
-    <string name="selection_view_renovations_title">Renovierungen auswählen</string>
+    <string name="selection_view_renovations_title">Modernisierung auswählen</string>
     <string name="selection_view_renter_title">Mieter auswählen</string>
     <string name="selection_view_deselect">ALLE ABWÄHLEN</string>
     <string name="selection_view_select_all">ALLE WÄHLEN</string>
     <string name="selection_view_accept">FERTIG</string>
     <string name="create_renovation_amount_placeholder">Kosten</string>
     <string name="create_renovation_timestamp_placeholder">Datum</string>
-    <string name="create_renovation_paragraph_placeholder">Bgründung (§)</string>
+    <string name="create_renovation_paragraph_placeholder">Begründung (§)</string>
     <string name="create_renovation_benefits_placeholder">Vorteile</string>
     <string name="create_renovation_state_placeholder">Zustand</string>
     <string name="create_renovation_object_placeholder">Objekt</string>
