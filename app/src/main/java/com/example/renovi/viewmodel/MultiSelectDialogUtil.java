@@ -84,7 +84,11 @@ public class MultiSelectDialogUtil {
         builder.setPositiveButton(R.string.selection_view_accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                targetTextView.setText(itemsArray[selectedItem[0]]);
+                try {
+                    targetTextView.setText(itemsArray[selectedItem[0]]);
+                } catch (Exception e) {
+                    dialog.cancel();
+                }
             }
         });
 
