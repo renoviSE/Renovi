@@ -231,8 +231,7 @@ public class ButtonCreator {
                                            boolean isSender,
                                            @NonNull String titleText,
                                            @NonNull String messageText,
-                                           @NonNull String timestampText,
-                                           int topConstraintId) {
+                                           @NonNull String timestampText) {
         // Container erstellen
         RelativeLayout container = new RelativeLayout(context);
         container.setId(View.generateViewId());
@@ -322,7 +321,7 @@ public class ButtonCreator {
         cs.clone(layout);
         if (firstButton) {
             cs.connect(container.getId(),
-                    ConstraintSet.TOP, topConstraintId, ConstraintSet.BOTTOM,
+                    ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP,
                     dpToPx(context,24));
             firstButton = false;
         } else {

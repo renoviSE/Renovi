@@ -230,8 +230,7 @@ public class ChatActivity extends AppCompatActivity {
                 isSender,
                 title,
                 text,
-                time,
-                R.id.chatListScrollSpacer
+                time
         );
     }
 
