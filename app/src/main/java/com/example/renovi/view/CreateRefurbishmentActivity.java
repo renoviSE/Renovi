@@ -205,7 +205,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
                             renovationData.put("kosten", String.valueOf(renterCost));
                             renovationData.put("eintrittsdatum", new Timestamp(refurbishmentDate.getTime()));
                             renovationData.put("object", "Fenster");
-                            renovationData.put("zustand", "schlecht");
+                            renovationData.put("zustand", "gut");
                             renovationData.put("vorteile", "");
                             renovationData.put("nachteile", "");
                             renovationData.put("paragraph", "");
