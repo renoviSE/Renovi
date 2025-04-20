@@ -5,13 +5,17 @@ import android.graphics.drawable.Drawable;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.graphics.Typeface;
 import android.widget.Button;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
+import androidx.annotation.NonNull;
+
 
 import com.example.renovi.R;
 
@@ -53,7 +57,6 @@ public class ButtonCreator {
 
         return textView;
     }
-
 
     public Button createButton(ConstraintLayout layout, String objectName, int scrollSpacerId) {
 
@@ -222,6 +225,140 @@ public class ButtonCreator {
         constraintSet.applyTo(layout);
 
         return benefitButton.getId(); // Gibt die ID des letzten Buttons zurück, um sie als Referenz für den nächsten Button zu verwenden
+    }
+
+    public RelativeLayout createChatBubble(ConstraintLayout layout,
+                                           boolean isSender,
+                                           @NonNull String titleText,
+                                           @NonNull String messageText,
+                                           @NonNull String timestampText,
+                                           int topConstraintId) {
+        // Container erstellen
+        RelativeLayout container = new RelativeLayout(context);
+        container.setId(View.generateViewId());
+        container.setBackgroundResource(R.drawable.bg_white_round_corner);
+        container.setPadding(0, dpToPx(context,12), 0, dpToPx(context,12));
+
+        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(
+                0,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        lp.setMarginStart(dpToPx(context, isSender ? 0 : 24));
+        lp.setMarginEnd(  dpToPx(context, isSender ? 24 : 0));
+        container.setLayoutParams(lp);
+
+        // Inneres ConstraintLayout
+        ConstraintLayout inner = new ConstraintLayout(context);
+        inner.setLayoutParams(new ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.MATCH_PARENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+        ));
+        container.addView(inner);
+
+        // 1) Farbstreifen
+        View stripe = new View(context);
+        stripe.setId(View.generateViewId());
+        ConstraintLayout.LayoutParams stripeParams = new ConstraintLayout.LayoutParams(
+                dpToPx(context,3), 0
+        );
+        stripeParams.topToTop    = ConstraintLayout.LayoutParams.PARENT_ID;
+        stripeParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        stripeParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        stripeParams.setMarginStart(dpToPx(context,4));
+        stripe.setLayoutParams(stripeParams);
+        stripe.setBackgroundResource(isSender
+                ? R.drawable.bg_button
+                : R.drawable.bg_cursor);
+        inner.addView(stripe);
+
+        // 2) Titel
+        TextView title = new TextView(context);
+        title.setId(View.generateViewId());
+        title.setText(titleText);
+        title.setTypeface(ResourcesCompat.getFont(context, R.font.poppins_semibold));
+        title.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
+        title.setPadding(dpToPx(context,20),0,dpToPx(context,20),0);
+        ConstraintLayout.LayoutParams titleParams = new ConstraintLayout.LayoutParams(
+                0, ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        titleParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        titleParams.endToEnd     = ConstraintLayout.LayoutParams.PARENT_ID;
+        titleParams.topToTop     = ConstraintLayout.LayoutParams.PARENT_ID;
+        inner.addView(title, titleParams);
+
+        // 3) Nachricht
+        TextView message = new TextView(context);
+        message.setId(View.generateViewId());
+        message.setText(messageText);
+        message.setTextColor(ContextCompat.getColor(context, R.color.black1));
+        message.setPadding(dpToPx(context,20),0,dpToPx(context,20),0);
+        ConstraintLayout.LayoutParams msgParams = new ConstraintLayout.LayoutParams(
+                0, ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        msgParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        msgParams.endToEnd   = ConstraintLayout.LayoutParams.PARENT_ID;
+        msgParams.topToBottom = title.getId();
+        inner.addView(message, msgParams);
+
+        // 4) Timestamp
+        TextView timestamp = new TextView(context);
+        timestamp.setId(View.generateViewId());
+        timestamp.setText(timestampText);
+        timestamp.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+        timestamp.setTextAlignment(View.TEXT_ALIGNMENT_VIEW_END);
+        timestamp.setPadding(dpToPx(context,20),0,dpToPx(context,20),0);
+        ConstraintLayout.LayoutParams timeParams = new ConstraintLayout.LayoutParams(
+                0, ConstraintLayout.LayoutParams.WRAP_CONTENT
+        );
+        timeParams.startToStart   = ConstraintLayout.LayoutParams.PARENT_ID;
+        timeParams.endToEnd       = ConstraintLayout.LayoutParams.PARENT_ID;
+        timeParams.topToBottom    = message.getId();
+        timeParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
+        inner.addView(timestamp, timeParams);
+
+        // 5) Zum Parent hinzufügen & positionieren
+        layout.addView(container);
+        ConstraintSet cs = new ConstraintSet();
+        cs.clone(layout);
+        if (firstButton) {
+            cs.connect(container.getId(),
+                    ConstraintSet.TOP, topConstraintId, ConstraintSet.BOTTOM,
+                    dpToPx(context,24));
+            firstButton = false;
+        } else {
+            cs.connect(container.getId(),
+                    ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM,
+                    dpToPx(context,4));
+        }
+
+        // horizontale Constraints abhängig von isSender
+        if (isSender) {
+            // Sender-Bubble: rechter Rand an parent‑End minus 24dp,
+            // und linker Rand an leftPadding‑View
+            cs.connect(container.getId(),
+                    ConstraintSet.END,
+                    ConstraintSet.PARENT_ID, ConstraintSet.END,
+                    dpToPx(context,24));
+            cs.connect(container.getId(),
+                    ConstraintSet.START,
+                    R.id.leftPadding, ConstraintSet.END,
+                    0);
+        } else {
+            // Empfänger-Bubble: linker Rand an parent‑Start + 24dp,
+            // und rechter Rand an RightPadding‑View
+            cs.connect(container.getId(),
+                    ConstraintSet.START,
+                    ConstraintSet.PARENT_ID, ConstraintSet.START,
+                    dpToPx(context,24));
+            cs.connect(container.getId(),
+                    ConstraintSet.END,
+                    R.id.RightPadding, ConstraintSet.START,
+                    0);
+        }
+
+        cs.applyTo(layout);
+        lastButtonId = container.getId();
+        return container;
     }
 
     public void configureButtonBasedOnName(Button button, String type, String buttonName, Boolean nextButton) {

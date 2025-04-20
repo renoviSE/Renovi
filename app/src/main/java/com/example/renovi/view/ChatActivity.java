@@ -26,7 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -50,7 +52,6 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat);
         mainLayout = findViewById(R.id.chatConstraintLayout);
         scrollView = findViewById(R.id.scrollViewChats);
-
         messageInput = findViewById(R.id.newChatMessage);
 
         initializeBackToPreviousActivityButton();
@@ -102,6 +103,7 @@ public class ChatActivity extends AppCompatActivity {
                             MChatMessage chat = new MChatMessage(
                                     document.getString("message"),
                                     document.getString("from"),
+                                    document.getString("senderName"),
                                     document.getString("to"),
                                     document.getTimestamp("timestamp")
 
@@ -175,6 +177,7 @@ public class ChatActivity extends AppCompatActivity {
     private void sendMessageToChat(String nachricht, String recipientId) {
         Map<String, Object> messageData = new HashMap<>();
         messageData.put("from", user.getId());
+        messageData.put("senderName", user.getFirstName() + " " + user.getLastName());
         messageData.put("to", recipientId);
         messageData.put("message", nachricht);
         messageData.put("timestamp", Timestamp.now());
@@ -206,19 +209,30 @@ public class ChatActivity extends AppCompatActivity {
                 });
     }
 
-
     private void generateButtonForMessage(MChatMessage chat) {
-        // Erstellen und Hinzufügen des Buttons zum Layout
-        if (chat != null) {
-            ButtonCreator buttonCreator = new ButtonCreator(this);
-            String message = chat.getMessage();
-            if (Objects.equals(user.getId(), chat.getMessageFrom())) {
-                Button renoButton = buttonCreator.createColoredButton(mainLayout, message, R.color.midBlue, R.id.chatListScrollSpacer);
-            }
-            else if (Objects.equals(user.getId(), chat.getMessageTo())){
-                Button renoButton = buttonCreator.createColoredButton(mainLayout, message, R.color.lightPurple, R.id.chatListScrollSpacer);
-            }
-        }
+        ButtonCreator bc = new ButtonCreator(this);
+        boolean isSender = user.getId().equals(chat.getMessageFrom());
+
+        // Title = entweder eigener Name oder otherPerson
+        String title = isSender
+                ? user.getFirstName() + " " + user.getLastName()
+                : chat.getMessageSenderName();
+
+        // Nachrichtentext
+        String text  = chat.getMessage();
+
+        // Timestamp formatieren
+        String time  = new SimpleDateFormat("HH:mm  dd.MM.yy", Locale.getDefault())
+                .format(chat.getTimestamp().toDate());
+
+        bc.createChatBubble(
+                mainLayout,
+                isSender,
+                title,
+                text,
+                time,
+                R.id.chatListScrollSpacer
+        );
     }
 
     private void initializeBackToPreviousActivityButton() {
@@ -240,6 +254,6 @@ public class ChatActivity extends AppCompatActivity {
         // Erstellen und Hinzufügen des Platzhalters zum Layout
         ButtonCreator buttonCreator = new ButtonCreator(this);
 
-        buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_renovations_placeholder_message);
+        buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_chat_placeholder_message);
     }
 }

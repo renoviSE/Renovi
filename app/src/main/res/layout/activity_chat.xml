@@ -66,64 +66,103 @@
                 android:layout_height="wrap_content"
                 tools:context=".view.RenterListActivity">
 
+                <View
+                    android:id="@+id/leftPadding"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <View
+                    android:id="@+id/RightPadding"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <ImageView
                     android:id="@+id/chatListScrollSpacer"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:layout_constraintTop_toBottomOf="@+id/chatListTopConstraintForPlaceholder" />
-
-                <ImageView
-                    android:id="@+id/chatListTopConstraintForPlaceholder"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_height="200dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
         <!-- Eingabebereich fixiert am unteren Bildschirmrand -->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/inputContainer"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
             android:background="@color/white1"
             android:elevation="8dp"
+            android:orientation="horizontal"
+            android:padding="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/scrollViewChats">
 
-            <EditText
-                android:id="@+id/newChatMessage"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+
+                android:id="@+id/constraint"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/bg_white_round_corner"
-                android:drawableTint="@color/gray2"
-                android:gravity="start|top"
-                android:hint="@string/neue_nachricht"
-                android:minHeight="48dp"
-                android:maxLines="5"
-                android:padding="12dp"
-                android:textColorHint="@color/gray2"
-                android:textCursorDrawable="@drawable/bg_cursor"
-                android:textSize="16sp" />
+                tools:context=".view.InboxActivity">
 
-            <Button
-                android:id="@+id/sendPrivateChatButton"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="8dp"
-                android:background="@drawable/bg_white_round_corner"
-                android:backgroundTint="@color/gray5"
-                android:drawableStart="@drawable/ic_arrow_left"
-                android:drawableTint="@color/black1"
-                android:rotation="180"
-                android:padding="10dp" />
-        </LinearLayout>
+                <EditText
+                    android:id="@+id/newChatMessage"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="16dp"
+                    android:background="@drawable/bg_white_round_corner"
+                    android:drawableTint="@color/gray2"
+                    android:gravity="start|top"
+                    android:hint="@string/neue_nachricht"
+                    android:maxLines="5"
+                    android:minHeight="48dp"
+                    android:padding="12dp"
+                    android:textColorHint="@color/gray2"
+                    android:textCursorDrawable="@drawable/bg_cursor"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/sendPrivateChatButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <Button
+                    android:id="@+id/sendPrivateChatButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/newChatMessage"
+                    android:background="@drawable/bg_button"
+                    android:elevation="10dp"
+                    android:rotation="230"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/addMessageButtonIcon"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/ic_arrow_down"
+                    android:elevation="10dp"
+                    android:rotation="270"
+                    app:layout_constraintBottom_toBottomOf="@+id/sendPrivateChatButton"
+                    app:layout_constraintEnd_toEndOf="@+id/sendPrivateChatButton"
+                    app:layout_constraintStart_toStartOf="@+id/sendPrivateChatButton"
+                    app:layout_constraintTop_toTopOf="@+id/sendPrivateChatButton" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
