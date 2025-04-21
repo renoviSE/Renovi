@@ -49,6 +49,7 @@ public class ProfileActivity extends AppCompatActivity {
         initializeSignOutButton();
         initializeContactUsButton();
         initializeSettingsButton();
+        initializePrivacyPolicyButton();
     }
 
     private void getRenterFromSession() {
@@ -120,6 +121,16 @@ public class ProfileActivity extends AppCompatActivity {
                 openWebPage("https://funktionales-kostensplitting.de");
             }
         });
+    }
+
+    private void initializePrivacyPolicyButton() {
+        Button privacyDataButton = findViewById(R.id.privacyDataButton);
+        privacyDataButton.setOnClickListener(view -> {
+            // Startet eine Activity mit der Policy
+            Intent privacyIntent = new Intent(ProfileActivity.this, PrivacyPolicyActivity.class);
+            startActivity(privacyIntent);
+                }
+        );
     }
 
     private void initializeContactUsButton() {
