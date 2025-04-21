@@ -53,8 +53,8 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
         try {
             getUserFromSession();
 
-            refurbishmentCostInput = findViewById(R.id.refurbishmentCostInput);
-            createRefurbishmentTimestamp = findViewById(R.id.createRefurbishmentTimestamp);
+            refurbishmentCostInput = findViewById(R.id.emailInput);
+            createRefurbishmentTimestamp = findViewById(R.id.changeLastNameInput);
             address = findViewById(R.id.create_refurbishment_address);
 
             loadObjects();
@@ -229,7 +229,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
 
 
     private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.CreateRefurbishmentToMainButton);
+        Button returnButton = findViewById(R.id.personalDataBackButton);
         returnButton.setOnClickListener(view -> switchToPreviousActivity());
     }
 

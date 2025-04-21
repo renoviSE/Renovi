@@ -19,7 +19,7 @@ public class PrivacyPolicyActivity extends Activity {
     }
 
     private void initializeBackToSettingsButton() {
-        Button startButton = findViewById(R.id.chatToPreviousButton2);
+        Button startButton = findViewById(R.id.privacyBackButton);
         startButton.setOnClickListener(view -> finish());
     }
     @Override
