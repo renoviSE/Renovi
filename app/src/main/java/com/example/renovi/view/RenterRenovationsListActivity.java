@@ -3,6 +3,7 @@ package com.example.renovi.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -122,4 +124,9 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
 
         buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_renovations_placeholder_message);
     }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
 }

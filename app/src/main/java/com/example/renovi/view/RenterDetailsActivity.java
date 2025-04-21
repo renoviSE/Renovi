@@ -2,10 +2,12 @@ package com.example.renovi.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.renovi.R;
+import com.example.renovi.model.LocaleHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -35,4 +37,9 @@ public class RenterDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
 }

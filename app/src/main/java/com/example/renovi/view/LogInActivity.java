@@ -2,6 +2,7 @@ package com.example.renovi.view;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Landlord;
+import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.model.Renter;
 import com.example.renovi.model.Person;
@@ -152,4 +154,9 @@ public class LogInActivity extends Activity {
 		Intent switchActivityIntent = new Intent(this, MainActivity.class);
 		startActivity(switchActivityIntent);
 	}
+	@Override
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(LocaleHelper.onAttach(newBase));
+	}
+
 }

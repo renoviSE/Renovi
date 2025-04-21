@@ -19,10 +19,9 @@
         <activity
             android:name=".view.CreateRenovationActivity"
             android:exported="false" />
-        <activity android:name=".view.SettingsActivity"
-            android:theme="@style/Theme.AppCompat.DayNight"> <!-- Hier das AppCompat-Thema -->
-            <!-- andere Konfigurationen -->
-        </activity>
+        <activity
+            android:name=".view.SettingsActivity"
+            android:exported="false" />
         <activity
             android:name=".view.ChatActivity"
             android:exported="false" />

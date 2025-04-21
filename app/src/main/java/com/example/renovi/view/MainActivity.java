@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Landlord;
+import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.BannerCreator;
 import com.example.renovi.viewmodel.ButtonCreator;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        LocaleHelper.setLocale(this, LocaleHelper.getLanguage(this));
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         getUserFromSession();
 
         // Wait for the layout to be completely drawn
-        mainLayout = findViewById(R.id.inner_constraint);
+        mainLayout = findViewById(R.id.middle_constraint);
 
         mainLayout.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -274,5 +276,10 @@ public class MainActivity extends AppCompatActivity {
                 context.getResources().getDisplayMetrics()
         );
     }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
 
 }

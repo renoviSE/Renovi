@@ -12,16 +12,6 @@
         android:layout_height="match_parent"
         tools:context=".view.SettingsActivity">
 
-        <!-- Hintergrundleiste oben -->
-        <ImageView
-            android:id="@+id/titleBackground"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:background="?android:attr/windowBackground"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
         <!-- Zurück-Button -->
         <Button
             android:id="@+id/settingsBackButton"
@@ -45,17 +35,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="41dp"
             android:fontFamily="@font/poppins_bold"
-            android:text="Design auswählen"
+            android:text="@string/sprache_ausw_hlen"
             android:textAlignment="center"
             android:textColor="@color/black1"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/titleBackground"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Radiobuttons in Card -->
+        <!-- Sprachwahl Dropdown -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/themeCard"
+            android:id="@+id/languageCard"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="120dp"
@@ -63,41 +53,32 @@
             android:layout_marginEnd="24dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
-            app:layout_constraintTop_toBottomOf="@id/titleBackground"
+            app:layout_constraintTop_toBottomOf="@id/settingsTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <RadioGroup
-                android:id="@+id/themeRadioGroup"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="16dp">
 
-                <RadioButton
-                    android:id="@+id/lightModeRadioButton"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Heller Modus"
-                    android:textColor="@color/gray1"
-                    android:fontFamily="@font/poppins_regular" />
+                    android:text="@string/app_sprache"
+                    android:fontFamily="@font/poppins_bold"
+                    android:textColor="@color/black1"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
 
-                <RadioButton
-                    android:id="@+id/darkModeRadioButton"
-                    android:layout_width="wrap_content"
+                <Spinner
+                    android:id="@+id/languageSpinner"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Dunkler Modus"
-                    android:textColor="@color/gray1"
-                    android:fontFamily="@font/poppins_regular" />
-
-                <RadioButton
-                    android:id="@+id/systemModeRadioButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Systemeinstellung übernehmen"
-                    android:textColor="@color/gray1"
-                    android:fontFamily="@font/poppins_regular" />
-            </RadioGroup>
+                    android:spinnerMode="dropdown"
+                    android:entries="@array/languages_array"/>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

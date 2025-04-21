@@ -1,94 +1,89 @@
 package com.example.renovi.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.AdapterView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.renovi.R;
+import com.example.renovi.model.LocaleHelper;
+
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private RadioGroup themeRadioGroup;
-    private RadioButton lightModeRadioButton, darkModeRadioButton, systemModeRadioButton;
+    private Spinner languageSpinner;
     private Button backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        // Apply saved theme if user changed it before
-        applySavedTheme();
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        themeRadioGroup = findViewById(R.id.themeRadioGroup);
-        lightModeRadioButton = findViewById(R.id.lightModeRadioButton);
-        darkModeRadioButton = findViewById(R.id.darkModeRadioButton);
-        systemModeRadioButton = findViewById(R.id.systemModeRadioButton);
+        languageSpinner = findViewById(R.id.languageSpinner);
         backButton = findViewById(R.id.settingsBackButton);
 
-        // Mark the current selection
-        int savedMode = getSavedThemeMode();
-        switch (savedMode) {
-            case AppCompatDelegate.MODE_NIGHT_NO:
-                lightModeRadioButton.setChecked(true);
-                break;
-            case AppCompatDelegate.MODE_NIGHT_YES:
-                darkModeRadioButton.setChecked(true);
-                break;
-            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
-            default:
-                systemModeRadioButton.setChecked(true);
-                break;
+        // Sprachauswahl setzen
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.languages_array,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        languageSpinner.setAdapter(adapter);
+
+        String currentLang = LocaleHelper.getLanguage(this);
+        if (currentLang.startsWith("de")) {
+            languageSpinner.setSelection(0);
+        } else {
+            languageSpinner.setSelection(1); // "en" oder was auch immer im Array steht
         }
 
-        // Change listener
-        themeRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
-            int selectedMode;
+        // Listener für Sprachauswahl
+        languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            boolean isFirstSelection = true; // verhindert Direktreaktion beim Öffnen
 
-            if (checkedId == R.id.lightModeRadioButton) {
-                selectedMode = AppCompatDelegate.MODE_NIGHT_NO;
-            } else if (checkedId == R.id.darkModeRadioButton) {
-                selectedMode = AppCompatDelegate.MODE_NIGHT_YES;
-            } else {
-                selectedMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (isFirstSelection) {
+                    isFirstSelection = false;
+                    return;
+                }
+
+                String selectedLanguage = position == 1 ? "en" : "de";
+
+                if (!LocaleHelper.getLanguage(SettingsActivity.this).equals(selectedLanguage)) {
+                    LocaleHelper.setLocale(SettingsActivity.this, selectedLanguage);
+
+                    // sanfter Neustart – keine Flags, kein Layout-Salat
+                    Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish(); // SettingsActivity schließen
+                }
+
             }
 
-            // Save and apply only if user selects something
-            saveThemeMode(selectedMode);
-            AppCompatDelegate.setDefaultNightMode(selectedMode);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Back
+        // Zurück-Button
         backButton.setOnClickListener(v -> onBackPressed());
     }
 
-    private void saveThemeMode(int mode) {
-        SharedPreferences prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("NightMode", mode);
-        editor.apply();
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
     }
 
-    private int getSavedThemeMode() {
-        SharedPreferences prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE);
-        // Default to FOLLOW_SYSTEM if not set
-        return prefs.getInt("NightMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-    }
 
-    private void applySavedTheme() {
-        SharedPreferences prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE);
-        if (prefs.contains("NightMode")) {
-            int savedMode = prefs.getInt("NightMode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            AppCompatDelegate.setDefaultNightMode(savedMode);
-        } else {
-            // No preference yet, follow system
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-        }
-    }
 }

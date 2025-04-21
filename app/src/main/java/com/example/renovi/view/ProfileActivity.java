@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
@@ -172,4 +173,9 @@ public class ProfileActivity extends AppCompatActivity {
         profileVerifyId.setText(user.getId());
 
     }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
 }

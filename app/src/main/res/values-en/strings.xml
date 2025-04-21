@@ -1,0 +1,150 @@
+<resources>
+    <string name="app_name">Renovi</string>
+    <string name="title_activity_overview">OverviewActivity</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="title_activity_login">Log In</string>
+    <string name="title_activity_main_test">Main</string>
+
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="renoviTitle">Renovi</string>
+    <string name="kaltmiete">Current base rent: %d</string>
+    <string name="afterwards">After renovation:\n+%d €\t%d €</string>
+    <string name="addRenterButton">Add tenant</string>
+    <string name="firstName">First name</string>
+    <string name="lastName">Last name</string>
+    <string name="renter_id">ID</string>
+
+    <!-- welcomescreen strings -->
+    <string name="logo_char">R</string>
+    <string name="logo_string">enovi</string>
+    <string name="slogan_string">very cool slogan</string>
+    <string name="start_button_string">Get Started</string>
+
+    <!-- login strings -->
+    <string name="login_title">Sign in</string>
+    <string name="Landlordlogin_title">Sign in as landlord</string>
+    <string name="descriptiontext_string">You will receive the verification code from your landlord</string>
+    <string name="landlorddescriptiontext_string">Landlord description text XYZ</string>
+    <string name="verify_id_placeholder_string">Verification code</string>
+    <string name="landlord_password_placeholder_string">Password</string>
+    <string name="first_name_placeholder_string">First name</string>
+    <string name="last_name_placeholder_string">Last name</string>
+    <string name="login_button_string">Log in</string>
+    <string name="landlord_login_button_string">Log in as landlord</string>
+
+    <!-- main strings -->
+    <string name="welcome_string">Welcome back,</string>
+    <string name="user_name_string">Mr. Tenant</string>
+    <string name="menu_title_string">Menu</string>
+    <string name="kosten_title_string">Cost change</string>
+    <string name="banner_title_string">Base rent</string>
+    <string name="banner_description_string">Rent increase by %1$s</string>
+    <string name="miete_price_string">€450.00</string>
+    <string name="percentage">20%</string>
+    <string name="reperatur_title">Repairs</string>
+    <string name="reperatur_button_string">Add</string>
+    <string name="verbrauchssenkung_title">Energy savings</string>
+    <string name="co2_title">CO2 reduction:</string>
+    <string name="co2_percantage">90% ⬆</string>
+    <string name="co2_progressbar_title">Climate benefits</string>
+    <string name="bevorstehende_renovierungen_title">Upcoming renovations</string>
+    <string name="tuer_renovierung_button_title">Door security</string>
+    <string name="tuer_renovierung_button_description">Cost: €50</string>
+    <string name="fenster_renovierung_button_title">Window insulation</string>
+    <string name="fenster_renovierung_button_description">Cost: €30</string>
+    <string name="badsanierung_renovierung_button_title">Bathroom renovation</string>
+    <string name="badsanierung_renovierung_button_description">Cost: €100</string>
+
+    <!-- inbox strings -->
+    <string name="details_title">Front door</string>
+    <string name="details_price_string">Cost:</string>
+    <string name="details_price_double">€50</string>
+    <string name="pros_title">Benefits</string>
+    <string name="description_title">Justification</string>
+    <string name="description_string">§ 555b No. 1:\n"measures through which final energy is sustainably saved in relation to the rental object (energy modernization)"&#160;<a href="https://www.gesetze-im-internet.de/bgb/__555b.html">Read More...</a></string>
+    <string name="redirect_title">More renovations</string>
+    <string name="object_count_string">6 items</string>
+    <string name="details_button_string">Log repair</string>
+
+    <string name="inbox_title">Inbox</string>
+    <string name="chat_title">Chat</string>
+    <string name="no_chat_placeholder_message">Chat is empty</string>
+    <string name="back_button_string">&lt;</string>
+    <string name="more_button_string">&#8226;&#8226;</string>
+
+    <!-- profile strings -->
+    <string name="profile_title">Profile</string>
+    <string name="app_information_string">Renovi\n\v 1.2.18 - Build 1</string>
+    <string name="role_string">Tenant</string>
+    <string name="account_setting_banner_title">Account</string>
+    <string name="notification_setting_banner_title">Notification</string>
+    <string name="other_setting_banner_title">Other</string>
+    <string name="logout_button_title">Log out</string>
+    <string name="personal_data_button_title">Personal data</string>
+    <string name="notification_button_title">Pop-up notifications</string>
+    <string name="contact_us_button_title">Contact Us</string>
+    <string name="privacy_policy_button_title">Privacy Policy</string>
+    <string name="settings_button_title">Settings</string>
+
+    <!-- button strings -->
+    <string name="no_renter_placeholder_message">No tenants found</string>
+    <string name="no_renovations_placeholder_message">No upcoming renovations</string>
+    <string name="fenster_button_title">Window</string>
+    <string name="tuer_button_title">Door</string>
+    <string name="wc_button_title">WC</string>
+    <string name="dach_button_title">Roof</string>
+
+    <!-- renterList strings -->
+    <string name="title_activity_renter_list">All tenants</string>
+    <string name="renterList_title">Tenants</string>
+    <string name="search_renter_placeholder_string">Search tenant ...</string>
+    <string name="search_renovation_placeholder_string">Search renovation ...</string>
+    <string name="no_renter_found_string">No tenant found</string>
+    <string name="large_text">Placeholder text</string>
+
+    <!-- renovationsList strings -->
+    <string name="renovationsList_title">Renovations</string>
+
+    <!-- create renovation strings -->
+    <string name="create_renovation_title">Renovation</string>
+    <string name="selection_view_benefits_title">Select benefits</string>
+    <string name="selection_view_states_title">Select condition</string>
+    <string name="selection_view_renovations_title">Select renovation</string>
+    <string name="selection_view_renter_title">Select tenant</string>
+    <string name="selection_view_deselect">DESELECT ALL</string>
+    <string name="selection_view_select_all">SELECT ALL</string>
+    <string name="selection_view_accept">DONE</string>
+    <string name="create_renovation_amount_placeholder2">Total cost</string>
+    <string name="create_renovation_amount_placeholder">Apportionable costs</string>
+    <string name="create_renovation_timestamp_placeholder">Date</string>
+    <string name="create_renovation_paragraph_placeholder">Justification (§)</string>
+    <string name="create_renovation_benefits_placeholder">Benefits</string>
+    <string name="create_renovation_state_placeholder">Condition</string>
+    <string name="create_renovation_object_placeholder">Object</string>
+    <string name="create_renovation_renter_placeholder">Tenant</string>
+    <string name="create_renovation_button_string">Create</string>
+
+    <!-- create renter strings -->
+    <string name="create_renter_title">Tenant</string>
+    <string name="selection_view_address_title">Select address</string>
+    <string name="create_renter_rent_placeholder">Rent</string>
+    <string name="create_renter_address_placeholder">Address</string>
+    <string name="create_renter_button_string">Add</string>
+    <string name="create_renter_squaremeters_placeholder">Size in square meters</string>
+
+    <!-- create refurbishment strings -->
+    <string name="create_refurbishment_title">New windows</string>
+    <string name="create_refurbishment_button_string">Next</string>
+    <string name="selection_view_refurbishment_title">Select address</string>
+    <string name="neue_nachricht">New message</string>
+
+    <!-- privacy policy strings -->
+    <string name="privacy_policy_title">Privacy Policy</string>
+    <string name="privacy_policy_text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+    <string name="sprache_ausw_hlen">Choose Language</string>
+    <string name="app_sprache">Language</string>
+</resources>

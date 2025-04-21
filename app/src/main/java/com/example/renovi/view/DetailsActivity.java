@@ -5,6 +5,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.renovi.R;
+import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.viewmodel.ButtonCreator;
 
@@ -103,4 +105,9 @@ public class DetailsActivity extends AppCompatActivity {
                 .replace("Ü", "Ue")
                 .replace("ß", "ss");
     }
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(LocaleHelper.onAttach(newBase));
+    }
+
 }

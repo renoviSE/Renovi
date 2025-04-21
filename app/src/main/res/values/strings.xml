@@ -88,13 +88,13 @@
     <string name="role_string">Mieter</string>
     <string name="account_setting_banner_title">Account</string>
     <string name="notification_setting_banner_title">Benachrichtigung</string>
-    <string name="other_setting_banner_title">Other</string>
+    <string name="other_setting_banner_title">Anderes</string>
     <string name="logout_button_title">Abmelden</string>
     <string name="personal_data_button_title">Persönliche Daten</string>
     <string name="notification_button_title">Pop-up Nachrichten</string>
-    <string name="contact_us_button_title">Contact Us</string>
+    <string name="contact_us_button_title">Kontakt</string>
     <string name="privacy_policy_button_title">Privacy Policy</string>
-    <string name="settings_button_title">Settings</string>
+    <string name="settings_button_title">Einstellungen</string>
     <!-- profile strings -->
 
     <!-- button strings -->
@@ -159,5 +159,7 @@
     <!-- privacy policy strings -->
     <string name="privacy_policy_title">Privacy Policy</string>
     <string name="privacy_policy_text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+    <string name="sprache_ausw_hlen">Sprache auswählen</string>
+    <string name="app_sprache">Sprache</string>
 
 </resources>
