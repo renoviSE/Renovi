@@ -26,11 +26,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="41dp"
+            android:fontFamily="@font/poppins_bold"
             android:text="@string/create_refurbishment_title"
             android:textAlignment="center"
             android:textColor="@color/black1"
             android:textSize="20sp"
-            android:fontFamily="@font/poppins_bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,7 +61,7 @@
             tools:context=".view.CreateRefurbishmentActivity">
 
             <EditText
-                android:id="@+id/refurbishmentCostInput"
+                android:id="@+id/refurbishmentCostInput2"
                 android:layout_width="155dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
@@ -72,7 +72,7 @@
                 android:drawablePadding="12dp"
                 android:drawableTint="@color/gray2"
                 android:elevation="5dp"
-                android:hint="@string/create_renovation_amount_placeholder"
+                android:hint="@string/create_renovation_amount_placeholder2"
                 android:inputType="numberDecimal"
                 android:paddingLeft="10dp"
                 android:textColorHint="@color/gray2"
@@ -111,7 +111,7 @@
             android:id="@+id/create_refurbishment_address"
             android:layout_width="315dp"
             android:layout_height="48dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/bg_white_round_corner"
             android:drawableEnd="@drawable/ic_arrow_down"
             android:drawablePadding="12dp"
@@ -139,7 +139,30 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createRefurbishmentConstraintLayout3"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <EditText
+            android:id="@+id/refurbishmentCostInput"
+            android:layout_width="315dp"
+            android:layout_height="48dp"
+            android:background="@drawable/bg_white_round_corner"
+            android:drawableStart="@drawable/ic_euro"
+            android:drawablePadding="12dp"
+            android:drawableTint="@color/gray2"
+            android:elevation="5dp"
+            android:hint="@string/create_renovation_amount_placeholder"
+            android:inputType="numberDecimal"
+            android:paddingLeft="10dp"
+            android:textColorHint="@color/gray2"
+            android:textCursorDrawable="@drawable/bg_cursor"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toTopOf="@+id/create_refurbishment_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createRefurbishmentConstraintLayout3"
+            app:layout_constraintVertical_bias="0.346" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>
