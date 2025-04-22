@@ -36,13 +36,11 @@ public class CreateRenovationActivity extends AppCompatActivity {
     TextView benefits, states, object, renter;
     boolean[] selectedBenefit;
     boolean[] selectedRenter;
-    int[] selectedState = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
     int[] selectedObject = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
     ArrayList<Integer> benefitsList = new ArrayList<>();
     ArrayList<Integer> renterList = new ArrayList<>();
     ArrayList<String> renterDocIds = new ArrayList<>();
     String[] benefitsArray = {"Brandschutz", "Einbruchschutz", "Isolation"};
-    String[] statesArray = {"gut", "mittel", "schlecht"};
     String[] objectsArray = {"Tür", "Fenster", "WC", "Dach"};
     String[] renterArray;  // Dynamisch befüllt
 
@@ -63,7 +61,6 @@ public class CreateRenovationActivity extends AppCompatActivity {
             createRenovationTimestamp = findViewById(R.id.createRenovationTimestamp);
             createRenovationParagraph = findViewById(R.id.createRenovationParagraph);
             benefits = findViewById(R.id.create_renovation_benefits);
-            states = findViewById(R.id.create_renovation_state);
             object = findViewById(R.id.create_renovation_object);
             renter = findViewById(R.id.create_renovation_Renter);
 
@@ -76,11 +73,6 @@ public class CreateRenovationActivity extends AppCompatActivity {
             benefits.setOnClickListener(v ->
                     MultiSelectDialogUtil.showMultiSelectDialog(this, getString(R.string.selection_view_benefits_title),
                             benefitsArray, selectedBenefit, benefitsList, benefits)
-            );
-
-            states.setOnClickListener(v ->
-                    MultiSelectDialogUtil.showSingleSelectDialog(this, getString(R.string.selection_view_states_title),
-                            statesArray, selectedState, states)
             );
 
             object.setOnClickListener(v ->
@@ -157,7 +149,7 @@ public class CreateRenovationActivity extends AppCompatActivity {
         String kosten = renovationCostInput.getText().toString();
         String timestamp = createRenovationTimestamp.getText().toString();
         String paragraph = createRenovationParagraph.getText().toString();
-        String state = selectedState[0] != -1 ? statesArray[selectedState[0]] : "";
+        String state = "gut";
         String renovationObject = selectedObject[0] != -1 ? objectsArray[selectedObject[0]] : "";
 
         // Umwandlung der Benefits in einen String, getrennt durch Kommas
@@ -184,10 +176,6 @@ public class CreateRenovationActivity extends AppCompatActivity {
         }
         if (timestamp.isEmpty()) {
             AnimationUtil.animateHintAndDrawableColor(createRenovationTimestamp, dangerColor, animationDuration);
-            isValid = false;
-        }
-        if (state.isEmpty()) {
-            AnimationUtil.animateHintAndDrawableColor(states, dangerColor, animationDuration);
             isValid = false;
         }
         if (renovationObject.isEmpty()) {
@@ -231,7 +219,6 @@ public class CreateRenovationActivity extends AppCompatActivity {
                     AnimationUtil.animateInputAndDrawableColor(createRenovationTimestamp, currentDrawableColor, successColor, animationDuration);
                     AnimationUtil.animateInputAndDrawableColor(createRenovationParagraph, currentDrawableColor, successColor, animationDuration);
                     AnimationUtil.animateInputAndDrawableColor(benefits, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(states, currentDrawableColor, successColor, animationDuration);
                     AnimationUtil.animateInputAndDrawableColor(object, currentDrawableColor, successColor, animationDuration);
                     AnimationUtil.animateInputAndDrawableColor(renter, currentDrawableColor, successColor, animationDuration);
 
@@ -242,14 +229,12 @@ public class CreateRenovationActivity extends AppCompatActivity {
                         createRenovationTimestamp.setText("");
                         createRenovationParagraph.setText("");
                         benefits.setText("");
-                        states.setText("");
                         object.setText("");
                         renter.setText("");
 
                         // Leeren der Auswahllisten
                         benefitsList.clear();
                         renterList.clear();
-                        selectedState[0] = -1;
                         selectedObject[0] = -1;
                         selectedRenter = new boolean[renterArray.length];
                     }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer

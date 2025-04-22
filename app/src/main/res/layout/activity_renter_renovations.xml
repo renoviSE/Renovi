@@ -51,36 +51,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/verifyIdInput"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="24dp"
-            android:background="@drawable/bg_white_round_corner"
-            android:backgroundTint="@color/white"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="20dp"
-            android:drawableTint="@color/gray2"
-            android:elevation="8dp"
-            android:hint="@string/search_renovation_placeholder_string"
-            android:inputType="textVisiblePassword"
-            android:paddingLeft="22dp"
-            android:textColorHint="@color/gray2"
-            android:textCursorDrawable="@drawable/bg_cursor"
-            android:textSize="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/titleBackground" />
-
         <ImageView
             android:id="@+id/shadowSpacer"
             android:layout_width="match_parent"
             android:layout_height="15dp"
+            app:layout_constraintBottom_toBottomOf="@+id/titleBackground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/verifyIdInput" />
+            app:layout_constraintTop_toBottomOf="@+id/titleBackground" />
 
         <ScrollView
             android:id="@+id/renovationsListScrollView"
