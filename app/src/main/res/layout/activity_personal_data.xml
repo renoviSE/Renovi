@@ -121,8 +121,8 @@
                 android:text="@string/changeEmail"
                 android:textColor="@color/black1"
                 android:textSize="16sp"
-                app:layout_constraintTop_toBottomOf="@+id/titleBackground"
-                tools:layout_editor_absoluteX="48dp" />
+                app:layout_constraintStart_toStartOf="@+id/emailInput"
+                app:layout_constraintTop_toBottomOf="@+id/titleBackground" />
 
             <EditText
                 android:id="@+id/emailInput"

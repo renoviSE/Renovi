@@ -51,6 +51,7 @@ public class ProfileActivity extends AppCompatActivity {
         initializeContactUsButton();
         initializeSettingsButton();
         initializePrivacyPolicyButton();
+        initializePersonalDataButton();
     }
 
     private void getRenterFromSession() {
@@ -152,6 +153,14 @@ public class ProfileActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(view -> {
             // Startet eine neue Activity für die Einstellungen
             Intent settingsIntent = new Intent(ProfileActivity.this, SettingsActivity.class);
+            startActivity(settingsIntent);
+        });
+
+    }private void initializePersonalDataButton() {
+        Button settingsButton = findViewById(R.id.personalDataButton);
+        settingsButton.setOnClickListener(view -> {
+            // Startet eine neue Activity für die Einstellungen
+            Intent settingsIntent = new Intent(ProfileActivity.this, PersonalDataActivity.class);
             startActivity(settingsIntent);
         });
     }

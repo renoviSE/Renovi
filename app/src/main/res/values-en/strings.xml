@@ -150,4 +150,6 @@
 
     <string name="email">E-mail</string>
     <string name="changeEmail">Change e-mail</string>
+    <string name="invalidEmail">Please provide a valid e-mail</string>
+    <string name="validEmail">E-mail successfully changed</string>
 </resources>
