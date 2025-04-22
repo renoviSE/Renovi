@@ -262,7 +262,11 @@ public class ButtonCreator {
         );
         stripeParams.topToTop    = ConstraintLayout.LayoutParams.PARENT_ID;
         stripeParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
-        stripeParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        if (isSender) {
+            stripeParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        } else {
+            stripeParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        }
         stripeParams.setMarginStart(dpToPx(context,4));
         stripe.setLayoutParams(stripeParams);
         stripe.setBackgroundResource(isSender
@@ -328,6 +332,10 @@ public class ButtonCreator {
             cs.connect(container.getId(),
                     ConstraintSet.TOP, lastButtonId, ConstraintSet.BOTTOM,
                     dpToPx(context,4));
+            cs.connect(
+                    R.id.chatListScrollSpacer,
+                    ConstraintSet.TOP, container.getId(), ConstraintSet.BOTTOM
+            );
         }
 
         // horizontale Constraints abhängig von isSender

@@ -23,8 +23,10 @@ import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
 import java.math.BigDecimal;
@@ -44,6 +46,9 @@ public class ChatActivity extends AppCompatActivity {
     private Person user;
     private String renterId;
     private EditText messageInput;
+    int dangerColor;
+    int successColor;
+    int animationDuration = 1000;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -58,6 +63,10 @@ public class ChatActivity extends AppCompatActivity {
 
         initializeBackToPreviousActivityButton();
         initializeSendPrivateMessageButton();
+
+        // Farben und Animationen
+        dangerColor = ContextCompat.getColor(this, R.color.danger);
+        successColor = ContextCompat.getColor(this, R.color.lightBlue);
 
         // Empfangen des Intent, der diese Activity gestartet hat
         Intent intent = getIntent();
@@ -124,7 +133,7 @@ public class ChatActivity extends AppCompatActivity {
                     if (buttonId == 1) {
                         generatePlaceholder();
                     }
-
+                    scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                 })
                 .addOnFailureListener(e -> {
                     // Fehler beim Abrufen der Daten
@@ -135,12 +144,6 @@ public class ChatActivity extends AppCompatActivity {
 
     private void sendPrivateMessage() {
         String nachricht = messageInput.getText().toString().trim();
-
-        // Farben und Animationen
-        int dangerColor = ContextCompat.getColor(this, R.color.danger);
-        int successColor = ContextCompat.getColor(this, R.color.lightBlue);
-        int currentDrawableColor = ContextCompat.getColor(this, R.color.gray2);
-        int animationDuration = 1000;
 
         // Validierung
         if (nachricht.isEmpty()) {
@@ -192,18 +195,10 @@ public class ChatActivity extends AppCompatActivity {
                     Log.d("Firestore", "Nachricht an Mieter " + renterId + " gesendet.");
 
                     // Animation + UI reset
-                    AnimationUtil.animateInputAndDrawableColor(messageInput, ContextCompat.getColor(this, R.color.gray2),
-                            ContextCompat.getColor(this, R.color.lightBlue), 1000);
+                    messageInput.setText(""); // Feld leeren
+                    AnimationUtil.animateHintAndDrawableColor(messageInput, successColor, animationDuration);
 
                     Toast.makeText(this, "Nachricht erfolgreich gesendet", Toast.LENGTH_SHORT).show();
-
-                    new android.os.Handler().postDelayed(() -> {
-                        messageInput.setText(""); // Feld leeren
-
-                        // Erst nach kurzem Delay die View neu laden
-                        recreate();
-                        scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
-                    }, 300);
                 })
                 .addOnFailureListener(e -> {
                     Log.w("Firestore", "Fehler beim Senden der Nachricht an " + renterId, e);
@@ -257,9 +252,69 @@ public class ChatActivity extends AppCompatActivity {
 
         buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_chat_placeholder_message);
     }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));
     }
 
+    private ListenerRegistration chatListener;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        startChatListener();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (chatListener != null) chatListener.remove();
+    }
+
+    private void startChatListener() {
+
+        chatListener = db.collection("Mieter")
+                .document(renterId)
+                .collection("Chat")
+                .orderBy("timestamp", Query.Direction.ASCENDING)
+                .addSnapshotListener((snapshots, e) -> {
+                    if (e != null) {
+                        Log.w(TAG, "Chat‑Listener failed", e);
+                        return;
+                    }
+                    ButtonCreator bc = new ButtonCreator(this);
+                    for (DocumentChange dc : snapshots.getDocumentChanges()) {
+                        if (dc.getType() == DocumentChange.Type.ADDED) {
+                            DocumentSnapshot doc = dc.getDocument();
+
+                            // Daten aus Firestore ziehen
+                            String text       = doc.getString("message");
+                            String fromId     = doc.getString("from");
+                            String senderName = doc.getString("senderName");
+                            com.google.firebase.Timestamp ts = doc.getTimestamp("timestamp");
+
+                            boolean isSender = user.getId().equals(fromId);
+                            String title     = isSender
+                                    ? user.getFirstName() + " " + user.getLastName()
+                                    : senderName;
+
+                            String time = new SimpleDateFormat(
+                                    "HH:mm  dd.MM.yy",
+                                    Locale.getDefault()
+                            ).format(ts.toDate());
+
+                            // **Direkt** die Bubble anlegen
+                            bc.createChatBubble(
+                                    mainLayout,
+                                    isSender,
+                                    title,
+                                    text,
+                                    time
+                            );
+                        }
+                    }
+                    scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
+                });
+    }
 }
