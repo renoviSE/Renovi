@@ -264,10 +264,11 @@ public class ButtonCreator {
         stripeParams.bottomToBottom = ConstraintLayout.LayoutParams.PARENT_ID;
         if (isSender) {
             stripeParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+            stripeParams.setMarginEnd(dpToPx(context,4));
         } else {
             stripeParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+            stripeParams.setMarginStart(dpToPx(context,4));
         }
-        stripeParams.setMarginStart(dpToPx(context,4));
         stripe.setLayoutParams(stripeParams);
         stripe.setBackgroundResource(isSender
                 ? R.drawable.bg_button

@@ -74,20 +74,13 @@ public class ChatActivity extends AppCompatActivity {
         // Extrahieren der übertragenen Variable 'renterId'
         if (intent != null && intent.hasExtra("renterId")) {
             renterId = intent.getStringExtra("renterId");
-            getChats(db, renterId, user.getId());
         } else {
             renterId = user.getId();
             db.collection("Mieter")
                     .document(user.getId())
                     .get()
                     .addOnSuccessListener(documentSnapshot -> {
-                        if (documentSnapshot.exists()) {
-                            String landlordID = documentSnapshot.getString("vermieter");
-                            getChats(db, renterId, landlordID);
 
-                        } else {
-                            Log.d("Firestore", "Dokument nicht gefunden.");
-                        }
                     })
                     .addOnFailureListener(e -> {
                         Log.e("Firestore", "Fehler beim Abrufen des Dokuments", e);
@@ -98,48 +91,6 @@ public class ChatActivity extends AppCompatActivity {
     private void getUserFromSession() {
         session = Session.getInstance(this);
         user = session.getUser();
-    }
-
-    private void getChats(FirebaseFirestore db, String renterId, String landlordId) {
-        db.collection("Mieter").document(renterId).collection("Chat").orderBy("timestamp", Query.Direction.ASCENDING)
-                .get()
-                .addOnSuccessListener(documents -> {
-                    BigDecimal allObjectsValue = new BigDecimal("0");
-
-                    // Daten erfolgreich erhalten
-                    int buttonId = 1;
-                    for (DocumentSnapshot document : documents.getDocuments()) {
-                        if (document.exists()) {
-                            //String objectName = document.getString("object");
-                            MChatMessage chat = new MChatMessage(
-                                    document.getString("message"),
-                                    document.getString("from"),
-                                    document.getString("senderName"),
-                                    document.getString("to"),
-                                    document.getTimestamp("timestamp")
-
-                            );
-
-                            // Erstelle einen Button für jede Renovierung
-                            if((Objects.equals(chat.getMessageFrom(), landlordId) || Objects.equals(chat.getMessageTo(), landlordId)) && (Objects.equals(chat.getMessageFrom(), renterId) || Objects.equals(chat.getMessageTo(), renterId)) ){
-                                generateButtonForMessage(chat);
-                            }
-
-                            buttonId += 1;
-                            Log.i(TAG, "Renovierung erfolgreich geladen.");
-                        }
-                    }
-                    // Wenn kein chat vorhanden sind
-                    if (buttonId == 1) {
-                        generatePlaceholder();
-                    }
-                    scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
-                })
-                .addOnFailureListener(e -> {
-                    // Fehler beim Abrufen der Daten
-                    Log.e(TAG, "Fehler beim Abrufen der Renovierungen", e);
-                });
-        scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
     }
 
     private void sendPrivateMessage() {
@@ -248,9 +199,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private void generatePlaceholder() {
         // Erstellen und Hinzufügen des Platzhalters zum Layout
-        ButtonCreator buttonCreator = new ButtonCreator(this);
+        ButtonCreator bubbleCreator = new ButtonCreator(this);
 
-        buttonCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_chat_placeholder_message);
+        bubbleCreator.createPlaceholderView(mainLayout, R.id.renovationsListTopConstraintForPlaceholder, R.string.no_chat_placeholder_message);
     }
 
     @Override
@@ -283,6 +234,14 @@ public class ChatActivity extends AppCompatActivity {
                         Log.w(TAG, "Chat‑Listener failed", e);
                         return;
                     }
+
+                    // wenn keine Nachrichten da sind → Placeholder einfügen
+                    if (snapshots != null && snapshots.isEmpty()) {
+                        generatePlaceholder();
+                        return;
+                    }
+
+                    // sonst alle vorhandenen Nachrichten laden und Bubbles anlegen
                     ButtonCreator bc = new ButtonCreator(this);
                     for (DocumentChange dc : snapshots.getDocumentChanges()) {
                         if (dc.getType() == DocumentChange.Type.ADDED) {
@@ -304,7 +263,7 @@ public class ChatActivity extends AppCompatActivity {
                                     Locale.getDefault()
                             ).format(ts.toDate());
 
-                            // **Direkt** die Bubble anlegen
+                            // Bubble anlegen
                             bc.createChatBubble(
                                     mainLayout,
                                     isSender,
@@ -314,6 +273,7 @@ public class ChatActivity extends AppCompatActivity {
                             );
                         }
                     }
+                    //Nach dem alle Bubbles geladen sind -> nach unten scrollen
                     scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                 });
     }
