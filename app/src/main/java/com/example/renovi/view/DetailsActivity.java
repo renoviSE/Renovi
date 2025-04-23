@@ -20,6 +20,7 @@ import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.UIHelper;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -27,7 +28,8 @@ public class DetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        initializeBackToMainButton();
+
+        UIHelper.initializeBackButton(this, R.id.detailsToPreviousButton);
         initializeReadMoreLink();
 
         Intent intent = getIntent();
@@ -52,14 +54,6 @@ public class DetailsActivity extends AppCompatActivity {
         for (int i = 0; i < benefits.length; i++) {
             lastButtonId = buttonCreator.createBenefitButton(benefitsLayout, benefits[i], lastButtonId, i == 0);
         }
-    }
-
-    private void initializeBackToMainButton() {
-        Button startButton = findViewById(R.id.chatToPreviousButton);
-        startButton.setOnClickListener(view -> switchToMain());
-    }
-    private void switchToMain() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen zurück
     }
 
     private void initializeReadMoreLink() { //reade more redirects to website

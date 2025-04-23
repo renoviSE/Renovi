@@ -18,6 +18,7 @@ import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.viewmodel.MultiSelectDialogUtil;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -96,9 +97,8 @@ public class CreateRenovationActivity extends AppCompatActivity {
                 }
             });
 
-            Button saveButton = findViewById(R.id.create_renovation_Button);
-            saveButton.setOnClickListener(v -> saveRenovationToDatabase());
-            initializeBackToPreviousActivityButton();
+            UIHelper.initializeViewFunction(this, R.id.create_renovation_Button, v -> saveRenovationToDatabase());
+            UIHelper.initializeBackButton(this, R.id.CreateRenovationToMainButton);
         } catch (Exception e) {
             Log.e("CreateRenovationActivity", "Error initializing activity", e);
             Toast.makeText(this, "Fehler beim Initialisieren der Aktivität", Toast.LENGTH_LONG).show();
@@ -248,13 +248,6 @@ public class CreateRenovationActivity extends AppCompatActivity {
                 });
     }
 
-    private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.CreateRenovationToMainButton);
-        returnButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
-    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));

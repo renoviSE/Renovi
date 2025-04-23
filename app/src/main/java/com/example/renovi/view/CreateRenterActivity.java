@@ -16,6 +16,7 @@ import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -43,11 +44,9 @@ public class CreateRenterActivity extends AppCompatActivity {
             createRenterAddress = findViewById(R.id.create_renter_address);
             createRenterSquareMeters = findViewById(R.id.create_renter_squaremeters);
 
-            createRenterAddress.setOnClickListener(v -> showAddressSelectionDialog());
-
-            Button saveButton = findViewById(R.id.create_renter_Button);
-            saveButton.setOnClickListener(v -> saveRenterToDatabase());
-            initializeBackToPreviousActivityButton();
+            UIHelper.initializeViewFunction(this, R.id.create_renter_address, v -> showAddressSelectionDialog());
+            UIHelper.initializeViewFunction(this, R.id.create_renter_Button, v -> saveRenterToDatabase());
+            UIHelper.initializeBackButton(this, R.id.CreateRenterToMainButton);
         } catch (Exception e) {
             Log.e("CreateRenterActivity", "Error initializing activity", e);
             Toast.makeText(this, "Fehler beim Initialisieren der Aktivität", Toast.LENGTH_LONG).show();
@@ -151,14 +150,6 @@ public class CreateRenterActivity extends AppCompatActivity {
                 });
     }
 
-    private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.CreateRenterToMainButton);
-        returnButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
-    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));

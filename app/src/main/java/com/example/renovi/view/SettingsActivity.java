@@ -14,21 +14,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
+import com.example.renovi.viewmodel.UIHelper;
 
 import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
     private Spinner languageSpinner;
-    private Button backButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        UIHelper.initializeBackButton(this, R.id.settingsBackButton);
+
         languageSpinner = findViewById(R.id.languageSpinner);
-        backButton = findViewById(R.id.settingsBackButton);
 
         // Sprachauswahl setzen
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -74,8 +75,6 @@ public class SettingsActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {}
         });
 
-        // Zurück-Button
-        backButton.setOnClickListener(v -> onBackPressed());
     }
 
     @Override

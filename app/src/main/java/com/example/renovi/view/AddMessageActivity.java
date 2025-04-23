@@ -15,10 +15,10 @@ import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.AnimationUtil;
+import com.example.renovi.viewmodel.UIHelper;
 import com.example.renovi.viewmodel.MultiSelectDialogUtil;
 import com.example.renovi.viewmodel.Session;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -51,7 +51,8 @@ public class AddMessageActivity extends AppCompatActivity {
         messageInput = findViewById(R.id.messageContentInput);
         recipientTextView = findViewById(R.id.messageRecipient);
         sendMessageButton = findViewById(R.id.sendMessageButton);
-        initializeBackToPreviousActivityButton();
+
+        UIHelper.initializeBackButton(this, R.id.sendMessageToMainButton);
 
         loadRenter();
 
@@ -157,13 +158,6 @@ public class AddMessageActivity extends AppCompatActivity {
         Toast.makeText(this, "Nachricht erfolgreich gesendet", Toast.LENGTH_SHORT).show();
     }
 
-    private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.sendMessageToMainButton);
-        returnButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
-    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));

@@ -14,6 +14,7 @@ import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,7 +34,7 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_renter_renovations);
         mainLayout = findViewById(R.id.renovationsListConstraintLayout);
 
-        initializeBackToPreviousActivityButton();
+        UIHelper.initializeBackButton(this, R.id.renterRenovationsToPreviousButton);
 
         // Empfangen des Intent, der diese Activity gestartet hat
         Intent intent = getIntent();
@@ -90,16 +91,6 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
                     // Fehler beim Abrufen der Daten
                     Log.e(TAG, "Fehler beim Abrufen der Renovierungen", e);
                 });
-    }
-
-    private void initializeBackToPreviousActivityButton() {
-        Button startButton = findViewById(R.id.chatToPreviousButton);
-        startButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
-        overridePendingTransition(0, 0); // Deaktiviert Animation beim Zurückkehren
     }
 
     private void generateButtonForRenter(String renovationTitle, Renovation renovation) {

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -21,6 +20,7 @@ import com.example.renovi.model.MChatMessage;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.UIHelper;
 import com.example.renovi.viewmodel.Session;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;
@@ -29,7 +29,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 
-import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Locale;
@@ -61,8 +60,8 @@ public class ChatActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollViewChats);
         messageInput = findViewById(R.id.newChatMessage);
 
-        initializeBackToPreviousActivityButton();
-        initializeSendPrivateMessageButton();
+        UIHelper.initializeBackButton(this, R.id.chatToPreviousButton);
+        UIHelper.initializeViewFunction(this, R.id.sendPrivateChatButton, view -> sendPrivateMessage());
 
         // Farben und Animationen
         dangerColor = ContextCompat.getColor(this, R.color.danger);
@@ -180,21 +179,6 @@ public class ChatActivity extends AppCompatActivity {
                 text,
                 time
         );
-    }
-
-    private void initializeBackToPreviousActivityButton() {
-        Button goBackButton = findViewById(R.id.chatToPreviousButton);
-        goBackButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-    private void initializeSendPrivateMessageButton() {
-        Button sendPrivateMessageButton = findViewById(R.id.sendPrivateChatButton);
-        sendPrivateMessageButton.setOnClickListener(view -> sendPrivateMessage());
-    }
-
-
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
-        overridePendingTransition(0, 0); // Deaktiviert Animation beim Zurückkehren
     }
 
     private void generatePlaceholder() {

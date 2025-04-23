@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
+import com.example.renovi.viewmodel.UIHelper;
 
 public class WelcomeScreen extends Activity {
 
@@ -20,12 +21,7 @@ public class WelcomeScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcomescreen);
 
-		initializeStartButton();
-	}
-
-	private void initializeStartButton() {
-		Button startButton = findViewById(R.id.startButton);
-		startButton.setOnClickListener(view -> switchToSignIn());
+		UIHelper.initializeViewFunction(this, R.id.startButton, view -> switchToSignIn());
 	}
 
 	private void switchToSignIn() {

@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +15,7 @@ import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.AnimationUtil;
+import com.example.renovi.viewmodel.UIHelper;
 import com.example.renovi.viewmodel.MultiSelectDialogUtil;
 import com.example.renovi.viewmodel.Session;
 import com.google.firebase.Timestamp;
@@ -76,9 +76,8 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
                 }
             });
 
-            Button saveButton = findViewById(R.id.create_refurbishment_Button);
-            saveButton.setOnClickListener(v -> saveRenovationToDatabase());
-            initializeBackToPreviousActivityButton();
+            UIHelper.initializeViewFunction(this, R.id.create_refurbishment_Button, v -> saveRenovationToDatabase());
+            UIHelper.initializeBackButton(this, R.id.refurbishmentBackButton);
         } catch (Exception e) {
             Log.e("CreateRefurbishmentActivity", "Error initializing activity", e);
             Toast.makeText(this, "Fehler beim Initialisieren der Aktivität", Toast.LENGTH_LONG).show();
@@ -226,16 +225,6 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
         Toast.makeText(this, "Renovierungen erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
     }
 
-
-
-    private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.personalDataBackButton);
-        returnButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-
-    private void switchToPreviousActivity() {
-        finish();
-    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));

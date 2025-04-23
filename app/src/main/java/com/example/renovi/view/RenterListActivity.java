@@ -18,6 +18,7 @@ import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -59,9 +60,7 @@ public class RenterListActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-
-
-        initializeBackToPreviousActivityButton();
+        UIHelper.initializeBackButton(this, R.id.renterListToPreviousButton);
         loadRenter();
     }
 
@@ -92,14 +91,6 @@ public class RenterListActivity extends AppCompatActivity {
                         Log.d("FirebaseError", "Error getting documents: ", task.getException());
                     }
                 });
-    }
-
-    private void initializeBackToPreviousActivityButton() {
-        Button startButton = findViewById(R.id.chatToPreviousButton);
-        startButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
     }
 
     private void generateButtonForRenter(String renterId, String fullname) {

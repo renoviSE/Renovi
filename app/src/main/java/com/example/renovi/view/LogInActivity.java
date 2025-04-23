@@ -21,6 +21,7 @@ import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.model.Renter;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -50,18 +51,13 @@ public class LogInActivity extends Activity {
 		lastNameData = findViewById(R.id.lastNameInput);
 		verifyIdInput = findViewById(R.id.verifyIdInput);
 
-		initializeLogInButton();
-		initializeRenterSession();
+		UIHelper.initializeViewFunction(this, R.id.signinButton, view -> checkIfIdExists());
+		initializeSession();
 	}
 
-	private void initializeRenterSession() {
+	private void initializeSession() {
 		session = Session.getInstance(this);
 		session.deleteSession();
-	}
-
-	private void initializeLogInButton() {
-		Button signInButton = findViewById(R.id.signinButton);
-		signInButton.setOnClickListener(view -> checkIfIdExists());
 	}
 
 	private void checkIfIdExists() {

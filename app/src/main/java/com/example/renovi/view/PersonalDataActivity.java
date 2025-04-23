@@ -3,8 +3,6 @@ package com.example.renovi.view;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.example.renovi.R;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.AnimationUtil;
+import com.example.renovi.viewmodel.UIHelper;
 import com.example.renovi.viewmodel.Session;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -43,18 +42,13 @@ public class PersonalDataActivity extends AppCompatActivity {
 
         getEmail();
 
-        initializeBackToSettingsButton();
-        initializeSetEmail();
+        UIHelper.initializeBackButton(this, R.id.personalDataButton);
+        UIHelper.initializeViewFunction(this, R.id.changePersonalDataButton, v -> saveEmailToDatabase());
     }
 
     private void getUserFromSession() {
         session = Session.getInstance(this);
         user = session.getUser();
-    }
-
-    private void initializeSetEmail() {
-        Button saveButton = findViewById(R.id.changePersonalDataButton);
-        saveButton.setOnClickListener(v -> saveEmailToDatabase());
     }
 
     private void saveEmailToDatabase() {
@@ -110,11 +104,6 @@ public class PersonalDataActivity extends AppCompatActivity {
                 }
             }
         });
-    }
-
-    private void initializeBackToSettingsButton() {
-        Button startButton = findViewById(R.id.personalDataBackButton);
-        startButton.setOnClickListener(view -> finish());
     }
 
     @Override

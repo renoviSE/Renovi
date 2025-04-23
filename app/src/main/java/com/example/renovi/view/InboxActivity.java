@@ -20,6 +20,7 @@ import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -64,15 +65,9 @@ public class InboxActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {}
         });
 
-
-        initializeBackToPreviousActivityButton();
-        initializeAddMessageButton();
+        UIHelper.initializeBackButton(this, R.id.inboxToPreviousButton);
+        UIHelper.initializeViewFunction(this, R.id.addMessageButton, view -> switchToAddMessageAcivity());
         loadRenter();
-    }
-
-    private void initializeAddMessageButton() {
-        Button addMessageButton = findViewById(R.id.addMessageButton);
-        addMessageButton.setOnClickListener(view -> switchToAddMessageAcivity());
     }
 
     private void switchToAddMessageAcivity() {
@@ -83,13 +78,6 @@ public class InboxActivity extends AppCompatActivity {
     private void getUserFromSession() {
         session = Session.getInstance(this);
         user = session.getUser();
-    }
-    private void initializeBackToPreviousActivityButton() {
-        Button returnButton = findViewById(R.id.chatToPreviousButton);
-        returnButton.setOnClickListener(view -> switchToPreviousActivity());
-    }
-    private void switchToPreviousActivity() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
     }
 
     private void loadRenter() {

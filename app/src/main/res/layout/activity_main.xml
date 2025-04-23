@@ -126,7 +126,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/addMessageButton"
+            android:id="@+id/scrollButton"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginBottom="32dp"
@@ -138,15 +138,15 @@
             app:layout_constraintStart_toStartOf="@+id/navBarBackground" />
 
         <ImageView
-            android:id="@+id/addMessageButtonIcon"
+            android:id="@+id/scrollButtonIcon"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:background="@drawable/ic_arrow_down"
             android:elevation="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/addMessageButton"
-            app:layout_constraintEnd_toEndOf="@+id/addMessageButton"
-            app:layout_constraintStart_toStartOf="@+id/addMessageButton"
-            app:layout_constraintTop_toTopOf="@+id/addMessageButton" />
+            app:layout_constraintBottom_toBottomOf="@+id/scrollButton"
+            app:layout_constraintEnd_toEndOf="@+id/scrollButton"
+            app:layout_constraintStart_toStartOf="@+id/scrollButton"
+            app:layout_constraintTop_toTopOf="@+id/scrollButton" />
 
         <Button
             android:id="@+id/homeIcon"
@@ -170,7 +170,7 @@
             android:backgroundTint="@color/gray2"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
-            app:layout_constraintEnd_toStartOf="@+id/addMessageButton"
+            app:layout_constraintEnd_toStartOf="@+id/scrollButton"
             app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
 
         <Button
@@ -182,7 +182,7 @@
             android:background="@drawable/ic_faq"
             android:elevation="2dp"
             app:layout_constraintBottom_toBottomOf="@+id/navBarBackground"
-            app:layout_constraintStart_toEndOf="@+id/addMessageButton"
+            app:layout_constraintStart_toEndOf="@+id/scrollButton"
             app:layout_constraintTop_toTopOf="@+id/navBarBackground" />
 
         <Button

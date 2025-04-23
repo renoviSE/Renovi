@@ -8,6 +8,7 @@ import android.widget.Button;
 
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
+import com.example.renovi.viewmodel.UIHelper;
 
 public class PrivacyPolicyActivity extends Activity {
     @Override
@@ -15,13 +16,9 @@ public class PrivacyPolicyActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_privacy_policy);
 
-        initializeBackToSettingsButton();
+        UIHelper.initializeBackButton(this, R.id.privacyBackButton);
     }
 
-    private void initializeBackToSettingsButton() {
-        Button startButton = findViewById(R.id.privacyBackButton);
-        startButton.setOnClickListener(view -> finish());
-    }
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));

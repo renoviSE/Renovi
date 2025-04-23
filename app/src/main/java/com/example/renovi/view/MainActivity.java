@@ -27,6 +27,7 @@ import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -89,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeButtons() {
-        initializeInboxButton();
-        initializeProfileButton();
-        initializeMainButton();
-        initializeFaqButton();
+        UIHelper.initializeViewFunction(this, R.id.notificationButton, view -> switchToInbox());
+        UIHelper.initializeViewFunction(this, R.id.notificationButtonNavBar, view -> switchToInbox());
+        UIHelper.initializeViewFunction(this, R.id.profileButton, view -> switchToProfile());
+        UIHelper.initializeViewFunction(this, R.id.scrollButton, vview -> scrollToTextView());
+        UIHelper.initializeViewFunction(this, R.id.faqButton, view -> openWebPage("https://funktionales-kostensplitting.de"));
     }
-
 
     private void getRenovierungen(FirebaseFirestore db) {
         // Zugriff auf die Sammlung "Renovationen" des aktuellen Mieters
@@ -189,12 +190,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-    private void initializeInboxButton() {
-        Button notificationButton = findViewById(R.id.notificationButton);
-        notificationButton.setOnClickListener(view -> switchToInbox());
-        Button notificationButtonNavBar = findViewById(R.id.notificationButtonNavBar);
-        notificationButtonNavBar.setOnClickListener(view -> switchToInbox());
-    }
     private void switchToInbox() {
         Intent switchActivityIntent = new Intent(this, InboxActivity.class);
         Intent directlyToChat = new Intent(this, ChatActivity.class);
@@ -205,10 +200,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    private void initializeProfileButton() {
-        Button profileButton = findViewById(R.id.profileButton);
-        profileButton.setOnClickListener(view -> switchToProfile());
-    }
     private void switchToProfile() {
         Intent switchActivityIntent = new Intent(this, ProfileActivity.class);
 
@@ -217,10 +208,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(switchActivityIntent);
     }
 
-    private void initializeMainButton() { //main button scrolls down
-        Button mainButton = findViewById(R.id.addMessageButton);
-        mainButton.setOnClickListener(view -> scrollToTextView());
-    }
     private void scrollToTextView() {
         ScrollView mainScrollView = findViewById(R.id.scrollView2);
 
@@ -229,10 +216,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeFaqButton() {
-        Button faqButton = findViewById(R.id.faqButton);
-        faqButton.setOnClickListener(view -> openWebPage("https://funktionales-kostensplitting.de"));
-    }
     private void openWebPage(String url) {
         Uri webpage = Uri.parse(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, webpage);

@@ -61,7 +61,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/chatToPreviousButton"
+            android:id="@+id/inboxToPreviousButton"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="40dp"
             android:layout_height="40dp"

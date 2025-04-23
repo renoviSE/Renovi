@@ -19,6 +19,7 @@ import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
+import com.example.renovi.viewmodel.UIHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -42,16 +43,16 @@ public class ProfileActivity extends AppCompatActivity {
         profileLastName = findViewById(R.id.profileLastName);
         profileVerifyId = findViewById(R.id.profileVerifyIdBackground);
 
-        initializeBackToMainButton();
+        UIHelper.initializeViewFunction(this, R.id.homeButton, view -> switchToMain());
+        UIHelper.initializeViewFunction(this, R.id.notificationButtonNavBar, view -> switchToInbox());
+        UIHelper.initializeViewFunction(this, R.id.faqButton, view -> openWebPage("https://funktionales-kostensplitting.de"));
+        UIHelper.initializeViewFunction(this, R.id.signOutButton, view -> switchToLogIn());
+        UIHelper.initializeViewFunction(this, R.id.settingsButton, view -> switchToSettings());
+        UIHelper.initializeViewFunction(this, R.id.privacyDataButton, view -> switchToPrivacyPolicy());
+        UIHelper.initializeViewFunction(this, R.id.personalDataButton, view -> switchToPersonalData());
         initializeCopyButton();
-        initializeInboxButton();
-        initializeFaqButton();
         setUserProfile();
-        initializeSignOutButton();
         initializeContactUsButton();
-        initializeSettingsButton();
-        initializePrivacyPolicyButton();
-        initializePersonalDataButton();
     }
 
     private void getRenterFromSession() {
@@ -61,39 +62,23 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void initializeCopyButton() {
         Button copyVerifyIdButton = findViewById(R.id.copyVerifyIdButton);
-        copyVerifyIdButton.setOnClickListener(new View.OnClickListener() { //This Button copies the string from "profileVerifyId"
-            @Override
-            public void onClick(View v) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); //make clipboard
-                ClipData clip = ClipData.newPlainText("Verify ID", profileVerifyId.getText().toString()); //get text
-                clipboard.setPrimaryClip(clip); //copy text
+        //This Button copies the string from "profileVerifyId"
+        copyVerifyIdButton.setOnClickListener(v -> {
+            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE); //make clipboard
+            ClipData clip = ClipData.newPlainText("Verify ID", profileVerifyId.getText().toString()); //get text
+            clipboard.setPrimaryClip(clip); //copy text
 
-                Toast.makeText(ProfileActivity.this, "ID erfolgreich kopiert", Toast.LENGTH_SHORT).show(); //shows success message
-            }
+            Toast.makeText(ProfileActivity.this, "ID erfolgreich kopiert", Toast.LENGTH_SHORT).show(); //shows success message
         });
     }
 
-    private void initializeBackToMainButton() {
-        Button homeButton = findViewById(R.id.homeButton);
-        homeButton.setOnClickListener(view -> switchToMain());
-    }
     private void switchToMain() {
-        finish(); // Beendet die aktuelle Activity und kehrt zur vorherigen im Stack zurück
-        overridePendingTransition(0,0); //disables animation
-    }
-
-    private void initializeInboxButton() {
-        Button notificationButtonNavBar = findViewById(R.id.notificationButtonNavBar);
-        notificationButtonNavBar.setOnClickListener(view -> switchToInbox());
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(switchActivityIntent);
     }
     private void switchToInbox() {
         Intent switchActivityIntent = new Intent(this, InboxActivity.class);
         startActivity(switchActivityIntent);
-    }
-
-    private void initializeSignOutButton() {
-        Button notificationButtonNavBar = findViewById(R.id.signOutButton);
-        notificationButtonNavBar.setOnClickListener(view -> switchToLogIn());
     }
 
     private void switchToLogIn() {
@@ -115,24 +100,9 @@ public class ProfileActivity extends AppCompatActivity {
         finish();
     }
 
-    private void initializeFaqButton() {
-        Button faqButton = findViewById(R.id.faqButton);
-        faqButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openWebPage("https://funktionales-kostensplitting.de");
-            }
-        });
-    }
-
-    private void initializePrivacyPolicyButton() {
-        Button privacyDataButton = findViewById(R.id.privacyDataButton);
-        privacyDataButton.setOnClickListener(view -> {
-            // Startet eine Activity mit der Policy
-            Intent privacyIntent = new Intent(ProfileActivity.this, PrivacyPolicyActivity.class);
-            startActivity(privacyIntent);
-                }
-        );
+    private void switchToPrivacyPolicy() {
+        Intent privacyIntent = new Intent(ProfileActivity.this, PrivacyPolicyActivity.class);
+        startActivity(privacyIntent);
     }
 
     private void initializeContactUsButton() {
@@ -148,21 +118,13 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
     }
-    private void initializeSettingsButton() {
-        Button settingsButton = findViewById(R.id.settingsButton);
-        settingsButton.setOnClickListener(view -> {
-            // Startet eine neue Activity für die Einstellungen
-            Intent settingsIntent = new Intent(ProfileActivity.this, SettingsActivity.class);
-            startActivity(settingsIntent);
-        });
-
-    }private void initializePersonalDataButton() {
-        Button settingsButton = findViewById(R.id.personalDataButton);
-        settingsButton.setOnClickListener(view -> {
-            // Startet eine neue Activity für die Einstellungen
-            Intent settingsIntent = new Intent(ProfileActivity.this, PersonalDataActivity.class);
-            startActivity(settingsIntent);
-        });
+    private void switchToSettings() {
+        Intent settingsIntent = new Intent(ProfileActivity.this, SettingsActivity.class);
+        startActivity(settingsIntent);
+    }
+    private void switchToPersonalData() {
+        Intent settingsIntent = new Intent(ProfileActivity.this, PersonalDataActivity.class);
+        startActivity(settingsIntent);
     }
 
 
