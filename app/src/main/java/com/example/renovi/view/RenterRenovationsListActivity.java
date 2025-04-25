@@ -13,19 +13,22 @@ import android.widget.Toast;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
+import com.example.renovi.viewmodel.RenterRenovationsListViewModel;
 import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RenterRenovationsListActivity extends AppCompatActivity {
 
     final String TAG = "myTag";
 
     private ConstraintLayout mainLayout;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private RenterRenovationsListViewModel renterRenovationsListViewModel = new RenterRenovationsListViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,54 +46,27 @@ public class RenterRenovationsListActivity extends AppCompatActivity {
         if (intent != null && intent.hasExtra("renterId")) {
             String renterId = intent.getStringExtra("renterId");
 
-            getRenovierungen(db, renterId);
+            getRenovierungen(renterId);
 
         } else {
             Toast.makeText(this, "Keine Mieter-ID übertragen!", Toast.LENGTH_LONG).show();
         }
     }
 
-    private void getRenovierungen(FirebaseFirestore db, String renterId) {
-        // Greife auf die Sammlung "Renovationen" des aktuellen Mieters zu
-        db.collection("Mieter").document(renterId).collection("Renovierungen")
-                .get()
-                .addOnSuccessListener(documents -> {
-                    BigDecimal allObjectsValue = new BigDecimal("0");
+    private void getRenovierungen(String renterId) {
+        renterRenovationsListViewModel.getRenovations(renterId, new RenterRenovationsListViewModel.RenterRenovationsListCallback() {
+            @Override
+            public void onRenovationList(HashMap<String, Renovation> renovationList) {
+                for (Map.Entry<String, Renovation> entry : renovationList.entrySet()) {
+                    generateButtonForRenter(entry.getKey(), entry.getValue());
+                }
+            }
 
-                    // Daten erfolgreich erhalten
-                    int buttonId = 1;
-                    for (DocumentSnapshot document : documents.getDocuments()) {
-                        if (document.exists()) {
-                            String objectName = document.getString("object");
-                            Renovation renovation = new Renovation(
-                                    document.getString("object"),
-                                    document.getString("vorteile"),
-                                    document.getString("nachteile"),
-                                    document.getString("kosten"),
-                                    document.getString("paragraph"),
-                                    document.getString("zustand")
-                            );
-
-                            // Erstelle einen Button für jede Renovierung
-                            generateButtonForRenter(objectName, renovation);
-
-                            // Summiere die Kosten aller Objekte
-                            allObjectsValue = allObjectsValue.add(renovation.getObjectValue());
-
-                            buttonId += 1;
-                            Log.i(TAG, "Renovierung erfolgreich geladen.");
-                        }
-                    }
-                    // Wenn keine Renovierungen vorhanden sind
-                    if (buttonId == 1) {
-                        generatePlaceholder();
-                    }
-
-                })
-                .addOnFailureListener(e -> {
-                    // Fehler beim Abrufen der Daten
-                    Log.e(TAG, "Fehler beim Abrufen der Renovierungen", e);
-                });
+            @Override
+            public void onEmptyList() {
+                generatePlaceholder();
+            }
+        });
     }
 
     private void generateButtonForRenter(String renovationTitle, Renovation renovation) {
