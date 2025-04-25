@@ -20,6 +20,7 @@ import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.viewmodel.AnimationUtil;
 import com.example.renovi.model.Renter;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.LogInViewModel;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UIHelper;
 import com.google.android.gms.tasks.Task;
@@ -33,13 +34,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LogInActivity extends Activity {
 
-	final String TAG = "myTag";
-
 	EditText firstNameData;
 	EditText lastNameData;
 	EditText verifyIdInput;
-	private Person person;
+
 	private Session session;
+	private LogInViewModel logInViewModel = new LogInViewModel();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +51,7 @@ public class LogInActivity extends Activity {
 		lastNameData = findViewById(R.id.lastNameInput);
 		verifyIdInput = findViewById(R.id.verifyIdInput);
 
-		UIHelper.initializeViewFunction(this, R.id.signinButton, view -> checkIfIdExists());
+		UIHelper.initializeViewFunction(this, R.id.signinButton, view -> checkLogin());
 		initializeSession();
 	}
 
@@ -60,67 +60,28 @@ public class LogInActivity extends Activity {
 		session.deleteSession();
 	}
 
-	private void checkIfIdExists() {
+	private void checkLogin() {
 		String id = verifyIdInput.getText().toString();
-		FirebaseFirestore db = FirebaseFirestore.getInstance();
-		AtomicBoolean found = new AtomicBoolean(false);
-
-		try {
-			// Erstelle Tasks für beide Sammlungen
-			Task<DocumentSnapshot> mieterTask = db.collection("Mieter").document(id).get();
-			Task<DocumentSnapshot> vermieterTask = db.collection("Vermieter").document(id).get();
-
-			// Führe beide Tasks gleichzeitig aus und reagiere auf den ersten Erfolg
-			mieterTask.addOnSuccessListener(document -> {
-				try {
-					if (document.exists() && !found.get()) {
-						found.set(true);
-						Log.i(TAG, "Mieter mit ID gefunden");
-						person = new Renter("Renter",id, document.getString("vorname"), document.getString("nachname"), new BigDecimal(document.getString("miete")));
-						checkIfValid();
-					}
-				} catch (Exception e) {
-					Log.e(TAG, "Fehler bei der Verarbeitung des Mieter-Dokuments: " + e.getMessage());
-				}
-			});
-
-			vermieterTask.addOnSuccessListener(document -> {
-				try {
-					if (document.exists() && !found.get()) {
-						found.set(true);
-						Log.i(TAG, "Vermieter mit ID gefunden");
-						person = new Landlord("Landlord", id, document.getString("vorname"), document.getString("nachname"));
-						checkIfValid();
-					}
-				} catch (Exception e) {
-					Log.e(TAG, "Fehler bei der Verarbeitung des Vermieter-Dokuments: " + e.getMessage());
-				}
-			});
-
-			Tasks.whenAll(mieterTask, vermieterTask).addOnCompleteListener(task -> {
-				if (!found.get()) {
-					Log.i(TAG, "Kein Benutzer mit ID in Mieter oder Vermieter gefunden");
-					onFalseLoginData();
-				}
-			});
-		} catch (Exception e) {
-			Log.e(TAG, "Fehler beim Zugriff auf Firestore oder bei der Ausführung der Tasks: " + e.getMessage());
-			onFalseLoginData();
-		}
-	}
-
-
-	private void checkIfValid() {
 		String firstName = firstNameData.getText().toString();
 		String lastName = lastNameData.getText().toString();
 
-		if (firstName.equals(person.getFirstName()) && lastName.equals(person.getLastName())) {
-			session.putUser(person);
-			switchToMain();
-		}
-		else {
-			onFalseLoginData();
-		}
+		logInViewModel.verifyUserId(id, new LogInViewModel.LoginCallback() {
+			@Override
+			public void onLoginSuccess(Person person) {
+				if (firstName.equals(person.getFirstName()) && lastName.equals(person.getLastName())) {
+					session.putUser(person);
+					switchToMain();
+				}
+				else {
+					onFalseLoginData();
+				}
+			}
+
+			@Override
+			public void onLoginFailure() {
+				onFalseLoginData();
+			}
+		});
 	}
 
 	private void onFalseLoginData() {
