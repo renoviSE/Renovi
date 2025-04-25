@@ -67,6 +67,10 @@ public class ChatActivity extends AppCompatActivity {
         dangerColor = ContextCompat.getColor(this, R.color.danger);
         successColor = ContextCompat.getColor(this, R.color.lightBlue);
 
+        extractRenterId();
+    }
+
+    private void extractRenterId() {
         // Empfangen des Intent, der diese Activity gestartet hat
         Intent intent = getIntent();
 
@@ -75,15 +79,6 @@ public class ChatActivity extends AppCompatActivity {
             renterId = intent.getStringExtra("renterId");
         } else {
             renterId = user.getId();
-            db.collection("Mieter")
-                    .document(user.getId())
-                    .get()
-                    .addOnSuccessListener(documentSnapshot -> {
-
-                    })
-                    .addOnFailureListener(e -> {
-                        Log.e("Firestore", "Fehler beim Abrufen des Dokuments", e);
-                    });
         }
     }
 
@@ -154,31 +149,6 @@ public class ChatActivity extends AppCompatActivity {
                     Log.w("Firestore", "Fehler beim Senden der Nachricht an " + renterId, e);
                     Toast.makeText(this, "Fehler beim Senden der Nachricht", Toast.LENGTH_SHORT).show();
                 });
-    }
-
-    private void generateButtonForMessage(MChatMessage chat) {
-        ButtonCreator bc = new ButtonCreator(this);
-        boolean isSender = user.getId().equals(chat.getMessageFrom());
-
-        // Title = entweder eigener Name oder otherPerson
-        String title = isSender
-                ? user.getFirstName() + " " + user.getLastName()
-                : chat.getMessageSenderName();
-
-        // Nachrichtentext
-        String text  = chat.getMessage();
-
-        // Timestamp formatieren
-        String time  = new SimpleDateFormat("HH:mm  dd.MM.yy", Locale.getDefault())
-                .format(chat.getTimestamp().toDate());
-
-        bc.createChatBubble(
-                mainLayout,
-                isSender,
-                title,
-                text,
-                time
-        );
     }
 
     private void generatePlaceholder() {

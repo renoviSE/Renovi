@@ -42,7 +42,7 @@ public class PersonalDataActivity extends AppCompatActivity {
 
         getEmail();
 
-        UIHelper.initializeBackButton(this, R.id.personalDataButton);
+        UIHelper.initializeBackButton(this, R.id.personalDataBackButton);
         UIHelper.initializeViewFunction(this, R.id.changePersonalDataButton, v -> saveEmailToDatabase());
     }
 

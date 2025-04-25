@@ -30,7 +30,6 @@ public class AddMessageActivity extends AppCompatActivity {
 
     private EditText messageInput;
     private TextView recipientTextView;
-    private Button sendMessageButton;
 
     private String[] renterArray;
     private boolean[] selectedRenter;
@@ -50,12 +49,17 @@ public class AddMessageActivity extends AppCompatActivity {
 
         messageInput = findViewById(R.id.messageContentInput);
         recipientTextView = findViewById(R.id.messageRecipient);
-        sendMessageButton = findViewById(R.id.sendMessageButton);
 
         UIHelper.initializeBackButton(this, R.id.sendMessageToMainButton);
 
         loadRenter();
 
+        initializeRenterDialog();
+
+        UIHelper.initializeViewFunction(this, R.id.sendMessageButton, v -> sendMessageToDatabase());
+    }
+
+    private void initializeRenterDialog() {
         recipientTextView.setOnClickListener(v -> {
             if (renterArray != null && renterArray.length > 0) {
                 selectedRenter = new boolean[renterArray.length];
@@ -69,8 +73,6 @@ public class AddMessageActivity extends AppCompatActivity {
                         renterArray, selectedRenter, renterList, recipientTextView);
             }
         });
-
-        sendMessageButton.setOnClickListener(v -> sendMessageToDatabase());
     }
 
     private void getUserFromSession() {
@@ -126,6 +128,7 @@ public class AddMessageActivity extends AppCompatActivity {
             // Nachricht mit Zeitstempel
             Map<String, Object> messageData = new HashMap<>();
             messageData.put("from", user.getId()); // Absender (Vermieter)
+            messageData.put("senderName", user.getFirstName() + " " + user.getLastName());
             messageData.put("to", renterDocId); // Empfänger (Mieter)
             messageData.put("message", nachricht); // Die Nachricht
             messageData.put("timestamp", Timestamp.now()); // Aktueller Zeitstempel
