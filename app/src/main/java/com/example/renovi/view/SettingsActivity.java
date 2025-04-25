@@ -36,6 +36,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         languageSpinner.setSelection(settingsViewModel.getLanguageIndex(this));
 
+        initializeLanguageSelection();
+    }
+
+    private void initializeLanguageSelection() {
         // Listener für Sprachauswahl
         languageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             boolean isFirstSelection = true; // verhindert Direktreaktion beim Öffnen
@@ -59,7 +63,6 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
         });
-
     }
 
     private void initializeDropMenu() {
