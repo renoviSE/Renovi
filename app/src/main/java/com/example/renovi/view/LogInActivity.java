@@ -7,29 +7,18 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
-import android.util.Log;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
-import com.example.renovi.model.Landlord;
 import com.example.renovi.model.LocaleHelper;
-import com.example.renovi.viewmodel.AnimationUtil;
-import com.example.renovi.model.Renter;
+import com.example.renovi.viewmodel.UI.AnimationUtil;
 import com.example.renovi.model.Person;
 import com.example.renovi.viewmodel.LogInViewModel;
 import com.example.renovi.viewmodel.Session;
-import com.example.renovi.viewmodel.UIHelper;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.math.BigDecimal;
-import java.util.concurrent.atomic.AtomicBoolean;
+import com.example.renovi.viewmodel.UI.UIHelper;
 
 
 public class LogInActivity extends Activity {

@@ -18,9 +18,9 @@ import android.view.View;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
-import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 

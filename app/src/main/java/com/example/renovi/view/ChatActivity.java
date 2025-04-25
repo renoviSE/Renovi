@@ -16,11 +16,10 @@ import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
-import com.example.renovi.model.MChatMessage;
 import com.example.renovi.model.Person;
-import com.example.renovi.viewmodel.AnimationUtil;
-import com.example.renovi.viewmodel.ButtonCreator;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.AnimationUtil;
+import com.example.renovi.viewmodel.UI.ButtonCreator;
+import com.example.renovi.viewmodel.UI.UIHelper;
 import com.example.renovi.viewmodel.Session;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentChange;

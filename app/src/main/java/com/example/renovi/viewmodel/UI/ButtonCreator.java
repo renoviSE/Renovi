@@ -1,4 +1,4 @@
-package com.example.renovi.viewmodel;
+package com.example.renovi.viewmodel.UI;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;

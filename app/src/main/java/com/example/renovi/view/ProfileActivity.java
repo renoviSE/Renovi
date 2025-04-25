@@ -9,7 +9,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,9 +16,9 @@ import android.widget.Toast;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
-import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.UIHelper;
 
 public class ProfileActivity extends AppCompatActivity {
 

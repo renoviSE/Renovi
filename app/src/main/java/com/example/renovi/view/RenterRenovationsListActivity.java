@@ -13,8 +13,8 @@ import android.widget.Toast;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
-import com.example.renovi.viewmodel.ButtonCreator;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.ButtonCreator;
+import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 

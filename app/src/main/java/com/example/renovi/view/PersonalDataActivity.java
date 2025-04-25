@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat;
 
 import com.example.renovi.R;
 import com.example.renovi.model.Person;
-import com.example.renovi.viewmodel.AnimationUtil;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.AnimationUtil;
+import com.example.renovi.viewmodel.UI.UIHelper;
 import com.example.renovi.viewmodel.Session;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

@@ -1,11 +1,10 @@
-package com.example.renovi.viewmodel;
+package com.example.renovi.viewmodel.UI;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.widget.EditText;
 import android.widget.TextView;
 
 public class AnimationUtil {

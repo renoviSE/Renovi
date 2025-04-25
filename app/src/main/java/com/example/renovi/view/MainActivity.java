@@ -22,12 +22,12 @@ import com.example.renovi.R;
 import com.example.renovi.model.Landlord;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
-import com.example.renovi.viewmodel.BannerCreator;
-import com.example.renovi.viewmodel.ButtonCreator;
+import com.example.renovi.viewmodel.UI.BannerCreator;
+import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.Session;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 

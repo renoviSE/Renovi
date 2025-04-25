@@ -7,11 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 
 
-import android.widget.Button;
-
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.UIHelper;
 
 public class WelcomeScreen extends Activity {
 

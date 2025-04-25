@@ -1,4 +1,4 @@
-package com.example.renovi.viewmodel;
+package com.example.renovi.viewmodel.UI;
 
 import com.example.renovi.R;
 import android.content.Context;

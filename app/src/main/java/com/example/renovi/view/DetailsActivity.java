@@ -11,7 +11,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +18,8 @@ import android.widget.Toast;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Renovation;
-import com.example.renovi.viewmodel.ButtonCreator;
-import com.example.renovi.viewmodel.UIHelper;
+import com.example.renovi.viewmodel.UI.ButtonCreator;
+import com.example.renovi.viewmodel.UI.UIHelper;
 
 public class DetailsActivity extends AppCompatActivity {
 

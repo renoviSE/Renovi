@@ -2,6 +2,8 @@ package com.example.renovi.viewmodel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.example.renovi.viewmodel.UI.ButtonCreator;
+
 import org.junit.jupiter.api.Test;
 
 public class ButtonCreatorTest {
