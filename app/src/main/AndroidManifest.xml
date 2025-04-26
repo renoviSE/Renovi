@@ -35,9 +35,6 @@
             android:name=".view.RenterRenovationsListActivity"
             android:exported="false" />
         <activity
-            android:name=".view.RenterDetailsActivity"
-            android:exported="false" />
-        <activity
             android:name=".view.CreateRenterActivity"
             android:exported="false" />
         <activity
