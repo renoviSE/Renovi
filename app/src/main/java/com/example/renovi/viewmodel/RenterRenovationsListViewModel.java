@@ -5,11 +5,12 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 public class RenterRenovationsListViewModel {
 
     public interface RenterRenovationsListCallback {
-        void onRenovationList(HashMap<String, Renovation> renovationList);
+        void onRenovationList(LinkedHashMap<String, Renovation> renovationList);
         void onEmptyList();
     }
 
@@ -24,7 +25,7 @@ public class RenterRenovationsListViewModel {
         db.collection("Mieter").document(id).collection("Renovierungen")
                 .get()
                 .addOnSuccessListener(documents -> {
-                    HashMap<String, Renovation> renovationList = new HashMap<>();
+                    LinkedHashMap<String, Renovation> renovationList = new LinkedHashMap<>();
 
                     int buttonId = 1;
                     for (DocumentSnapshot document : documents.getDocuments()) {

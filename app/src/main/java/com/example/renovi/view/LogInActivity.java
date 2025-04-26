@@ -54,23 +54,28 @@ public class LogInActivity extends Activity {
 		String firstName = firstNameData.getText().toString();
 		String lastName = lastNameData.getText().toString();
 
-		logInViewModel.verifyUserId(id, new LogInViewModel.LoginCallback() {
-			@Override
-			public void onLoginSuccess(Person person) {
-				if (firstName.equals(person.getFirstName()) && lastName.equals(person.getLastName())) {
-					session.putUser(person);
-					switchToMain();
+		if (id.isEmpty() && firstName.isEmpty() && lastName.isEmpty()) {
+			onFalseLoginData();
+		} else {
+			logInViewModel.verifyUserId(id, new LogInViewModel.LoginCallback() {
+				@Override
+				public void onLoginSuccess(Person person) {
+					if (firstName.equals(person.getFirstName()) && lastName.equals(person.getLastName())) {
+						session.putUser(person);
+						switchToMain();
+					}
+					else {
+						onFalseLoginData();
+					}
 				}
-				else {
+
+				@Override
+				public void onLoginFailure() {
 					onFalseLoginData();
 				}
-			}
+			});
+		}
 
-			@Override
-			public void onLoginFailure() {
-				onFalseLoginData();
-			}
-		});
 	}
 
 	private void onFalseLoginData() {

@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,24 +15,25 @@ import android.widget.EditText;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.RenterListViewModel;
 import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RenterListActivity extends AppCompatActivity {
 
 
     private ConstraintLayout mainLayout;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
     private List<Button> renterButtons = new ArrayList<>();
-
+    private RenterListViewModel viewModel = new RenterListViewModel();
 
 
 
@@ -46,6 +46,13 @@ public class RenterListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_renter_list);
         mainLayout = findViewById(R.id.renterListConstraintLayout);
 
+        initializeSearch();
+
+        UIHelper.initializeBackButton(this, R.id.renterListToPreviousButton);
+        loadRenter();
+    }
+
+    private void initializeSearch() {
         EditText searchInput = findViewById(R.id.verifyIdInput);
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -59,9 +66,6 @@ public class RenterListActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        UIHelper.initializeBackButton(this, R.id.renterListToPreviousButton);
-        loadRenter();
     }
 
     private void getUserFromSession() {
@@ -70,27 +74,19 @@ public class RenterListActivity extends AppCompatActivity {
     }
 
     private void loadRenter() {
-        db.collection("Mieter")
-                .whereEqualTo("vermieter", user.getId())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if(task.getResult().isEmpty()) {
-                            generatePlaceholder();
-                        } else {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String firstName = document.getString("vorname");
-                                String lastName = document.getString("nachname");
-                                String fullName = firstName + " " + lastName;
-                                String renterId = document.getId();
-                                generateButtonForRenter(renterId, fullName);
-                            }
-                        }
-                    } else {
-                        generatePlaceholder();
-                        Log.d("FirebaseError", "Error getting documents: ", task.getException());
-                    }
-                });
+        viewModel.getRenters(user, new RenterListViewModel.RenterListCallback() {
+            @Override
+            public void onRenterList(LinkedHashMap<String, String> renterList) {
+                for (Map.Entry<String, String> renter : renterList.entrySet()) {
+                    generateButtonForRenter(renter.getKey(), renter.getValue());
+                }
+            }
+
+            @Override
+            public void onEmptyList() {
+                generatePlaceholder();
+            }
+        });
     }
 
     private void generateButtonForRenter(String renterId, String fullname) {
