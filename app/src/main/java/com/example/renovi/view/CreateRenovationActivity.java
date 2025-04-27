@@ -14,14 +14,12 @@ import androidx.core.content.ContextCompat;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.CreateRenovationViewModel;
 import com.example.renovi.viewmodel.UI.AnimationUtil;
 import com.example.renovi.viewmodel.UI.MultiSelectDialogUtil;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ import java.util.Map;
 public class CreateRenovationActivity extends AppCompatActivity {
 
     EditText renovationCostInput, createRenovationTimestamp, createRenovationParagraph;
-    TextView benefits, states, object, renter;
+    TextView benefits, object, renter;
     boolean[] selectedBenefit;
     boolean[] selectedRenter;
     int[] selectedObject = {-1}; // Für Single-Choice, -1 bedeutet keine Auswahl
@@ -44,10 +42,10 @@ public class CreateRenovationActivity extends AppCompatActivity {
     String[] objectsArray = {"Tür", "Fenster", "WC", "Dach"};
     String[] renterArray;  // Dynamisch befüllt
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
     private Calendar renovationDate = Calendar.getInstance(); // Zum Speichern des Datums
+    private CreateRenovationViewModel viewModel = new CreateRenovationViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,24 +121,18 @@ public class CreateRenovationActivity extends AppCompatActivity {
     }
 
     private void loadRenter() {
-        db.collection("Mieter")
-                .whereEqualTo("vermieter", user.getId())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        ArrayList<String> renters = new ArrayList<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String firstName = document.getString("vorname");
-                            String lastName = document.getString("nachname");
-                            String fullName = firstName + " " + lastName;
-                            renters.add(fullName);
-                            renterDocIds.add(document.getId()); // Dokument-ID speichern
-                        }
-                        renterArray = renters.toArray(new String[0]);  // Konvertiere in ein Array
-                    } else {
-                        Log.d("FirebaseError", "Error getting documents: ", task.getException());
-                    }
-                });
+        viewModel.getRenters(user, new CreateRenovationViewModel.RenterCallback() {
+            @Override
+            public void onSuccess(ArrayList<String> ids, ArrayList<String> renters) {
+                renterDocIds = ids;
+                renterArray = renters.toArray(new String[0]);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     private void saveRenovationToDatabase() {
@@ -197,54 +189,44 @@ public class CreateRenovationActivity extends AppCompatActivity {
         renovationData.put("nachteile", ""); // Immer leer
 
         // Log die gesammelten Daten
-        Log.d("Firestore", "Renovation Data: " + renovationData.toString());
+        Log.d("Firestore", "Renovation Data: " + renovationData);
 
-        // Erstelle das Renovierung-Dokument in Firestore
-        db.collection("Renovierung").add(renovationData)
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("Firestore", "Renovierung erfolgreich gespeichert. ID: " + documentReference.getId());
+        viewModel.saveRenovationToDatabase(renovationData, renterDocIds, new CreateRenovationViewModel.RenovationCallback() {
+            @Override
+            public void onSuccess() {
+                // Erfolgsanimation
+                AnimationUtil.animateInputAndDrawableColor(renovationCostInput, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(createRenovationTimestamp, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(createRenovationParagraph, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(benefits, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(object, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(renter, currentDrawableColor, successColor, animationDuration);
 
-                    // Verknüpfe das Renovierung-Dokument mit den Mietern
-                    for (int index : renterList) {
-                        String renterDocId = renterDocIds.get(index);
-                        DocumentReference renterDocRef = db.collection("Mieter").document(renterDocId);
-                        renterDocRef.collection("Renovierungen").add(renovationData)
-                                .addOnSuccessListener(aVoid -> Log.d("Firestore", "Renovierung für Mieter erfolgreich verknüpft."))
-                                .addOnFailureListener(e -> Log.w("Firestore", "Fehler bei der Verknüpfung der Renovierung mit dem Mieter", e));
-                    }
+                // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
+                new android.os.Handler().postDelayed(() -> {
+                    // Felder leeren
+                    renovationCostInput.setText("");
+                    createRenovationTimestamp.setText("");
+                    createRenovationParagraph.setText("");
+                    benefits.setText("");
+                    object.setText("");
+                    renter.setText("");
 
-                    // Erfolgsanimation
-                    AnimationUtil.animateInputAndDrawableColor(renovationCostInput, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(createRenovationTimestamp, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(createRenovationParagraph, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(benefits, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(object, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(renter, currentDrawableColor, successColor, animationDuration);
+                    // Leeren der Auswahllisten
+                    benefitsList.clear();
+                    renterList.clear();
+                    selectedObject[0] = -1;
+                    selectedRenter = new boolean[renterArray.length];
+                }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
 
-                    // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
-                    new android.os.Handler().postDelayed(() -> {
-                        // Felder leeren
-                        renovationCostInput.setText("");
-                        createRenovationTimestamp.setText("");
-                        createRenovationParagraph.setText("");
-                        benefits.setText("");
-                        object.setText("");
-                        renter.setText("");
+                Toast.makeText(CreateRenovationActivity.this, "Renovierung erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
+            }
 
-                        // Leeren der Auswahllisten
-                        benefitsList.clear();
-                        renterList.clear();
-                        selectedObject[0] = -1;
-                        selectedRenter = new boolean[renterArray.length];
-                    }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
-
-                    Toast.makeText(CreateRenovationActivity.this, "Renovierung erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
-
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("Firestore", "Fehler beim Speichern der Renovierung", e);
-                    Toast.makeText(CreateRenovationActivity.this, "Fehler beim Speichern der Renovierung", Toast.LENGTH_SHORT).show();
-                });
+            @Override
+            public void onFailure() {
+                Toast.makeText(CreateRenovationActivity.this, "Fehler beim Speichern der Renovierung", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
