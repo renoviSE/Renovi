@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
@@ -22,6 +21,7 @@ import com.example.renovi.R;
 import com.example.renovi.model.Landlord;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.MainViewModel;
 import com.example.renovi.viewmodel.UI.BannerCreator;
 import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.model.Renovation;
@@ -29,23 +29,23 @@ import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import android.net.Uri;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
     final String TAG = "myTag";
-    public static final String geplanteRenovierung ="com.exemple.renovi";
     private Person user;
     private Session session;
-    private ProgressBar rentCostProgressBar;
     private List<Pair<String, Class<?>>> menuItems;
     private ConstraintLayout mainLayout;
+    private MainViewModel viewModel = new MainViewModel();
 
 
     @Override
@@ -66,9 +66,8 @@ public class MainActivity extends AppCompatActivity {
                 // Remove the listener to prevent repeated calls
                 mainLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
                 if (user instanceof Renter) {
-                    getRenovierungen(db);
+                    getRenovations();
                 } else if (user instanceof Landlord) {
                     generateMenuButtons();
                 }
@@ -97,43 +96,26 @@ public class MainActivity extends AppCompatActivity {
         UIHelper.initializeViewFunction(this, R.id.faqButton, view -> openWebPage("https://funktionales-kostensplitting.de"));
     }
 
-    private void getRenovierungen(FirebaseFirestore db) {
-        // Zugriff auf die Sammlung "Renovationen" des aktuellen Mieters
-        db.collection("Mieter").document(user.getId()).collection("Renovierungen")
-                .get()
-                .addOnSuccessListener(documents -> {
-                    BigDecimal allObjectsValue = new BigDecimal("0");
+    private void getRenovations() {
+        viewModel.getRenovations(user, new MainViewModel.MainCallback() {
+            @Override
+            public void onRenovationList(BigDecimal objectValue, LinkedHashMap<String, Renovation> renovationList) {
 
-                    // Daten erfolgreich erhalten
-                    int buttonId = 1;
-                    for (DocumentSnapshot document : documents.getDocuments()) {
-                        if (document.exists()) {
-                            String objectName = document.getString("object");
-                            Renovation renovation = new Renovation(document.getString("object"), document.getString("vorteile"), document.getString("nachteile"), document.getString("kosten"), document.getString("paragraph"), document.getString("zustand"));
-                            // Erstelle einen Button für jeden Mieter
-                            generateButtonForRenter(objectName, renovation);
+                for (Map.Entry<String, Renovation> entry : renovationList.entrySet()) {
+                    generateButtonForRenter(entry.getKey(), entry.getValue());
+                }
 
-                            // Speichere Kosten von allen Objekten
-                            allObjectsValue = allObjectsValue.add(renovation.getObjectValue());
+                ((Renter) user).updateRent(objectValue);
+                ((Renter) user).setRentDifferenceInPercentage(objectValue);
+                setRentCost();
+            }
 
-                            buttonId += 1;
-                            Log.i(TAG, "Good Job");
-                        }
-                    }
-                    // Wenn keine Renovierungen vorhanden sind
-                    if (buttonId == 1) {
-                        generatePlaceholder();
-                    }
-
-                    ((Renter) user).updateRent(allObjectsValue);
-                    ((Renter) user).setRentDifferenceInPercentage(allObjectsValue);
-                    setRentCost();
-                })
-                .addOnFailureListener(e -> {
-                    // Fehler beim Abrufen der Daten
-                    Log.i(TAG, "NO");
-
-                });
+            @Override
+            public void onEmptyList() {
+                generatePlaceholder();
+                setRentCost();
+            }
+        });
     }
 
     private void initializeMenuItems() {
@@ -148,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         initializeMenuItems();
 
         ButtonCreator buttonCreator = new ButtonCreator(this);
-        TextView buttonsTitle = buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.menu_title_string, R.id.header_constraint);
+        buttonCreator.createUpcomingSectionTitle(mainLayout, R.string.menu_title_string, R.id.header_constraint);
 
         for (Pair<String, Class<?>> menuItem : menuItems) {
             String objectName = menuItem.first;
@@ -252,13 +234,7 @@ public class MainActivity extends AppCompatActivity {
         BannerCreator bannerCreator  = new BannerCreator(this);
         bannerCreator.createBanner(mainLayout, R.id.mainScrollSpacer);
     }
-    public static int dpToPx(Context context, float dp) {
-        return (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                dp,
-                context.getResources().getDisplayMetrics()
-        );
-    }
+
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(LocaleHelper.onAttach(newBase));

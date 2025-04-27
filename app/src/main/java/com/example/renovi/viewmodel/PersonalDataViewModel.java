@@ -1,14 +1,10 @@
 package com.example.renovi.viewmodel;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
-import com.example.renovi.R;
 import com.example.renovi.model.Person;
-import com.example.renovi.viewmodel.UI.AnimationUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
