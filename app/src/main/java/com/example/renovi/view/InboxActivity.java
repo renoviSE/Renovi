@@ -18,6 +18,7 @@ import android.view.View;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.InboxViewModel;
 import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
@@ -25,7 +26,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class InboxActivity extends AppCompatActivity {
@@ -36,7 +39,7 @@ public class InboxActivity extends AppCompatActivity {
     private Person user;
     private List<Button> renterButtons = new ArrayList<>();
 
-
+    private InboxViewModel viewModel = new InboxViewModel();
 
 
     @SuppressLint("MissingInflatedId")
@@ -51,6 +54,14 @@ public class InboxActivity extends AppCompatActivity {
         setContentView(R.layout.activity_inbox);
         mainLayout = findViewById(R.id.inboxConstraintLayout);
 
+        initializeSearchRenter();
+
+        UIHelper.initializeBackButton(this, R.id.inboxToPreviousButton);
+        UIHelper.initializeViewFunction(this, R.id.addMessageButton, view -> switchToAddMessageActivity());
+        loadRenter();
+    }
+
+    private void initializeSearchRenter() {
         EditText searchInput = findViewById(R.id.searchRenter);
         searchInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,13 +75,9 @@ public class InboxActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         });
-
-        UIHelper.initializeBackButton(this, R.id.inboxToPreviousButton);
-        UIHelper.initializeViewFunction(this, R.id.addMessageButton, view -> switchToAddMessageAcivity());
-        loadRenter();
     }
 
-    private void switchToAddMessageAcivity() {
+    private void switchToAddMessageActivity() {
         Intent switchActivityIntent = new Intent(this, AddMessageActivity.class);
         startActivity(switchActivityIntent);
     }
@@ -81,27 +88,19 @@ public class InboxActivity extends AppCompatActivity {
     }
 
     private void loadRenter() {
-        db.collection("Mieter")
-                .whereEqualTo("vermieter", user.getId())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        if(task.getResult().isEmpty()) {
-                            generatePlaceholder();
-                        } else {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                String firstName = document.getString("vorname");
-                                String lastName = document.getString("nachname");
-                                String fullName = firstName + " " + lastName;
-                                String renterId = document.getId();
-                                generateButtonForRenter(renterId, fullName);
-                            }
-                        }
-                    } else {
-                        generatePlaceholder();
-                        Log.d("FirebaseError", "Error getting documents: ", task.getException());
-                    }
-                });
+        viewModel.getRenters(user, new InboxViewModel.InboxCallback() {
+            @Override
+            public void onRenterList(LinkedHashMap<String, String> renterList) {
+                for (Map.Entry<String, String> entry : renterList.entrySet()) {
+                    generateButtonForRenter(entry.getKey(), entry.getValue());
+                }
+            }
+
+            @Override
+            public void onEmptyList() {
+                generatePlaceholder();
+            }
+        });
     }
 
     private void generateButtonForRenter(String renterId, String fullname) {
