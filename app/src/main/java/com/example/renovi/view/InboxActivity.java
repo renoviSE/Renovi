@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.view.View;
@@ -22,8 +21,6 @@ import com.example.renovi.viewmodel.InboxViewModel;
 import com.example.renovi.viewmodel.UI.ButtonCreator;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -34,7 +31,6 @@ import java.util.Objects;
 public class InboxActivity extends AppCompatActivity {
 
     private ConstraintLayout mainLayout;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
     private List<Button> renterButtons = new ArrayList<>();

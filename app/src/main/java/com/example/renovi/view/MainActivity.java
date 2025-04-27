@@ -7,7 +7,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -28,7 +27,6 @@ import com.example.renovi.model.Renovation;
 import com.example.renovi.model.Renter;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
-import com.google.firebase.firestore.DocumentSnapshot;
 
 import android.net.Uri;
 
@@ -40,7 +38,6 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    final String TAG = "myTag";
     private Person user;
     private Session session;
     private List<Pair<String, Class<?>>> menuItems;

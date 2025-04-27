@@ -13,10 +13,10 @@ import androidx.core.content.ContextCompat;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.CreateRenterViewModel;
 import com.example.renovi.viewmodel.UI.AnimationUtil;
 import com.example.renovi.viewmodel.Session;
 import com.example.renovi.viewmodel.UI.UIHelper;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,9 +25,9 @@ public class CreateRenterActivity extends AppCompatActivity {
 
     EditText renterFirstnameInput, renterLastnameInput, createRenterRent, createRenterSquareMeters;
     TextView createRenterAddress;
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
+    private CreateRenterViewModel viewModel = new CreateRenterViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,35 +118,34 @@ public class CreateRenterActivity extends AppCompatActivity {
         // Log die gesammelten Daten
         Log.d("Firestore", "Renter Data: " + renterData.toString());
 
-        // Erstelle das Mieter-Dokument in Firestore
-        db.collection("Mieter").add(renterData)
-                .addOnSuccessListener(documentReference -> {
-                    Log.d("Firestore", "Mieter erfolgreich gespeichert. ID: " + documentReference.getId());
+        viewModel.saveRenterToDatabase(renterData, new CreateRenterViewModel.CreateRenterCallback() {
+            @Override
+            public void onSuccess() {
+                // Erfolgsanimation
+                AnimationUtil.animateInputAndDrawableColor(renterFirstnameInput, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(renterLastnameInput, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(createRenterRent, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(createRenterAddress, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(createRenterSquareMeters, currentDrawableColor, successColor, animationDuration);
 
-                    // Erfolgsanimation
-                    AnimationUtil.animateInputAndDrawableColor(renterFirstnameInput, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(renterLastnameInput, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(createRenterRent, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(createRenterAddress, currentDrawableColor, successColor, animationDuration);
-                    AnimationUtil.animateInputAndDrawableColor(createRenterSquareMeters, currentDrawableColor, successColor, animationDuration);
+                // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
+                new android.os.Handler().postDelayed(() -> {
+                    // Felder leeren
+                    renterFirstnameInput.setText("");
+                    renterLastnameInput.setText("");
+                    createRenterRent.setText("");
+                    createRenterAddress.setText("");
+                    createRenterSquareMeters.setText("");
 
-                    // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
-                    new android.os.Handler().postDelayed(() -> {
-                        // Felder leeren
-                        renterFirstnameInput.setText("");
-                        renterLastnameInput.setText("");
-                        createRenterRent.setText("");
-                        createRenterAddress.setText("");
-                        createRenterSquareMeters.setText("");
+                    Toast.makeText(CreateRenterActivity.this, "Mieter erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
+                }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
+            }
 
-                        Toast.makeText(CreateRenterActivity.this, "Mieter erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
-                    }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
-
-                })
-                .addOnFailureListener(e -> {
-                    Log.w("Firestore", "Fehler beim Speichern des Mieters", e);
-                    Toast.makeText(CreateRenterActivity.this, "Fehler beim Speichern des Mieters", Toast.LENGTH_SHORT).show();
-                });
+            @Override
+            public void onFailure() {
+                Toast.makeText(CreateRenterActivity.this, "Fehler beim Speichern des Mieters", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override

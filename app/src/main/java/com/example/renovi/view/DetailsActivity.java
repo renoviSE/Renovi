@@ -33,14 +33,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Renovation renovation = (Renovation) intent.getSerializableExtra("renovierung");
-        TextView kostenTextview = findViewById(R.id.kosten);
-        TextView renovierungTextView = findViewById(R.id.detailsTitle);
-        TextView paragraphenTextView = findViewById(R.id.descriptionString);
-
-        renovierungTextView.setText(renovation.getObject());
-        kostenTextview.setText(renovation.getCost() + "€");
-        paragraphenTextView.setText(renovation.getParagraph());
-        kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
+        setValues(renovation);
 
         configureImageViewBasedOnName(renovation.getObject());
 
@@ -53,6 +46,17 @@ public class DetailsActivity extends AppCompatActivity {
         for (int i = 0; i < benefits.length; i++) {
             lastButtonId = buttonCreator.createBenefitButton(benefitsLayout, benefits[i], lastButtonId, i == 0);
         }
+    }
+
+    private void setValues(Renovation renovation) {
+        TextView kostenTextview = findViewById(R.id.kosten);
+        TextView renovierungTextView = findViewById(R.id.detailsTitle);
+        TextView paragraphenTextView = findViewById(R.id.descriptionString);
+
+        renovierungTextView.setText(renovation.getObject());
+        kostenTextview.setText(renovation.getCost() + "€");
+        paragraphenTextView.setText(renovation.getParagraph());
+        kostenTextview.setTextColor(ContextCompat.getColor(this, R.color.black));
     }
 
     private void initializeReadMoreLink() { //reade more redirects to website
