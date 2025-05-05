@@ -61,7 +61,7 @@
             tools:context=".view.CreateRefurbishmentActivity">
 
             <EditText
-                android:id="@+id/changeFirstNameInput"
+                android:id="@+id/refurbCostInput"
                 android:layout_width="155dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="8dp"
@@ -83,7 +83,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/changeLastNameInput"
+                android:id="@+id/dateInput"
                 android:layout_width="155dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -144,7 +144,7 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <EditText
-            android:id="@+id/emailInput"
+            android:id="@+id/refurbApportionableCostInput"
             android:layout_width="315dp"
             android:layout_height="48dp"
             android:background="@drawable/bg_white_round_corner"

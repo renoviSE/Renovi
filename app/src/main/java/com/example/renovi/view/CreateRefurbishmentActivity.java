@@ -19,21 +19,14 @@ import com.example.renovi.viewmodel.UI.AnimationUtil;
 import com.example.renovi.viewmodel.UI.UIHelper;
 import com.example.renovi.viewmodel.UI.MultiSelectDialogUtil;
 import com.example.renovi.viewmodel.Session;
-import com.google.firebase.Timestamp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Locale;
-import java.util.Map;
-import java.util.HashMap;
 
 public class CreateRefurbishmentActivity extends AppCompatActivity {
-    EditText refurbishmentCostInput, createRefurbishmentTimestamp;
+    EditText refurbishmentCostInput, apportionableCostInput, createRefurbishmentTimestamp;
     TextView address;
 
     ArrayList<Integer> selectedAddressesIndices = new ArrayList<>();
@@ -41,7 +34,6 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
     ArrayList<String> addressList = new ArrayList<>();
     ArrayList<Double> qmList = new ArrayList<>();
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Session session;
     private Person user;
     private Calendar refurbishmentDate = Calendar.getInstance();
@@ -55,9 +47,10 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
         try {
             getUserFromSession();
 
-            refurbishmentCostInput = findViewById(R.id.emailInput);
-            createRefurbishmentTimestamp = findViewById(R.id.changeLastNameInput);
+            refurbishmentCostInput = findViewById(R.id.refurbCostInput);
+            createRefurbishmentTimestamp = findViewById(R.id.dateInput);
             address = findViewById(R.id.create_refurbishment_address);
+            apportionableCostInput = findViewById(R.id.refurbApportionableCostInput);
 
             loadRenterAddress();
 
@@ -122,6 +115,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
 
     private void saveRenovationToDatabase() {
         String kostenInput = refurbishmentCostInput.getText().toString();
+        String apportionableCost = apportionableCostInput.getText().toString();
         String timestamp = createRefurbishmentTimestamp.getText().toString();
 
         // Farben für Validierung
@@ -131,6 +125,10 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
         boolean isValid = true;
         if (kostenInput.isEmpty()) {
             AnimationUtil.animateHintAndDrawableColor(refurbishmentCostInput, dangerColor, animationDuration);
+            isValid = false;
+        }
+        if (apportionableCost.isEmpty()) {
+            AnimationUtil.animateHintAndDrawableColor(apportionableCostInput, dangerColor, animationDuration);
             isValid = false;
         }
         if (timestamp.isEmpty()) {
@@ -147,9 +145,31 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             return;
         }
 
-        viewModel.saveRenovationToDatabase(kostenInput, refurbishmentDate, selectedAddressesIndices, addressList, new CreateRefurbishmentViewModel.RenovationCallback() {
+        viewModel.saveRenovationToDatabase(apportionableCost, refurbishmentDate, selectedAddressesIndices, addressList, new CreateRefurbishmentViewModel.RenovationCallback() {
             @Override
             public void onSuccess() {
+                // Farben für die Animation
+                int successColor = ContextCompat.getColor(CreateRefurbishmentActivity.this, R.color.lightBlue);
+                int currentDrawableColor = ContextCompat.getColor(CreateRefurbishmentActivity.this, R.color.gray2);
+                int animationDuration = 1000; // Dauer der Animation in Millisekunden
+                // Erfolgsanimation
+                AnimationUtil.animateInputAndDrawableColor(refurbishmentCostInput, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(createRefurbishmentTimestamp, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(address, currentDrawableColor, successColor, animationDuration);
+                AnimationUtil.animateInputAndDrawableColor(apportionableCostInput, currentDrawableColor, successColor, animationDuration);
+
+
+                // Verzögere das Leeren der Felder bis die Animation abgeschlossen ist
+                new android.os.Handler().postDelayed(() -> {
+                    // Felder leeren
+                    refurbishmentCostInput.setText("");
+                    createRefurbishmentTimestamp.setText("");
+                    apportionableCostInput.setText("");
+
+                    // Leeren der Auswahllisten
+                    addressList.clear();
+                }, animationDuration); // Dauer der Verzögerung entspricht der Animationsdauer
+
                 Toast.makeText(CreateRefurbishmentActivity.this, "Renovierungen erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
             }
 
