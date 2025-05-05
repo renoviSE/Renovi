@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 import com.example.renovi.R;
 import com.example.renovi.model.LocaleHelper;
 import com.example.renovi.model.Person;
+import com.example.renovi.viewmodel.CreateRefurbishmentViewModel;
 import com.example.renovi.viewmodel.UI.AnimationUtil;
 import com.example.renovi.viewmodel.UI.UIHelper;
 import com.example.renovi.viewmodel.UI.MultiSelectDialogUtil;
@@ -44,6 +45,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
     private Session session;
     private Person user;
     private Calendar refurbishmentDate = Calendar.getInstance();
+    private CreateRefurbishmentViewModel viewModel = new CreateRefurbishmentViewModel();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             createRefurbishmentTimestamp = findViewById(R.id.changeLastNameInput);
             address = findViewById(R.id.create_refurbishment_address);
 
-            loadObjects();
+            loadRenterAddress();
 
             // Date Picker Dialog
             createRefurbishmentTimestamp.setOnClickListener(v -> showDatePickerDialog());
@@ -102,31 +104,20 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
         user = session.getUser();
     }
 
-    private void loadObjects() {
-        db.collection("Mieter")
-                .whereEqualTo("vermieter", user.getId())
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        HashSet<String> uniqueAddresses = new HashSet<>();
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            String address = document.getString("adresse");
-                            String qmString = document.getString("qm");
-                            if (address != null && uniqueAddresses.add(address)) {
-                                addressList.add(address);
-                                renterDocIds.add(document.getId());
-                                try {
-                                    qmList.add(Double.parseDouble(qmString));
-                                } catch (NumberFormatException e) {
-                                    Log.e("LoadObjects", "Invalid qm value: " + qmString, e);
-                                    qmList.add(0.0);
-                                }
-                            }
-                        }
-                    } else {
-                        Log.d("FirebaseError", "Error getting documents: ", task.getException());
-                    }
-                });
+    private void loadRenterAddress() {
+        viewModel.getRenterAdresses(user, new CreateRefurbishmentViewModel.RenterCallback() {
+            @Override
+            public void onSuccess(ArrayList<String> addresses, ArrayList<String> renterIds, ArrayList<Double> qms) {
+                renterDocIds = renterIds;
+                addressList = addresses;
+                qmList = qms;
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     private void saveRenovationToDatabase() {
@@ -156,73 +147,17 @@ public class CreateRefurbishmentActivity extends AppCompatActivity {
             return;
         }
 
-        double totalCost;
-        try {
-            totalCost = Double.parseDouble(kostenInput);
-        } catch (NumberFormatException e) {
-            Toast.makeText(this, "Ungültiger Betrag für Kosten", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        viewModel.saveRenovationToDatabase(kostenInput, refurbishmentDate, selectedAddressesIndices, addressList, new CreateRefurbishmentViewModel.RenovationCallback() {
+            @Override
+            public void onSuccess() {
+                Toast.makeText(CreateRefurbishmentActivity.this, "Renovierungen erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
+            }
 
-        for (int addressIndex : selectedAddressesIndices) {
-            String address = addressList.get(addressIndex);
-
-            // Hole Mieter für die Adresse
-            db.collection("Mieter")
-                    .whereEqualTo("adresse", address)
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        double totalSquareMeters = 0.0;
-                        ArrayList<QueryDocumentSnapshot> renters = new ArrayList<>();
-
-                        for (QueryDocumentSnapshot renter : queryDocumentSnapshots) {
-                            renters.add(renter);
-                            String qmString = renter.getString("qm");
-                            try {
-                                totalSquareMeters += Double.parseDouble(qmString);
-                            } catch (NumberFormatException e) {
-                                Log.w("Renovierung", "Fehler beim Parsen von Quadratmetern für Mieter: " + renter.getId(), e);
-                            }
-                        }
-
-                        // Verteilung der Kosten
-                        for (QueryDocumentSnapshot renter : renters) {
-                            String renterId = renter.getId();
-                            String qmString = renter.getString("qm");
-                            double renterSquareMeters = 0.0;
-
-                            try {
-                                renterSquareMeters = Double.parseDouble(qmString);
-                            } catch (NumberFormatException e) {
-                                Log.w("Renovierung", "Fehler beim Parsen von Quadratmetern für Mieter: " + renterId, e);
-                            }
-
-                            // Kostenberechnung und Rundung auf 2 Nachkommastellen
-                            double renterCost = totalSquareMeters > 0 ? (renterSquareMeters / totalSquareMeters) * totalCost : 0.0;
-                            renterCost = Math.round(renterCost * 100.0) / 100.0;
-
-                            // Renovierungsdaten erstellen
-                            Map<String, Object> renovationData = new HashMap<>();
-                            renovationData.put("kosten", String.valueOf(renterCost));
-                            renovationData.put("eintrittsdatum", new Timestamp(refurbishmentDate.getTime()));
-                            renovationData.put("object", "Fenster");
-                            renovationData.put("zustand", "gut");
-                            renovationData.put("vorteile", "");
-                            renovationData.put("nachteile", "");
-                            renovationData.put("paragraph", "");
-
-                            // Renovierung für den Mieter direkt in seiner Sammlung "Renovierungen" speichern
-                            DocumentReference renterDocRef = db.collection("Mieter").document(renterId);
-                            renterDocRef.collection("Renovierungen")
-                                    .add(renovationData)
-                                    .addOnSuccessListener(aVoid -> Log.d("Renovierung", "Renovierung erfolgreich hinzugefügt für Mieter: " + renterId))
-                                    .addOnFailureListener(e -> Log.w("Renovierung", "Fehler beim Hinzufügen der Renovierung", e));
-                        }
-                    })
-                    .addOnFailureListener(e -> Log.w("Renovierung", "Fehler beim Abrufen der Mieter für Adresse: " + address, e));
-        }
-
-        Toast.makeText(this, "Renovierungen erfolgreich gespeichert", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onFailure() {
+                Toast.makeText(CreateRefurbishmentActivity.this, "Ungültiger Betrag für Kosten", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
